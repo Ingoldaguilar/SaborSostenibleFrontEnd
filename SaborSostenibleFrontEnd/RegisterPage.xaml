@@ -1,0 +1,42 @@
+<ContentPage 
+    x:Class="SaborSostenibleFrontEnd.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{StaticResource backgroundColor}">
+
+    <Grid>
+        <Image Source="background.jpg" Aspect="AspectFill" Opacity="0.5" />
+
+        <ScrollView>
+            <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+                <Label Text="Registrarse" FontAttributes="Bold" FontSize="28" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+
+                <Label Text="Nombre" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="NameEntry" Placeholder="Value" BackgroundColor="White" />
+
+                <Label Text="Teléfono" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="PhoneEntry" Placeholder="Value" Keyboard="Telephone" BackgroundColor="White" />
+
+                <Label Text="Correo" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="EmailEntry" Placeholder="Value" Keyboard="Email" BackgroundColor="White" />
+
+                <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="PasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+
+                <Label Text="Repetir contraseña" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="RepeatPasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+
+                <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="¿Ya tienes cuenta? " TextColor="{StaticResource PrimaryDarkText}" />
+                    <Label Text="Inicia sesión" TextColor="{StaticResource Primary}" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLoginTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

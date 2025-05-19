@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.CodeVerificationPage"
+             Title="CodeVerificationPage"
+             BackgroundColor="{StaticResource backgroundColor}">
+    <AbsoluteLayout>
+
+        <!-- Imagen de fondo -->
+        <Image 
+            Source="background.jpg"
+            Opacity="0.5"
+            Aspect="AspectFill"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All" />
+
+        <!-- Contenido centrado -->
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
+              AbsoluteLayout.LayoutFlags="All" VerticalOptions="Center" HorizontalOptions="Center">
+
+            <ScrollView>
+                <ContentView HorizontalOptions="Center" VerticalOptions="Center">
+                    <Grid Padding="40"
+                          RowSpacing="20"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Título -->
+                        <Label 
+                            Text="Verificación de código" 
+                            FontSize="24" 
+                            FontAttributes="Bold"
+                            TextColor="#789262"
+                            HorizontalOptions="Center"
+                            Grid.Row="0"/>
+
+                        <!-- Correo -->
+                        <Label Text="Se ha enviado un código a tu correo electrónico. Por favor, ingresa el código de 6 dígitos." 
+                               FontSize="14"
+                               TextColor="#789262"
+                               Grid.Row="1"/>
+                        <Entry Placeholder="Código"
+                               TextColor="Black"
+                               BackgroundColor="White"
+                               Grid.Row="2"
+                               Keyboard="Default"/>
+
+                        <!-- Botón de ingresar -->
+                        <Button Text="Verificar"
+                                TextColor="White"
+                                BackgroundColor="#789262"
+                                CornerRadius="8"
+                                Grid.Row="6"
+                                Padding="10"
+                                FontAttributes="Bold">
+                            <Button.ImageSource>
+                                <FontImageSource Glyph="&#xf023;" 
+                                                 FontFamily="FontAwesome"
+                                                 Color="White" 
+                                                 Size="16"/>
+                            </Button.ImageSource>
+                        </Button>
+
+                        <!-- Divider -->
+                        <BoxView 
+                            HeightRequest="1"
+                            Color="#789262"
+                            Opacity="0.3"
+                            Margin="0,20"
+                            Grid.Row="7"/>
+
+                        <!-- Registrarse -->
+                        <StackLayout Grid.Row="8" Orientation="Vertical" HorizontalOptions="Center">
+                            <Label Text="¿No recibiste el código?" 
+                                   FontSize="12"
+                                   TextColor="#789262"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Reenvíar" 
+                                   FontSize="14"
+                                   TextColor="#789262"
+                                   TextDecorations="Underline"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </Grid>
+                </ContentView>
+            </ScrollView>
+        </Grid>
+
+    </AbsoluteLayout>
+</ContentPage>
