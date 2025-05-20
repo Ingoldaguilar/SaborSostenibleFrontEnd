@@ -16,4 +16,9 @@ public partial class LoginPage : ContentPage
     {
         // hacer metodo para log In acá
     }
+
+    private async void OnOlvido_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new ForgotPassword());
+    }
 }

@@ -53,6 +53,6 @@ public partial class RegisterPage : ContentPage
 
     private async void OnLoginTapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LoginPage());
+        await Navigation.PopAsync();
     }
 }
