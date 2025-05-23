@@ -32,7 +32,7 @@ public partial class RegisterPage : ContentPage
         {
             var json = JsonSerializer.Serialize(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:44313/api/signUp", content);
+            var response = await client.PostAsync("http://34.39.128.125:80/api/signUp", content);
 
             if (response.IsSuccessStatusCode)
             {
