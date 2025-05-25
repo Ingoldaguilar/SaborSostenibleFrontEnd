@@ -14,6 +14,9 @@
                 <Label Text="Nombre" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="NameEntry" Placeholder="Value" BackgroundColor="White" />
 
+                <Label Text="Apellido" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="LastNameEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+
                 <Label Text="Teléfono" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="PhoneEntry" Placeholder="Value" Keyboard="Telephone" BackgroundColor="White" />
 
@@ -23,7 +26,7 @@
                 <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="PasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
 
-                <Label Text="Repetir contraseña" TextColor="{StaticResource PrimaryDark}" />
+                <Label Text="Repita la contraseña" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="RepeatPasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
 
                 <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
