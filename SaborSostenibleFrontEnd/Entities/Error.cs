@@ -9,6 +9,6 @@ namespace SaborSostenibleFrontEnd.Entities
     public class Error
     {
         public int Id { get; set; }
-        public string? Description { get; set; }
+        public string? Description { get; set; } = string.Empty;
     }
 }

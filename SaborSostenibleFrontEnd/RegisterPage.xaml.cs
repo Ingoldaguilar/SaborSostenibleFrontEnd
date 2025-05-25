@@ -14,6 +14,18 @@ public partial class RegisterPage : ContentPage
 
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
+        // Validaciones básicas
+        if (string.IsNullOrWhiteSpace(NameEntry.Text) ||
+            string.IsNullOrWhiteSpace(LastNameEntry.Text) ||
+            string.IsNullOrWhiteSpace(PhoneEntry.Text) ||
+            string.IsNullOrWhiteSpace(EmailEntry.Text) ||
+            string.IsNullOrWhiteSpace(PasswordEntry.Text) ||
+            string.IsNullOrWhiteSpace(RepeatPasswordEntry.Text))
+        {
+            await DisplayAlert("Error", "Todos los campos son obligatorios", "OK");
+            return;
+        }
+
         if (PasswordEntry.Text != RepeatPasswordEntry.Text)
         {
             await DisplayAlert("Error", "Las contraseñas no coinciden", "OK");
@@ -28,16 +40,18 @@ public partial class RegisterPage : ContentPage
         request.PhoneNumber = PhoneEntry.Text;
 
         using var client = new HttpClient();
+
         try
         {
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:44313/api/signUp", content);
+            var response = await client.PostAsync("http://34.39.128.125/api/signUp", content);
 
             if (response.IsSuccessStatusCode)
             {
-                await DisplayAlert("Éxito", "Usuario registrado correctamente. Porfavor verifique el correo", "OK");
-                await Navigation.PushAsync(new CodeVerificationPage());
+                await DisplayAlert("Éxito", "Usuario registrado correctamente. Por favor verifique el correo", "OK");
+                // Pasar el email al CodeVerificationPage
+                await Navigation.PushAsync(new CodeVerificationPage(EmailEntry.Text));
             }
             else
             {
@@ -45,9 +59,17 @@ public partial class RegisterPage : ContentPage
                 await DisplayAlert("Error", $"No se pudo registrar: {error}", "OK");
             }
         }
+        catch (HttpRequestException httpEx)
+        {
+            await DisplayAlert("Error", $"Error de conexión: {httpEx.Message}", "OK");
+        }
+        catch (JsonException jsonEx)
+        {
+            await DisplayAlert("Error", $"Error al procesar la respuesta: {jsonEx.Message}", "OK");
+        }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Error de conexión: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
         }
     }
 

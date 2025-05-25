@@ -52,19 +52,23 @@
                                TextColor="#789262"
                                Grid.Row="1"/>
                         <Entry Placeholder="Código"
+                               x:Name="CodeEntry"
                                TextColor="Black"
                                BackgroundColor="White"
                                Grid.Row="2"
                                Keyboard="Default"/>
 
                         <!-- Botón de ingresar -->
-                        <Button Text="Verificar"
+                        <Button 
+                                Clicked="VerifyCode_Clicked"
+                                Text="Verificar"
                                 TextColor="White"
                                 BackgroundColor="#789262"
                                 CornerRadius="8"
                                 Grid.Row="6"
                                 Padding="10"
                                 FontAttributes="Bold">
+                                
                             <Button.ImageSource>
                                 <FontImageSource Glyph="&#xf023;" 
                                                  FontFamily="FontAwesome"

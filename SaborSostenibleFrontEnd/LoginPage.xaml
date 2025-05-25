@@ -52,8 +52,9 @@
                                FontSize="14"
                                TextColor="#789262"
                                Grid.Row="1"/>
-                        <Entry Placeholder="Correo"
-                               
+                        <Entry x:Name="EmailEntry"
+                               Placeholder="Correo"
+                               Keyboard="Email"
                                TextColor="Black"
                                BackgroundColor="White"
                                Grid.Row="2"/>
@@ -63,7 +64,8 @@
                                FontSize="14"
                                TextColor="#789262"
                                Grid.Row="3"/>
-                        <Entry Placeholder="Contraseña"
+                        <Entry x:Name="PasswordEntry"
+                               Placeholder="Contraseña"
                                IsPassword="True"
                                TextColor="Black"
                                BackgroundColor="White"
