@@ -12,22 +12,22 @@
                 <Label Text="Registrarse" FontAttributes="Bold" FontSize="28" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
 
                 <Label Text="Nombre" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="NameEntry" Placeholder="Value" BackgroundColor="White" />
+                <Entry x:Name="NameEntry" Placeholder="Digite su nombre (ej: Mario)" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Label Text="Apellido" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="LastNameEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+                <Entry x:Name="LastNameEntry" Placeholder="Digite su primer apellido (ej: Gomez)" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Label Text="Teléfono" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PhoneEntry" Placeholder="Value" Keyboard="Telephone" BackgroundColor="White" />
+                <Entry x:Name="PhoneEntry" Placeholder="Digite su teléfono celular (ej: 62543227)" Keyboard="Telephone" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Label Text="Correo" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="EmailEntry" Placeholder="Value" Keyboard="Email" BackgroundColor="White" />
+                <Entry x:Name="EmailEntry" Placeholder="Digite su email (ej: mgomez@gmail.com)" Keyboard="Email" BackgroundColor="White" TextColor="{StaticResource Black}"/>
 
                 <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+                <Entry x:Name="PasswordEntry" Placeholder="Digite su contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}"/>
 
                 <Label Text="Repita la contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="RepeatPasswordEntry" Placeholder="Value" IsPassword="True" BackgroundColor="White" />
+                <Entry x:Name="RepeatPasswordEntry" Placeholder="Digite nuevamente su contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
 
