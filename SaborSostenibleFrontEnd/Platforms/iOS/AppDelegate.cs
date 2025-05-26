@@ -1,9 +1,10 @@
 ﻿using Foundation;
 
-namespace SaborSostenibleFrontEnd;
-
-[Register("AppDelegate")]
-public class AppDelegate : MauiUIApplicationDelegate
+namespace SaborSostenibleFrontEnd
 {
-	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    [Register("AppDelegate")]
+    public class AppDelegate : MauiUIApplicationDelegate
+    {
+        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    }
 }
