@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage 
     x:Class="SaborSostenibleFrontEnd.RegisterPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -12,22 +13,35 @@
                 <Label Text="Registrarse" FontAttributes="Bold" FontSize="28" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
 
                 <Label Text="Nombre" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="NameEntry" Placeholder="Digite su nombre (ej: Mario)" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Entry x:Name="NameEntry" Placeholder="Nombre" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
-                <Label Text="Apellido" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="LastNameEntry" Placeholder="Digite su primer apellido (ej: Gomez)" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Segundo nombre (opcional)" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="SecondNameEntry" Placeholder="Segundo nombre" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
-                <Label Text="Teléfono" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PhoneEntry" Placeholder="Digite su teléfono celular (ej: 62543227)" Keyboard="Telephone" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Primer apellido" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="LastNameEntry" Placeholder="Primer apellido" BackgroundColor="White" TextColor="{StaticResource Black}" />
+
+                <Label Text="Segundo apellido (opcional)" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="SecondLastNameEntry" Placeholder="Segundo apellido" BackgroundColor="White" TextColor="{StaticResource Black}" />
+
+                <Label Text="Teléfono (opcional)" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="PhoneEntry" Placeholder="Teléfono" Keyboard="Telephone" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Label Text="Correo" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="EmailEntry" Placeholder="Digite su email (ej: mgomez@gmail.com)" Keyboard="Email" BackgroundColor="White" TextColor="{StaticResource Black}"/>
+                <Entry x:Name="EmailEntry" Placeholder="ejemplo@correo.com" Keyboard="Email" BackgroundColor="White" TextColor="{StaticResource Black}" />
+
+                <Label Text="Dirección (opcional)" TextColor="{StaticResource PrimaryDark}" />
+                <Entry x:Name="AddressEntry" Placeholder="Dirección" BackgroundColor="White" TextColor="{StaticResource Black}" />
+
+                <Button Text="📍 Usar mi ubicación actual" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnObtenerUbicacionClicked" />
+
+                <Label x:Name="UbicacionLabel" Text="Ubicación no detectada aún." FontSize="12" TextColor="{StaticResource PrimaryDarkText}" HorizontalOptions="Center" />
 
                 <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PasswordEntry" Placeholder="Digite su contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}"/>
+                <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Label Text="Repita la contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="RepeatPasswordEntry" Placeholder="Digite nuevamente su contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Entry x:Name="RepeatPasswordEntry" Placeholder="Repetir contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
                 <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
 

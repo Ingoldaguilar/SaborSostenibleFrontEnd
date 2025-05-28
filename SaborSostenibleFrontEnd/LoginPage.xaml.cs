@@ -2,6 +2,7 @@ using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using System.Text.Json;
 using System.Text;
+using System.Net.Mail;
 
 namespace SaborSostenibleFrontEnd;
 
@@ -19,27 +20,78 @@ public partial class LoginPage : ContentPage
 
     private async void OnLogIn_Clicked(object sender, EventArgs e)
     {
-        // Validaciones básicas
+        if (!ValidarCampos())
+            return;
+
+        await MostrarLoading(async () =>
+        {
+            await RealizarLoginAsync();
+        });
+    }
+
+    private async void OnOlvido_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new ForgotPassword());
+    }
+
+    private bool ValidarCampos()
+    {
         if (string.IsNullOrWhiteSpace(EmailEntry.Text))
         {
-            await DisplayAlert("Error", "Por favor ingrese su correo electrónico", "OK");
-            return;
+            MostrarError("Por favor ingrese su correo electrónico");
+            return false;
+        }
+
+        if (!EsEmailValido(EmailEntry.Text))
+        {
+            MostrarError("Correo electrónico no válido");
+            return false;
         }
 
         if (string.IsNullOrWhiteSpace(PasswordEntry.Text))
         {
-            await DisplayAlert("Error", "Por favor ingrese su contraseña", "OK");
-            return;
+            MostrarError("Por favor ingrese su contraseña");
+            return false;
         }
 
-        // Validación básica de formato de email
-        if (!IsValidEmail(EmailEntry.Text))
+        return true;
+    }
+
+    private bool EsEmailValido(string email)
+    {
+        try
         {
-            await DisplayAlert("Error", "Por favor ingrese un correo electrónico válido", "OK");
-            return;
+            var addr = new MailAddress(email);
+            return addr.Address == email;
         }
+        catch
+        {
+            return false;
+        }
+    }
 
-        // Crear el request
+    private async void MostrarError(string mensaje)
+    {
+        await DisplayAlert("Error", mensaje, "OK");
+    }
+
+    private async Task MostrarLoading(Func<Task> accion)
+    {
+        var loadingPage = new LoadingPage();
+        await Navigation.PushModalAsync(loadingPage);
+
+        try
+        {
+            await accion.Invoke();
+        }
+        finally
+        {
+            await Navigation.PopModalAsync();
+        }
+    }
+
+    private async Task RealizarLoginAsync()
+    {
         ReqLogin request = new ReqLogin
         {
             Email = EmailEntry.Text.Trim(),
@@ -57,74 +109,32 @@ public partial class LoginPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var loginResponse = JsonSerializer.Deserialize<ResLogin>(responseContent, new JsonSerializerOptions
+                var loginResponse = JsonSerializer.Deserialize<ResLogin>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (loginResponse?.Success == true && !string.IsNullOrEmpty(loginResponse.SessionId))
                 {
-                    PropertyNameCaseInsensitive = true
-                });
+                    Preferences.Set("SessionId", loginResponse.SessionId);
+                    Preferences.Set("UserEmail", EmailEntry.Text.Trim());
+                    Preferences.Set("UserName", EmailEntry.Text.Trim());
 
-                if (loginResponse?.Success == true)
-                {
-                    // Login exitoso
-                    if (!string.IsNullOrEmpty(loginResponse.SessionId))
-                    {
-                        // Se guarda el token en preferences
-                        Preferences.Set("SessionId", loginResponse.SessionId);
-                        Preferences.Set("UserEmail", EmailEntry.Text.Trim());
-
-                        await DisplayAlert("Éxito", "Inicio de sesión exitoso", "OK");
-
-                        // Navegar a la página principal de la aplicación
-                        Application.Current.MainPage = new MainPage(); 
-                    }
-                    else
-                    {
-                        await DisplayAlert("Error", "No se pudo obtener la sesión", "OK");
-                    }
+                    await DisplayAlert("Éxito", "Inicio de sesión exitoso", "OK");
+                    Application.Current.MainPage = new MainPage();
                 }
                 else
                 {
-                    // Mostrar errores específicos del servidor
                     var errorMessages = loginResponse?.Errors?.Select(e => e.Description) ?? new[] { "Error desconocido" };
-                    var errorText = string.Join(", ", errorMessages);
-                    await DisplayAlert("Error", $"Login fallido: {errorText}", "OK");
+                    MostrarError(string.Join(", ", errorMessages));
                 }
             }
             else
             {
                 var error = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Error", $"No se pudo iniciar sesión: {error}", "OK");
+                MostrarError($"No se pudo iniciar sesión: {error}");
             }
-        }
-        catch (HttpRequestException httpEx)
-        {
-            await DisplayAlert("Error", $"Error de conexión: {httpEx.Message}", "OK");
-        }
-        catch (JsonException jsonEx)
-        {
-            await DisplayAlert("Error", $"Error al procesar la respuesta: {jsonEx.Message}", "OK");
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
-        }
-    }
-
-    private async void OnOlvido_Tapped(object sender, TappedEventArgs e)
-    {
-        await Navigation.PushAsync(new ForgotPassword());
-    }
-
-    // Método auxiliar para validar formato de email
-    private bool IsValidEmail(string email)
-    {
-        try
-        {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch
-        {
-            return false;
+            MostrarError($"Error inesperado: {ex.Message}");
         }
     }
 }

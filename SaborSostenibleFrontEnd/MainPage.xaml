@@ -1,12 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SaborSostenibleFrontEnd.MainPage"
-             Title="MainPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+<TabbedPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:shell="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:local="clr-namespace:SaborSostenibleFrontEnd"
+    x:Class="SaborSostenibleFrontEnd.MainPage"
+    Title="Sabor Sostenible"
+    shell:TabbedPage.ToolbarPlacement="Bottom"
+    BackgroundColor="#F8F9FA"
+    BarBackgroundColor="#2E7D32"
+    BarTextColor="White"
+    SelectedTabColor="White"
+    UnselectedTabColor="#A5D6A7">
+
+    <TabbedPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </TabbedPage.Resources>
+
+    <!-- Tab 1: Descubrir -->
+    <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+        <ScrollView>
+            <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
+
+                <!-- Header con saludo clásico -->
+                <Grid Padding="15" BackgroundColor="#2E7D32">
+                    <VerticalStackLayout>
+                        <Label x:Name="SaludoLabel"
+                               FontSize="26"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label Text="Descubre opciones sostenibles cerca de ti"
+                               FontSize="14"
+                               TextColor="#C8E6C9" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Mostrar ubicación sin fondo -->
+                <VerticalStackLayout Padding="10,5,10,15">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Ubicación actual: " FontSize="12" TextColor="#666" />
+                                <Span Text="Alajuela, Costa Rica" FontSize="12" TextColor="#2E7D32" FontAttributes="Bold" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+
+                <!-- Barra de búsqueda -->
+                <Grid Padding="10" BackgroundColor="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="&#xf002;" FontFamily="FontAwesome" TextColor="#999" FontSize="18" VerticalOptions="Center" Margin="0,0,10,0" />
+                    <Entry Grid.Column="1" Placeholder="Buscar por nombre de restaurante..." PlaceholderColor="#AAA" FontSize="14" />
+                </Grid>
+
+                <!-- Lista dinámica de restaurantes -->
+                <CollectionView x:Name="RestaurantesCollectionView" ItemsSource="{Binding Restaurantes}" EmptyView="No hay restaurantes disponibles." SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" CornerRadius="10" Padding="10" Margin="0,10" HasShadow="True" BorderColor="Transparent">
+                                <Grid ColumnDefinitions="Auto,*" VerticalOptions="Center">
+                                    <Image Grid.Column="0" Source="{Binding imagen}" WidthRequest="80" HeightRequest="80" Aspect="AspectFill" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Padding="10,0" Spacing="4" VerticalOptions="Center">
+                                        <Label Text="{Binding nombreRestaurante}" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32" />
+                                        <Label Text="{Binding descripcionRestaurante}" FontSize="13" TextColor="#555" LineBreakMode="TailTruncation" MaxLines="2"/>
+                                        <Button Text="Comprar" FontSize="12" Padding="8,4" BackgroundColor="#2E7D32" TextColor="White" CornerRadius="5"
+                                                Clicked="OnComprarClicked" CommandParameter="{Binding}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <!-- Tab 2: Pedidos -->
+    <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="10">
+                <Label Text="Mis Pedidos" FontSize="20" FontAttributes="Bold" TextColor="#2E7D32" />
+                <Label Text="Aquí se mostrarán tus pedidos recientes." FontSize="14" TextColor="#666" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <!-- Tab 3: Favoritos -->
+    <ContentPage Title="Favoritos" IconImageSource="{FontImage Glyph=&#xf004;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="10">
+                <Label Text="Mis Favoritos" FontSize="20" FontAttributes="Bold" TextColor="#2E7D32" />
+                <Label Text="Aquí verás los restaurantes que has marcado como favoritos." FontSize="14" TextColor="#666" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <!-- Tab 4: Perfil -->
+    <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="10">
+                <Label Text="Mi Perfil" FontSize="20" FontAttributes="Bold" TextColor="#2E7D32" />
+                <Label Text="Aquí aparecerá la información de tu cuenta." FontSize="14" TextColor="#666" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+</TabbedPage>

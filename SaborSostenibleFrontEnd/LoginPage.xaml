@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:SaborSostenibleFrontEnd"
              x:Class="SaborSostenibleFrontEnd.LoginPage"
              BackgroundColor="{StaticResource backgroundColor}">
 
     <AbsoluteLayout>
 
-        <!-- Imagen de fondo -->
         <Image 
             Source="background.jpg"
             Opacity="0.5"
@@ -15,17 +13,14 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All" />
 
-        <!-- Contenido centrado -->
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
-              AbsoluteLayout.LayoutFlags="All" VerticalOptions="Center" HorizontalOptions="Center">
+              AbsoluteLayout.LayoutFlags="All"
+              VerticalOptions="Center"
+              HorizontalOptions="Center">
 
             <ScrollView>
                 <ContentView HorizontalOptions="Center" VerticalOptions="Center">
-                    <Grid Padding="40"
-                          RowSpacing="20"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Center">
-
+                    <Grid Padding="40" RowSpacing="20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -38,7 +33,6 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Título -->
                         <Label 
                             Text="Inicio de sesión" 
                             FontSize="24" 
@@ -47,38 +41,18 @@
                             HorizontalOptions="Center"
                             Grid.Row="0"/>
 
-                        <!-- Correo -->
-                        <Label Text="Correo" 
-                               FontSize="14"
-                               TextColor="#789262"
-                               Grid.Row="1"/>
-                        <Entry x:Name="EmailEntry"
-                               Placeholder="Correo"
-                               Keyboard="Email"
-                               TextColor="Black"
-                               BackgroundColor="White"
-                               Grid.Row="2"/>
+                        <Label Text="Correo" FontSize="14" TextColor="#789262" Grid.Row="1"/>
+                        <Entry x:Name="EmailEntry" Placeholder="Correo" Keyboard="Email" TextColor="Black" BackgroundColor="White" Grid.Row="2"/>
 
-                        <!-- Contraseña -->
-                        <Label Text="Contraseña" 
-                               FontSize="14"
-                               TextColor="#789262"
-                               Grid.Row="3"/>
-                        <Entry x:Name="PasswordEntry"
-                               Placeholder="Contraseña"
-                               IsPassword="True"
-                               TextColor="Black"
-                               BackgroundColor="White"
-                               Grid.Row="4"/>
+                        <Label Text="Contraseña" FontSize="14" TextColor="#789262" Grid.Row="3"/>
+                        <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="White" Grid.Row="4"/>
 
-                        <!-- Olvidó su contraseña -->
                         <Label FontSize="12" Text="¿Olvidó su contraseña? Reestablezcala" TextColor="{StaticResource Primary}" FontAttributes="Bold" Grid.Row="5" HorizontalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
                             </Label.GestureRecognizers>
                         </Label>
 
-                        <!-- Botón de ingresar -->
                         <Button Text="Ingresar"
                                 TextColor="White"
                                 BackgroundColor="#789262"
@@ -88,27 +62,14 @@
                                 FontAttributes="Bold"
                                 Clicked="OnLogIn_Clicked">
                             <Button.ImageSource>
-                                <FontImageSource Glyph="&#xf023;" 
-                                                 FontFamily="FontAwesome"
-                                                 Color="White" 
-                                                 Size="16"/>
+                                <FontImageSource Glyph="&#xf023;" FontFamily="FontAwesome" Color="White" Size="16"/>
                             </Button.ImageSource>
                         </Button>
 
-                        <!-- Divider -->
-                        <BoxView 
-                            HeightRequest="1"
-                            Color="#789262"
-                            Opacity="0.3"
-                            Margin="0,20"
-                            Grid.Row="7"/>
+                        <BoxView HeightRequest="1" Color="#789262" Opacity="0.3" Margin="0,20" Grid.Row="7"/>
 
-                        <!-- Registrarse -->
                         <StackLayout Grid.Row="8" Orientation="Vertical" HorizontalOptions="Center">
-                            <Label Text="¿Aún no tienes cuenta?" 
-                                   FontSize="12"
-                                   TextColor="#789262"
-                                   HorizontalOptions="Center"/>
+                            <Label Text="¿Aún no tienes cuenta?" FontSize="12" TextColor="#789262" HorizontalOptions="Center"/>
                             <Label Text="Regístrate" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalTextAlignment="Center">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnRegister_Tapped" />
@@ -119,6 +80,5 @@
                 </ContentView>
             </ScrollView>
         </Grid>
-
     </AbsoluteLayout>
 </ContentPage>
