@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ListVolunteerRequestsPage.xaml.cs">
+	    <DependentUpon>ListVolunteerRequestsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="InsertFoodBankPage.xaml.cs">
 	    <DependentUpon>InsertFoodBankPage.xaml</DependentUpon>
 	  </Compile>
@@ -84,6 +87,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ForgotPassword.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ListVolunteerRequestsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="InsertFoodBankPage.xaml">
