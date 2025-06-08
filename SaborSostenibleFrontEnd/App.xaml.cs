@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new InsertBusinessPage());
+            MainPage = new NavigationPage(new InsertFoodBankPage());
         }
     }
 }
