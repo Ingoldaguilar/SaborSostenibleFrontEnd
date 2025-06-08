@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
@@ -90,6 +92,64 @@ public class ApiService
         catch (Exception ex)
         {
             throw new Exception($"Error en POST {endpoint}: {ex.Message}");
+        }
+    }
+
+    // POST multipart/form-data con los campos de 'data' y un solo archivo.
+    public async Task<TResponse?> PostMultipartAsync<TRequest, TResponse>(
+            string endpoint,
+            TRequest data,
+            FileResult file,
+            string fileParamName)
+            where TResponse : class
+    {
+        try
+        {
+            SetBearerToken();
+
+            using var content = new MultipartFormDataContent();
+
+            // Añadimos cada propiedad de data como StringContent
+            var props = typeof(TRequest)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.GetValue(data) != null);
+
+            foreach (var prop in props)
+            {
+                var value = prop.GetValue(data)!.ToString()!;
+                content.Add(new StringContent(value, System.Text.Encoding.UTF8), prop.Name);
+            }
+
+            // Añadimos el archivo
+            using var stream = await file.OpenReadAsync();
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(file.ContentType);
+            content.Add(fileContent, fileParamName, file.FileName);
+
+            // Ejecutamos el POST
+            var resp = await _httpClient.PostAsync(endpoint, content);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var json = await resp.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            }
+            else if (resp.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                await HandleUnauthorized();
+                return null;
+            }
+            else
+            {
+                throw new HttpRequestException($"Error en API multipart ({resp.StatusCode})");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error en POST multipart '{endpoint}': {ex.Message}", ex);
         }
     }
 
