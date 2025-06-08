@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new InsertFoodBankPage());
+            MainPage = new NavigationPage(new ListVolunteerRequestsPage());
         }
     }
 }
