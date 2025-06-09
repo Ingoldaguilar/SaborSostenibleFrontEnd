@@ -83,6 +83,9 @@
 	  <Compile Update="OrderDetailsPage.xaml.cs">
 	    <DependentUpon>OrderDetailsPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="BusinessPendingSaleDetailsPage.xaml.cs">
+	    <DependentUpon>BusinessPendingSaleDetailsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="UpdateBusinessPage.xaml.cs">
 	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
 	  </Compile>
@@ -106,6 +109,9 @@
 	  </Compile>
 	  <Compile Update="InsertBusinessPage.xaml.cs">
 	    <DependentUpon>InsertBusinessPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="PendingSalesHistoryPage.xaml.cs">
+	    <DependentUpon>PendingSalesHistoryPage.xaml</DependentUpon>
 	  </Compile>
 
 	</ItemGroup>
@@ -150,6 +156,9 @@
 	  <MauiXaml Update="OrderDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="BusinessPendingSaleDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UpdateBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -190,6 +199,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Styles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="PendingSalesHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="YoBusinessPage.xaml">

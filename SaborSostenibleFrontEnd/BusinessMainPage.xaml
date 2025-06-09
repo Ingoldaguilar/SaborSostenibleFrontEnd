@@ -16,7 +16,7 @@
     Title="Nueva Bolsa"
     IconImageSource="{FontImage Glyph=&#xf49e;, FontFamily=FontAwesome}" />
 
-    <fb:YoBusinessPage
+    <fb:PendingSalesHistoryPage 
     Title="Pendientes"
     IconImageSource="{FontImage Glyph=&#xf017;, FontFamily=FontAwesome}" />
 

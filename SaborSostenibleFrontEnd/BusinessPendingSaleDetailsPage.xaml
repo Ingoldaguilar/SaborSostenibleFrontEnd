@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SaborSostenibleFrontEnd.BusinessPendingSaleDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F5F5F5"
+    NavigationPage.HasNavigationBar="False"
+    Title="Detalles de la venta en proceso">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <!-- HEADER -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+            <Button
+                Text="←"
+                FontSize="24"
+                BackgroundColor="Transparent"
+                TextColor="#2E7D32"
+                Clicked="OnBackButtonClicked" />
+            <Label
+                Grid.Column="1"
+                Text="Detalles de la venta en proceso"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="#2E7D32"
+                HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="20">
+
+                <Frame
+                    CornerRadius="10"
+                    Padding="15"
+                    BackgroundColor="White"
+                    HasShadow="True">
+                    <VerticalStackLayout Spacing="12">
+
+                        <Label
+                            Text="¡Compra en proceso!"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            TextColor="#2E7D32"
+                            HorizontalOptions="Center" />
+
+                        <Label
+                            Text="Código de orden:"
+                            FontSize="14"
+                            TextColor="Black" />
+                        <Label
+                            x:Name="OrderCodeLabel"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="#2E7D32" />
+
+                        <Button
+                            x:Name="ViewBagsButton"
+                            Text="Ver bolsas del pedido"
+                            BackgroundColor="#2E7D32"
+                            TextColor="White"
+                            CornerRadius="15"
+                            Clicked="OnViewBagsClicked" />
+
+                        <Label
+                            x:Name="StateLabel"
+                            Text="Estado actual: "
+                            FontSize="14"
+                            TextColor="Black" />
+
+                        <Label
+                            x:Name="TotalLabel"
+                            Text="Total: "
+                            FontSize="14"
+                            TextColor="Black" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
+            <Button
+                Text="Confirmar pago"
+                BackgroundColor="#2E7D32"
+                TextColor="White"
+                CornerRadius="25"
+                Clicked="OnConfirmPaymentClicked" />
+            <Button
+                Text="Denegar pago"
+                BackgroundColor="#E53935"
+                TextColor="White"
+                CornerRadius="25"
+                Clicked="OnDenyPaymentClicked" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
