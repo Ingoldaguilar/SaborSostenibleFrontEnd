@@ -1,7 +1,11 @@
 using Microsoft.Maui.Controls;
 using SaborSostenibleFrontEnd.Entities;
 using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
 
 namespace SaborSostenibleFrontEnd
 {
@@ -9,7 +13,6 @@ namespace SaborSostenibleFrontEnd
     {
         private Restaurante _restaurante;
         private string _orderCode;
-        private string _customerPhone;
 
         public BuySupriseBagPage(Restaurante restaurante)
         {
@@ -17,13 +20,10 @@ namespace SaborSostenibleFrontEnd
             _restaurante = restaurante;
             _orderCode = GenerateOrderCode();
 
-            // Mostrar información del restaurante
             RestauranteNombreLabel.Text = _restaurante.nombreRestaurante;
             RestauranteDescripcionLabel.Text = _restaurante.descripcionRestaurante;
             RestauranteImagen.Source = _restaurante.imagen;
             RestauranteTelefonoLabel.Text = _restaurante.telefono;
-
-            // Detalle para SINPE
             SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
         }
 
@@ -35,15 +35,7 @@ namespace SaborSostenibleFrontEnd
 
         private async void OnProcederCompraClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(CustomerPhoneEntry.Text))
-            {
-                await DisplayAlert("Error", "Por favor ingresa tu número de teléfono", "OK");
-                return;
-            }
-
-            _customerPhone = CustomerPhoneEntry.Text.Trim();
-
-            // Animación suave de ocultar y mostrar
+            // Eliminamos la validación del teléfono
             await CompraStep.FadeTo(0, 200);
             CompraStep.IsVisible = false;
 
@@ -51,11 +43,9 @@ namespace SaborSostenibleFrontEnd
             InstruccionesStep.IsVisible = true;
             await InstruccionesStep.FadeTo(1, 200);
 
-            // Actualizar progreso visual
             Paso1Icon.BackgroundColor = Colors.LightGray;
             Paso2Icon.BackgroundColor = Application.Current.Resources["Primary"] as Color;
         }
-
 
         private async void OnCopiarDetalleClicked(object sender, EventArgs e)
         {
@@ -84,8 +74,44 @@ namespace SaborSostenibleFrontEnd
 
             Paso2Icon.BackgroundColor = Colors.LightGray;
             Paso3Icon.BackgroundColor = Application.Current.Resources["Primary"] as Color;
+
+            // ?? Hacer POST a /api/order/insert
+            await InsertarOrdenAsync();
         }
 
+        private async Task InsertarOrdenAsync()
+        {
+            try
+            {
+                using var httpClient = new HttpClient();
+
+                var payload = new
+                {
+                    BagsIdsVarchar = _orderCode,
+                    BusinessId = _restaurante.idRestaurante,
+                    IsDonation = false,
+                    FoodBankId = 1 // Esto puedes ajustarlo si viene del restaurante o es fijo
+                };
+
+                var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync("http://34.39.128.125/api/order/insert", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Error", $"No se pudo registrar la orden: {error}", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Error inesperado al registrar la orden: {ex.Message}", "OK");
+            }
+        }
 
         private async void OnBackButtonClicked(object sender, EventArgs e)
         {
@@ -103,8 +129,7 @@ namespace SaborSostenibleFrontEnd
 
         protected override bool OnBackButtonPressed()
         {
-            // Deshabilita el botón físico de retroceso
-            return true;
+            return true; // Desactiva botón físico de retroceso
         }
     }
 }

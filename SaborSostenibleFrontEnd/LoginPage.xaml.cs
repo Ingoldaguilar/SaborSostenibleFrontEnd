@@ -114,11 +114,15 @@ public partial class LoginPage : ContentPage
                 if (loginResponse?.Success == true && !string.IsNullOrEmpty(loginResponse.SessionId))
                 {
                     Preferences.Set("SessionId", loginResponse.SessionId);
+                    Console.WriteLine($"SessionId guardado: {loginResponse.SessionId}");
                     Preferences.Set("UserEmail", EmailEntry.Text.Trim());
                     Preferences.Set("UserName", EmailEntry.Text.Trim());
 
-                    await DisplayAlert("Éxito", "Inicio de sesión exitoso", "OK");
-                    Application.Current.MainPage = new MainPage();
+                    var mainPage = new MainPage();
+                    NavigationPage.SetHasNavigationBar(mainPage, false);
+                    Application.Current.MainPage = new NavigationPage(mainPage);
+
+
                 }
                 else
                 {
