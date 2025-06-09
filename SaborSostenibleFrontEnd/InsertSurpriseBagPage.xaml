@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="SaborSostenibleFrontEnd.InsertSurpriseBagPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  NavigationPage.HasNavigationBar="False"
+  BackgroundColor="#F5F5F5"
+  Title="Subir Bolsa Sorpresa">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <!-- CABECERA -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+            <Button
+                Text="←"
+                FontSize="24"
+                BackgroundColor="Transparent"
+                TextColor="#789262"
+                Clicked="OnBackButtonClicked"/>
+            <Label
+                Grid.Column="1"
+                Text="Subir Bolsa Sorpresa"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#789262"
+                HorizontalOptions="Center"/>
+        </Grid>
+
+        <!-- FORMULARIO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="20">
+
+                <Label Text="Descripción del producto" />
+                <Entry x:Name="DescriptionEntry" Placeholder="Pan dulce"/>
+
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="Donación" VerticalOptions="Center"/>
+                    <Switch x:Name="DonationSwitch" Toggled="OnDonationToggled"/>
+                </HorizontalStackLayout>
+
+                <!-- Este bloque se alterna -->
+                <Entry
+                    x:Name="PriceEntry"
+                    Placeholder="Precio"
+                    Keyboard="Numeric"
+                    IsVisible="True"/>
+
+                <Picker
+                    x:Name="FoodBankPicker"
+                    Title="Seleccione el banco de alimento a donar"
+                    IsVisible="False"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTÓN -->
+        <Button
+            Grid.Row="2"
+            Text="Registrar y notificar"
+            HeightRequest="50"
+            CornerRadius="25"
+            BackgroundColor="#789262"
+            TextColor="White"
+            Clicked="OnRegisterClicked"/>
+
+    </Grid>
+</ContentPage>

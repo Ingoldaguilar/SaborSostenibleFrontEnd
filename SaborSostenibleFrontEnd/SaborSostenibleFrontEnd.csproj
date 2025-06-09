@@ -77,11 +77,20 @@
 	  <Compile Update="ListBusinessesPage.xaml.cs">
 	    <DependentUpon>ListBusinessesPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="InsertSurpriseBagPage.xaml.cs">
+	    <DependentUpon>InsertSurpriseBagPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="OrderDetailsPage.xaml.cs">
+	    <DependentUpon>OrderDetailsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="UpdateBusinessPage.xaml.cs">
 	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="ReceivedBagsHistoryPage.xaml.cs">
 	    <DependentUpon>ReceivedBagsHistoryPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="SalesHistoryPage.xaml.cs">
+	    <DependentUpon>SalesHistoryPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="UpdateFoodBankPage.xaml.cs">
 	    <DependentUpon>UpdateFoodBankPage.xaml</DependentUpon>
@@ -126,10 +135,19 @@
 	  <MauiXaml Update="ListBusinessesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="InsertSurpriseBagPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="OrderDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UpdateBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ReceivedBagsHistoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="SalesHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UpdateFoodBankPage.xaml">
