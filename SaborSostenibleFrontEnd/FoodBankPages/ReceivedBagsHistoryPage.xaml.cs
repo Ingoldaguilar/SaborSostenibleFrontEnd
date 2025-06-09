@@ -6,7 +6,7 @@ using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd.FoodBankPages
 {
     public partial class ReceivedBagsHistoryPage : ContentPage
     {

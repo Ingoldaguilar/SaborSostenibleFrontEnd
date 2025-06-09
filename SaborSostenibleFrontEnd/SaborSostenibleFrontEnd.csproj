@@ -68,10 +68,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="ConfirmReceptionPage.xaml.cs">
+	  <Compile Update="FoodBankPages\ConfirmReceptionPage.xaml.cs">
 	    <DependentUpon>ConfirmReceptionPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ListPendingBagsPage.xaml.cs">
+	  <Compile Update="FoodBankPages\ListPendingBagsPage.xaml.cs">
 	    <DependentUpon>ListPendingBagsPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="ListBusinessesPage.xaml.cs">
@@ -80,10 +80,10 @@
 	  <Compile Update="UpdateBusinessPage.xaml.cs">
 	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ReceivedBagsHistoryPage.xaml.cs">
+	  <Compile Update="FoodBankPages\ReceivedBagsHistoryPage.xaml.cs">
 	    <DependentUpon>ReceivedBagsHistoryPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="UpdateFoodBankPage.xaml.cs">
+	  <Compile Update="FoodBankPages\UpdateFoodBankPage.xaml.cs">
 	    <DependentUpon>UpdateFoodBankPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="ListFoodBanksPage.xaml.cs">
@@ -102,10 +102,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ConfirmReceptionPage.xaml">
+	  <MauiXaml Update="FoodBankPages\ConfirmReceptionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ListPendingBagsPage.xaml">
+	  <MauiXaml Update="FoodBankPages\FoodBankMainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="FoodBankPages\ListPendingBagsPage.xaml">
 	  	<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="AdminMainPage.xaml">
@@ -120,6 +123,9 @@
 	  <MauiXaml Update="ElegirUbicacionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="FoodBankPages\YoFoodBankPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ForgotPassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -129,10 +135,10 @@
 	  <MauiXaml Update="UpdateBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ReceivedBagsHistoryPage.xaml">
+	  <MauiXaml Update="FoodBankPages\ReceivedBagsHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="UpdateFoodBankPage.xaml">
+	  <MauiXaml Update="FoodBankPages\UpdateFoodBankPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ListFoodBanksPage.xaml">

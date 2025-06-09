@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-  x:Class="SaborSostenibleFrontEnd.ReceivedBagsHistoryPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  NavigationPage.HasNavigationBar="False"
-  BackgroundColor="#F5F5F5"
-  Title="Historial de bolsas recibidas">
+    x:Class="SaborSostenibleFrontEnd.FoodBankPages.ListPendingBagsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5"
+    Title="Bolsas pendientes">
 
     <Grid RowDefinitions="Auto,*" Padding="0">
         <!-- HEADER -->
@@ -24,17 +24,17 @@
 
             <Label
                 Grid.Column="1"
+                Text="Bolsas pendientes"
                 FontSize="18"
                 FontAttributes="Bold"
                 TextColor="#8CBF26"
-                HorizontalOptions="Center"
-                Text="Historial de bolsas recibidas" />
+                HorizontalOptions="Center" />
         </Grid>
 
-        <!-- LISTADO -->
+        <!-- LISTA -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
-                x:Name="HistoryContainer"
+                x:Name="BagsContainer"
                 Spacing="12"
                 Padding="20" />
         </ScrollView>

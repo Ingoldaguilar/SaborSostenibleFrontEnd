@@ -3,6 +3,7 @@ using SaborSostenibleFrontEnd.Response;
 using System.Text.Json;
 using System.Text;
 using System.Net.Mail;
+using SaborSostenibleFrontEnd.FoodBankPages;
 
 namespace SaborSostenibleFrontEnd;
 
@@ -133,7 +134,7 @@ public partial class LoginPage : ContentPage
                             targetPage = new MainPage();
                             break;
                         case "FoodBank":
-                            targetPage = new MainPage();
+                            targetPage = new FoodBankMainPage();
                             break;
                         case "Volunteer":
                             targetPage = new MainPage();

@@ -7,7 +7,7 @@ using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd.FoodBankPages
 {
     public partial class ConfirmReceptionPage : ContentPage
     {
