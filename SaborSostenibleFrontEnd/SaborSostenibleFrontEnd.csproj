@@ -93,6 +93,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AdminMainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="BuySupriseBagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

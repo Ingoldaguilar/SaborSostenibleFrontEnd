@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+
+           xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+           x:Class="SaborSostenibleFrontEnd.AdminMainPage"  
+           Title="Panel de Administración"
+           NavigationPage.HasNavigationBar="False"
+           BackgroundColor="#F8F9FA"  
+           BarBackgroundColor="#2E7D32"  
+           BarTextColor="White"  
+           SelectedTabColor="White"  
+           UnselectedTabColor="#A5D6A7"
+           android:TabbedPage.ToolbarPlacement="Bottom">
+
+    <!-- Tab 1: Administrar -->  
+  <ContentPage Title="Administrar" IconImageSource="{FontImage Glyph=&#xf013;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">  
+      <ScrollView>  
+          <VerticalStackLayout Padding="20" Spacing="20">  
+              <Label Text="Panel de Administración" FontSize="22" FontAttributes="Bold" TextColor="#2E7D32" />  
+
+              <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15" RowSpacing="15">  
+                  <!-- Cuadro 1 -->  
+                  <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True">  
+                      <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">  
+                          <Label Text="&#xf2bb;" FontFamily="FontAwesome" FontSize="30" TextColor="#2E7D32" HorizontalOptions="Center"/>  
+                          <Label Text="Agregar negocio" FontSize="14" TextColor="#333" HorizontalOptions="Center"/>  
+                      </VerticalStackLayout>  
+                      <Frame.GestureRecognizers>  
+                          <TapGestureRecognizer Tapped="OnUsuariosTapped"/>  
+                      </Frame.GestureRecognizers>  
+                  </Frame>  
+
+                  <!-- Cuadro 2 -->  
+                  <Frame Grid.Column="1" Grid.Row="0" BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True">  
+                      <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">  
+                          <Label Text="&#xf4c0;" FontFamily="FontAwesome" FontSize="30" TextColor="#2E7D32" HorizontalOptions="Center"/>  
+                          <Label Text="Agregar banco de alimentos" FontSize="14" TextColor="#333" HorizontalOptions="Center"/>  
+                      </VerticalStackLayout>  
+                      <Frame.GestureRecognizers>  
+                          <TapGestureRecognizer Tapped="OnRestaurantesTapped"/>  
+                      </Frame.GestureRecognizers>  
+                  </Frame>  
+
+                  <!-- Cuadro 3 -->  
+                  <Frame Grid.Column="0" Grid.Row="1" BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True">  
+                      <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">  
+                          <Label Text="&#xf0ae;" FontFamily="FontAwesome" FontSize="30" TextColor="#2E7D32" HorizontalOptions="Center"/>  
+                          <Label Text="Solicitudes voluntarios" FontSize="14" TextColor="#333" HorizontalOptions="Center"/>  
+                      </VerticalStackLayout>  
+                      <Frame.GestureRecognizers>  
+                          <TapGestureRecognizer Tapped="OnReportesTapped"/>  
+                      </Frame.GestureRecognizers>  
+                  </Frame>  
+
+                  <!-- Cuadro 4 -->  
+                  <Frame Grid.Column="1" Grid.Row="1" BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True">  
+                      <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">  
+                          <Label Text="&#xf4b0;" FontFamily="FontAwesome" FontSize="30" TextColor="#2E7D32" HorizontalOptions="Center"/>  
+                          <Label Text="Estados bancos de alimentos" FontSize="14" TextColor="#333" HorizontalOptions="Center"/>  
+                      </VerticalStackLayout>  
+                      <Frame.GestureRecognizers>  
+                          <TapGestureRecognizer Tapped="OnEstadisticasTapped"/>  
+                      </Frame.GestureRecognizers>  
+                  </Frame>  
+
+                  <!-- Cuadro 5 -->  
+                  <Frame Grid.ColumnSpan="2" Grid.Row="2" BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True">  
+                      <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">  
+                          <Label Text="&#xf4fc;" FontFamily="FontAwesome" FontSize="30" TextColor="#2E7D32" HorizontalOptions="Center"/>  
+                          <Label Text="Estados negocios" FontSize="14" TextColor="#333" HorizontalOptions="Center"/>  
+                      </VerticalStackLayout>  
+                      <Frame.GestureRecognizers>  
+                          <TapGestureRecognizer Tapped="OnConfiguracionTapped"/>  
+                      </Frame.GestureRecognizers>  
+                  </Frame>  
+              </Grid>  
+          </VerticalStackLayout>  
+      </ScrollView>  
+  </ContentPage>  
+
+  <!-- Tab 2: Perfil -->  
+  <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">  
+      <!-- El contenido de tu perfil que ya tenías -->  
+      <!-- Copia y pega aquí tu sección de Perfil existente sin cambios -->  
+  </ContentPage>  
+</TabbedPage>

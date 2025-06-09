@@ -9,5 +9,6 @@ namespace SaborSostenibleFrontEnd.Response
     public class ResLogin : ResBase
     {
         public string? SessionId { get; set; }
+        public string UserRole { get; set; }
     }
 }
