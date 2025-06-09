@@ -21,4 +21,12 @@ public partial class YoBusinessPage : ContentPage
         await _apiService.Logout();
 
     }
+
+    private async void OnBagsHistoryClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SurpriseBagsForBusinessPage());
+
+    }
+
+    
 }

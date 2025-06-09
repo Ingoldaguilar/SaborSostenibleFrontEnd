@@ -113,6 +113,9 @@
 	  <Compile Update="PendingSalesHistoryPage.xaml.cs">
 	    <DependentUpon>PendingSalesHistoryPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="SurpriseBagsForBusinessPage.xaml.cs">
+	    <DependentUpon>SurpriseBagsForBusinessPage.xaml</DependentUpon>
+	  </Compile>
 
 	</ItemGroup>
 
@@ -202,6 +205,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="PendingSalesHistoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="SurpriseBagsForBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="YoBusinessPage.xaml">

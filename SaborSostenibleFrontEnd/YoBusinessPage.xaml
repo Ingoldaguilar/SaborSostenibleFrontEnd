@@ -24,7 +24,7 @@
 
         <!-- Email -->
         <Label x:Name="LabelEmail"
-           Text="email@example.com"
+           Text="negocio@gmail.com"
            FontSize="14"
            TextColor="Gray"
            HorizontalOptions="Center" />
@@ -32,6 +32,13 @@
         <!-- Botón Actualizar -->
         <Button Text="🔧 Actualizar Negocio"
             Clicked="OnUpdateClicked"
+            BackgroundColor="Transparent"
+            TextColor="Black"
+            FontSize="14" />
+
+        <!-- Botón Ver Historial de Bolsas -->
+        <Button Text="🕒 Ver Historial de Bolsas"
+            Clicked="OnBagsHistoryClicked"
             BackgroundColor="Transparent"
             TextColor="Black"
             FontSize="14" />
