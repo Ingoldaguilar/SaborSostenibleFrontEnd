@@ -68,6 +68,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ListBusinessesPage.xaml.cs">
+	    <DependentUpon>ListBusinessesPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ListFoodBanksPage.xaml.cs">
+	    <DependentUpon>ListFoodBanksPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ListVolunteerRequestsPage.xaml.cs">
+	    <DependentUpon>ListVolunteerRequestsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="InsertFoodBankPage.xaml.cs">
+	    <DependentUpon>InsertFoodBankPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="InsertBusinessPage.xaml.cs">
+	    <DependentUpon>InsertBusinessPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="BuySupriseBagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -77,10 +95,25 @@
 	  <MauiXaml Update="ForgotPassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ListBusinessesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ListFoodBanksPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ListVolunteerRequestsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="InsertFoodBankPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="LoadingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="InsertBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="RegisterPage.xaml">

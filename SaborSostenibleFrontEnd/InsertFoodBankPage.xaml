@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SaborSostenibleFrontEnd.InsertFoodBankPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    Title="Insertar Banco de Comida">
+
+    <Grid Padding="20" RowDefinitions="Auto,*,Auto">
+        <!-- Header personalizado -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+            <Button
+                Text="←"
+                FontSize="Large"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource Primary}"
+                Clicked="OnBackButtonClicked" />
+            <Label
+                Grid.Column="1"
+                Text="Insertar Banco de Comida"
+                FontSize="Title"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <!-- Formulario -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="15">
+
+                <Label Text="Nombre" />
+                <Entry x:Name="NameEntry" Placeholder="Value" />
+
+                <Label Text="Descripción" />
+                <Entry x:Name="DescriptionEntry" Placeholder="Value" />
+
+                <Label Text="Logo" />
+                <HorizontalStackLayout Spacing="10">
+                    <Button
+                        Text="Seleccionar imagen"
+                        Clicked="OnSelectLogoClicked" />
+                    <Label x:Name="LogoSelectedLabel" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Label Text="Usuario administrador" />
+                <Picker
+                    x:Name="AdminPicker"
+                    Title="Seleccionar admin"
+                    ItemDisplayBinding="{Binding FullName}"
+                    SelectedIndexChanged="AdminPicker_SelectedIndexChanged" />
+
+                <Label Text="Email" />
+                <Entry
+                    x:Name="EmailEntry"
+                    Placeholder="Value"
+                    Keyboard="Email" />
+
+                <Label Text="Número teléfono" />
+                <Entry
+                    x:Name="PhoneEntry"
+                    Placeholder="Value"
+                    Keyboard="Telephone" />
+
+                <Label Text="Dirección" />
+                <Entry x:Name="AddressEntry" Placeholder="Value" />
+
+                <Label Text="Latitud" />
+                <Entry
+                    x:Name="LatitudeEntry"
+                    Placeholder="Value"
+                    Keyboard="Numeric" />
+
+                <Label Text="Longitud" />
+                <Entry
+                    x:Name="LongitudeEntry"
+                    Placeholder="Value"
+                    Keyboard="Numeric" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botón Insertar -->
+        <Button
+            Grid.Row="2"
+            Text="Insertar"
+            HeightRequest="50"
+            CornerRadius="25"
+            BackgroundColor="{StaticResource Primary}"
+            TextColor="White"
+            Clicked="OnInsertClicked" />
+
+    </Grid>
+</ContentPage>
