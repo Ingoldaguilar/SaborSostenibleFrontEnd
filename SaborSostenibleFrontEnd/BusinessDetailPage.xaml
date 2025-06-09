@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.BusinessDetailPage"
+             Title="Detalle del Restaurante"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Imagen destacada -->
+            <Frame Padding="0" CornerRadius="15" HasShadow="True">
+                <Image x:Name="RestauranteImagen"
+                       Aspect="AspectFill"
+                       HeightRequest="200"
+                       Clip="RectangleGeometry RadiusX=15 RadiusY=15 Rect='0,0,1000,200'" />
+            </Frame>
+
+            <!-- Nombre y descripción -->
+            <Label x:Name="RestauranteNombreLabel"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#2E7D32" />
+
+            <Label x:Name="RestauranteDescripcionLabel"
+                   FontSize="14"
+                   TextColor="#555"
+                   LineBreakMode="WordWrap" />
+
+            <!-- Teléfono -->
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Label Text="📞" FontSize="18"/>
+                <Label x:Name="RestauranteTelefonoLabel" FontSize="14" TextColor="#2E7D32" />
+            </HorizontalStackLayout>
+
+            <!-- Título sección de bolsas -->
+            <Label Text="Bolsas Sorpresa Disponibles"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#2E7D32"
+                   Margin="0,20,0,0"/>
+
+            <!-- Lista de bolsas -->
+            <CollectionView x:Name="BolsasCollectionView"
+                            ItemsSource="{Binding BolsasDisponibles}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="White"
+                               CornerRadius="10"
+                               Padding="15"
+                               Margin="0,10"
+                               HasShadow="True">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Description}"
+                                       FontSize="14"
+                                       TextColor="#444"/>
+                                <Label Text="{Binding Price, StringFormat='₡{0:N2}'}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#2E7D32"/>
+                                <Button Text="Comprar"
+                                        Clicked="OnComprarClicked"
+                                        CommandParameter="{Binding}" 
+                                        BackgroundColor="#2E7D32"
+                                        TextColor="White"
+                                        CornerRadius="8"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No hay bolsas disponibles en este momento."
+                           FontSize="14"
+                           TextColor="#777"
+                           HorizontalOptions="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+            <!-- Botón volver -->
+            <Button Text="Volver"
+                    Clicked="OnVolverClicked"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="#2E7D32"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

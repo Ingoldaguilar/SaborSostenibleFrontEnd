@@ -8,15 +8,18 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
 
-            <!-- Paso 1: Confirmar Compra -->
-            <StackLayout x:Name="CompraStep" IsVisible="True" Spacing="20">
-                <Label Text="Confirmación de Compra" FontSize="24" FontAttributes="Bold" TextColor="#333"/>
+            <!-- Paso 1: Confirmar Bolsa -->
+            <StackLayout x:Name="Paso1" IsVisible="True" Spacing="20">
+                <Label Text="Confirmación de Bolsa" FontSize="24" FontAttributes="Bold" TextColor="#2C3E50"/>
+                <Label x:Name="DescripcionBolsaLabel" FontSize="16" TextColor="#555"/>
+                <Label x:Name="PrecioBolsaLabel" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32"/>
 
-                <Image x:Name="RestauranteImagen" HeightRequest="120" Aspect="AspectFit" HorizontalOptions="Center"/>
+                <Switch x:Name="DonacionSwitch" Toggled="OnDonacionToggled"/>
+                <Label Text="¿Deseas donar esta bolsa?" FontSize="14" TextColor="#666"/>
 
-                <Label x:Name="RestauranteNombreLabel" FontSize="20" FontAttributes="Bold" TextColor="#2C3E50"/>
-                <Label x:Name="RestauranteDescripcionLabel" FontSize="16" TextColor="#666"/>
-                <Label x:Name="RestauranteTelefonoLabel" FontSize="14" TextColor="#888"/>
+                <Picker x:Name="FoodBankPicker"
+                        Title="Selecciona un banco de comida"
+                        IsVisible="False"/>
 
                 <Button Text="Proceder con Compra"
                         Clicked="OnProcederCompraClicked"
@@ -26,25 +29,15 @@
                         FontAttributes="Bold"/>
             </StackLayout>
 
-            <!-- Paso 2: Instrucciones -->
-            <StackLayout x:Name="InstruccionesStep" IsVisible="False" Spacing="20">
-                <Label Text="Instrucciones de Pago" FontSize="24" FontAttributes="Bold" TextColor="#333"/>
+            <!-- Paso 2: Instrucciones de Pago -->
+            <StackLayout x:Name="Paso2" IsVisible="False" Spacing="20">
+                <Label Text="Instrucciones de Pago" FontSize="24" FontAttributes="Bold" TextColor="#2C3E50"/>
+                <Label x:Name="PagoNombreNegocioLabel" TextColor="#555"/>
+                <Label x:Name="PagoTelefonoLabel" TextColor="#555"/>
+                <Label x:Name="PagoCodigoOrdenLabel" TextColor="#2E7D32" FontAttributes="Bold"/>
 
-                <Label Text="Realiza un SINPE Móvil al número de la empresa, incluye el siguiente detalle:"
-                       FontSize="16" TextColor="#444"/>
-
-                <Frame BackgroundColor="#f5f5f5" Padding="15" CornerRadius="10" HasShadow="True">
-                    <Label x:Name="SinpeDetalleLabel" TextColor="#333" FontSize="14"/>
-                </Frame>
-
-                <Button Text="Copiar Detalle"
-                        Clicked="OnCopiarDetalleClicked"
-                        BackgroundColor="#2196F3"
-                        TextColor="White"
-                        CornerRadius="10"/>
-
-                <Button Text="Finalizar"
-                        Clicked="OnFinalizarClicked"
+                <Button Text="Continuar"
+                        Clicked="OnContinuarClicked"
                         BackgroundColor="#2E7D32"
                         TextColor="White"
                         CornerRadius="12"
@@ -52,17 +45,11 @@
             </StackLayout>
 
             <!-- Paso 3: Confirmación -->
-            <StackLayout x:Name="ConfirmacionStep" IsVisible="False" Spacing="20">
-                <Label Text="Compra Finalizada" FontSize="24" FontAttributes="Bold" TextColor="#333"/>
-                <Label Text="Gracias por tu compra. Aquí están los detalles:" FontSize="16" TextColor="#444"/>
-
-                <Label Text="Código de Orden:" FontAttributes="Bold" TextColor="#555"/>
-                <Label x:Name="OrdenFinalLabel" FontSize="16" TextColor="#000"/>
-
-                <Label Text="Teléfono del Comercio:" FontAttributes="Bold" TextColor="#555"/>
-                <Label x:Name="TelefonoFinalLabel" FontSize="16" TextColor="#000"/>
-
-                <ActivityIndicator IsRunning="True" Color="#2E7D32" HeightRequest="40"/>
+            <StackLayout x:Name="Paso3" IsVisible="False" Spacing="20">
+                <Label Text="Compra Finalizada" FontSize="24" FontAttributes="Bold" TextColor="#2C3E50"/>
+                <Label x:Name="ConfirmacionCodigoOrdenLabel" FontSize="16" TextColor="#000"/>
+                <Label x:Name="ConfirmacionNombreNegocioLabel" FontSize="16" TextColor="#000"/>
+                <Label x:Name="ConfirmacionEstadoLabel" FontSize="16" TextColor="#2E7D32"/>
 
                 <Button Text="Volver al Inicio"
                         Clicked="OnVolverInicioClicked"
@@ -70,20 +57,6 @@
                         TextColor="White"
                         CornerRadius="10"/>
             </StackLayout>
-
-            <!-- Indicadores de pasos -->
-            <Grid ColumnDefinitions="*,*,*" Padding="10">
-                <Frame x:Name="Paso1Icon" BackgroundColor="#2E7D32" HeightRequest="15" CornerRadius="7.5"/>
-                <Frame x:Name="Paso2Icon" BackgroundColor="LightGray" HeightRequest="15" CornerRadius="7.5" Grid.Column="1"/>
-                <Frame x:Name="Paso3Icon" BackgroundColor="LightGray" HeightRequest="15" CornerRadius="7.5" Grid.Column="2"/>
-            </Grid>
-
-            <!-- Botón de retroceso -->
-            <Button Text="Cancelar y Regresar"
-                    Clicked="OnBackButtonClicked"
-                    BackgroundColor="#E53935"
-                    TextColor="White"
-                    CornerRadius="10"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
