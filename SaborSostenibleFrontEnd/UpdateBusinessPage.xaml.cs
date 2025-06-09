@@ -142,7 +142,13 @@ namespace SaborSostenibleFrontEnd
                 if (res?.Success == true)
                 {
                     await DisplayAlert("Éxito", "Restaurante actualizado.", "OK");
-                    await Navigation.PopAsync();
+                    await Navigation.PopModalAsync();
+
+                    // Redirige a YoFoodBankPage (reemplaza la página actual)
+                    await Navigation.PushAsync(new YoBusinessPage());
+
+                    // Y cierra la actual
+                    Navigation.RemovePage(this);
                 }
                 else
                 {

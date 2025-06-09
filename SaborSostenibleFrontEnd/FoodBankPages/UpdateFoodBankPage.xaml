@@ -14,14 +14,14 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
                 Text="Actualizar Banco de Alimentos"
                 FontSize="20"
                 FontAttributes="Bold"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center" />
         </Grid>
 

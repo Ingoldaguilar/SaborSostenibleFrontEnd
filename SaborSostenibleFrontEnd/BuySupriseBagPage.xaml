@@ -20,7 +20,7 @@
 
                 <Button Text="Proceder con Compra"
                         Clicked="OnProcederCompraClicked"
-                        BackgroundColor="#4CAF50"
+                        BackgroundColor="#2E7D32"
                         TextColor="White"
                         CornerRadius="12"
                         FontAttributes="Bold"/>
@@ -45,7 +45,7 @@
 
                 <Button Text="Finalizar"
                         Clicked="OnFinalizarClicked"
-                        BackgroundColor="#4CAF50"
+                        BackgroundColor="#2E7D32"
                         TextColor="White"
                         CornerRadius="12"
                         FontAttributes="Bold"/>
@@ -62,7 +62,7 @@
                 <Label Text="Teléfono del Comercio:" FontAttributes="Bold" TextColor="#555"/>
                 <Label x:Name="TelefonoFinalLabel" FontSize="16" TextColor="#000"/>
 
-                <ActivityIndicator IsRunning="True" Color="#4CAF50" HeightRequest="40"/>
+                <ActivityIndicator IsRunning="True" Color="#2E7D32" HeightRequest="40"/>
 
                 <Button Text="Volver al Inicio"
                         Clicked="OnVolverInicioClicked"
@@ -73,7 +73,7 @@
 
             <!-- Indicadores de pasos -->
             <Grid ColumnDefinitions="*,*,*" Padding="10">
-                <Frame x:Name="Paso1Icon" BackgroundColor="#4CAF50" HeightRequest="15" CornerRadius="7.5"/>
+                <Frame x:Name="Paso1Icon" BackgroundColor="#2E7D32" HeightRequest="15" CornerRadius="7.5"/>
                 <Frame x:Name="Paso2Icon" BackgroundColor="LightGray" HeightRequest="15" CornerRadius="7.5" Grid.Column="1"/>
                 <Frame x:Name="Paso3Icon" BackgroundColor="LightGray" HeightRequest="15" CornerRadius="7.5" Grid.Column="2"/>
             </Grid>

@@ -131,7 +131,7 @@ public partial class LoginPage : ContentPage
                             targetPage = new AdminMainPage();
                             break;
                         case "Business":
-                            targetPage = new MainPage();
+                            targetPage = new BusinessMainPage();
                             break;
                         case "FoodBank":
                             targetPage = new FoodBankMainPage();

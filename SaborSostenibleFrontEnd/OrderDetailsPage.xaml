@@ -18,14 +18,14 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
                 Text="Detalles del Pedido"
                 FontSize="18"
                 FontAttributes="Bold"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center" />
         </Grid>
 
@@ -42,7 +42,7 @@
             Grid.Row="2"
             Text="Ver más ↓"
             BackgroundColor="Transparent"
-            TextColor="#8CBF26"
+            TextColor="#2E7D32"
             FontAttributes="Italic"
             Clicked="OnShowMoreClicked" />
     </Grid>

@@ -15,7 +15,7 @@
 
         <!-- Nombre -->
         <Label x:Name="LabelName"
-               Text="Negocio"
+               Text="Banco de alimentos"
                FontSize="20"
                FontAttributes="Bold"
                HorizontalOptions="Center" />

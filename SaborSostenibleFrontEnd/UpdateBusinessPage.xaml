@@ -14,14 +14,14 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
                 Text="Actualizar Restaurante"
                 FontSize="20"
                 FontAttributes="Bold"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center" />
         </Grid>
 
@@ -80,7 +80,7 @@
             Text="Actualizar"
             HeightRequest="50"
             CornerRadius="25"
-            BackgroundColor="#8CBF26"
+            BackgroundColor="#2E7D32"
             TextColor="White"
             Clicked="OnUpdateClicked" />
 

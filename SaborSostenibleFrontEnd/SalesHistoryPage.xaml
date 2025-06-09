@@ -19,7 +19,7 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
 
             <Label
@@ -27,7 +27,7 @@
                 Text="Historial de ventas"
                 FontSize="18"
                 FontAttributes="Bold"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center" />
         </Grid>
 

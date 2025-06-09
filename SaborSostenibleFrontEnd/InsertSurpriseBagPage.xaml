@@ -14,14 +14,14 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#789262"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked"/>
             <Label
                 Grid.Column="1"
                 Text="Subir Bolsa Sorpresa"
                 FontSize="20"
                 FontAttributes="Bold"
-                TextColor="#789262"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center"/>
         </Grid>
 
@@ -58,7 +58,7 @@
             Text="Registrar y notificar"
             HeightRequest="50"
             CornerRadius="25"
-            BackgroundColor="#789262"
+            BackgroundColor="#2E7D32"
             TextColor="White"
             Clicked="OnRegisterClicked"/>
 

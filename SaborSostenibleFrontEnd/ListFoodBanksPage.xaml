@@ -19,7 +19,7 @@
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
 
             <Label
@@ -27,7 +27,7 @@
                 Text="Lista banco de alimentos para activar o desactivar"
                 FontSize="20"
                 FontAttributes="Bold"
-                TextColor="#8CBF26"
+                TextColor="#2E7D32"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
         </Grid>

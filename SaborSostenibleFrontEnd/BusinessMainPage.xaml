@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.BusinessMainPage"
+            xmlns:fb="clr-namespace:SaborSostenibleFrontEnd"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             Title="Panel de negocio"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             NavigationPage.HasNavigationBar="False"
+             BarBackgroundColor="#2E7D32"
+             BarTextColor="White"
+             SelectedTabColor="White"
+             UnselectedTabColor="#A5D6A7">
+
+    <fb:InsertSurpriseBagPage 
+    Title="Nueva Bolsa"
+    IconImageSource="{FontImage Glyph=&#xf49e;, FontFamily=FontAwesome}" />
+
+    <fb:YoBusinessPage
+    Title="Pendientes"
+    IconImageSource="{FontImage Glyph=&#xf017;, FontFamily=FontAwesome}" />
+
+    <fb:SalesHistoryPage 
+    Title="Ventas"
+    IconImageSource="{FontImage Glyph=&#xf155;, FontFamily=FontAwesome}" />
+
+    <fb:YoBusinessPage 
+    Title="Yo"
+    IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome}" />
+    
+</TabbedPage>
