@@ -35,10 +35,10 @@
                 <Label Text="Descripción" />
                 <Entry x:Name="DescriptionEntry" Placeholder="Value" />
 
-                <Label Text="Logo" />
+                <!--<Label Text="Logo" />
                 <Button
                     Text="Seleccionar imagen"
-                    Clicked="OnSelectLogoClicked" />
+                    Clicked="OnSelectLogoClicked" />-->
 
                 <Label Text="Número teléfono" />
                 <Entry x:Name="PhoneEntry" Placeholder="Value" Keyboard="Telephone" />

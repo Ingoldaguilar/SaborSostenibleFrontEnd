@@ -61,21 +61,21 @@ namespace SaborSostenibleFrontEnd
             }
         }
 
-        private async void OnSelectLogoClicked(object sender, EventArgs e)
-        {
-            var result = await FilePicker.PickAsync(new PickOptions
-            {
-                FileTypes = FilePickerFileType.Images
-            });
-            if (result != null)
-            {
-                _logoFileResult = result;
-                using var stream = await result.OpenReadAsync();
-                using var ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
-                _logoImageBase64 = Convert.ToBase64String(ms.ToArray());
-            }
-        }
+        //private async void OnSelectLogoClicked(object sender, EventArgs e)
+        //{
+        //    var result = await FilePicker.PickAsync(new PickOptions
+        //    {
+        //        FileTypes = FilePickerFileType.Images
+        //    });
+        //    if (result != null)
+        //    {
+        //        _logoFileResult = result;
+        //        using var stream = await result.OpenReadAsync();
+        //        using var ms = new MemoryStream();
+        //        await stream.CopyToAsync(ms);
+        //        _logoImageBase64 = Convert.ToBase64String(ms.ToArray());
+        //    }
+        //}
 
         private bool ValidateFields()
         {
