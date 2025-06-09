@@ -3,6 +3,7 @@ using SaborSostenibleFrontEnd.Entities;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SaborSostenibleFrontEnd
@@ -12,11 +13,11 @@ namespace SaborSostenibleFrontEnd
         public ObservableCollection<Restaurante> Restaurantes { get; set; } = new();
         public ObservableCollection<Pedido> Pedidos { get; set; } = new();
 
-
         public MainPage()
         {
             InitializeComponent();
             BindingContext = this;
+            NavigationPage.SetHasNavigationBar(this, false);
 
             _ = CargarSaludoPersonalizadoAsync();
             _ = CargarRestaurantesDesdeApiAsync();
@@ -24,32 +25,33 @@ namespace SaborSostenibleFrontEnd
             _ = MostrarDatosUsuarioAsync();
         }
 
-
-        private async Task CargarRestaurantesDesdeApiAsync()
+        private async Task CargarRestaurantesDesdeApiAsync(string searchText = null)
         {
             try
             {
-                var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    await DisplayAlert("Error", "No hay sesión activa", "OK");
-                    return;
-                }
-
                 using var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var token = Preferences.Get("SessionId", null);
+                if (!string.IsNullOrEmpty(token))
+                    httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-                var response = await httpClient.GetAsync("http://34.39.128.125/api/activeBusinessesDetails/get");
+                HttpResponseMessage response;
+                if (string.IsNullOrWhiteSpace(searchText))
+                {
+                    response = await httpClient.GetAsync("http://34.39.128.125/api/activeBusinessesDetails/get");
+                }
+                else
+                {
+                    var content = new StringContent(JsonSerializer.Serialize(new { SearchText = searchText }), Encoding.UTF8, "application/json");
+                    response = await httpClient.PostAsync("http://34.39.128.125/api/searchBusinesses/get", content);
+                }
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    using var doc = JsonDocument.Parse(json);
-
-                    if (doc.RootElement.TryGetProperty("Businesses", out JsonElement empresas))
+                    var doc = JsonDocument.Parse(json);
+                    if (doc.RootElement.TryGetProperty("Businesses", out JsonElement empresas) && empresas.GetArrayLength() > 0)
                     {
                         Restaurantes.Clear();
-
                         foreach (var item in empresas.EnumerateArray())
                         {
                             Restaurantes.Add(new Restaurante
@@ -64,22 +66,83 @@ namespace SaborSostenibleFrontEnd
                     }
                     else
                     {
-                        await DisplayAlert("Info", "No se encontraron restaurantes disponibles.", "OK");
+                        Restaurantes.Clear();
                     }
                 }
                 else
                 {
-                    var error = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Error", $"Error al obtener restaurantes: {error}", "OK");
+                    Restaurantes.Clear();
+                }
+            }
+            catch
+            {
+                Restaurantes.Clear();
+            }
+        }
+
+        private async Task CargarPedidosAsync()
+        {
+            try
+            {
+                Pedidos.Clear();
+                var token = Preferences.Get("SessionId", null);
+                if (string.IsNullOrEmpty(token)) return;
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync("http://34.39.128.125/api/userOrders/get");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var doc = JsonDocument.Parse(json);
+
+                    if (doc.RootElement.TryGetProperty("OrdersByUserId", out JsonElement ordenes) && ordenes.GetArrayLength() > 0)
+                    {
+                        foreach (var item in ordenes.EnumerateArray())
+                        {
+                            Pedidos.Add(new Pedido
+                            {
+                                OrderId = item.GetProperty("OrderId").GetInt32(),
+                                RestaurantName = item.GetProperty("BusinessName").GetString(),
+                                Date = DateTime.Parse(item.GetProperty("OrderDate").GetString()).ToString("dd/MM/yyyy HH:mm"),
+                                Status = item.GetProperty("State").GetString(),
+                                Total = item.GetProperty("TotalAmount").GetDecimal(),
+                                Bags = item.GetProperty("BagsQuantity").GetInt32()
+                            });
+                        }
+                    }
+                    else
+                    {
+                        Pedidos.Clear();
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Error", "No se pudieron obtener los pedidos.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Excepción: {ex.Message}", "OK");
+                await DisplayAlert("Error", $"Ha ocurrido un error, porfavor reinicie la aplicación", "OK");
+                Console.Write("Excepción al cargar pedidos: " + ex.Message);
             }
         }
-
-
+        private async void OnSearchCompleted(object sender, EventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                var texto = entry.Text?.Trim();
+                if (!string.IsNullOrEmpty(texto))
+                {
+                    await CargarRestaurantesDesdeApiAsync(texto);
+                }
+                else
+                {
+                    await CargarRestaurantesDesdeApiAsync();
+                }
+            }
+        }
         private async void OnComprarClicked(object sender, EventArgs e)
         {
             if (sender is Button button && button.CommandParameter is Restaurante restaurante)
@@ -149,59 +212,6 @@ namespace SaborSostenibleFrontEnd
                 Preferences.Remove("UserName");
 
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
-            }
-        }
-
-
-        private async Task CargarPedidosAsync()
-        {
-            try
-            {
-                var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    await DisplayAlert("Error", "No hay sesión activa", "OK");
-                    return;
-                }
-
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
-                var response = await client.GetAsync("http://34.39.128.125/api/orders/by-user");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var doc = JsonDocument.Parse(json);
-                    if (doc.RootElement.TryGetProperty("Orders", out JsonElement ordenes))
-                    {
-                        Pedidos.Clear();
-
-                        foreach (var item in ordenes.EnumerateArray())
-                        {
-                            Pedidos.Add(new Pedido
-                            {
-                                OrderId = item.GetProperty("OrderId").GetInt32(),
-                                RestaurantName = item.GetProperty("RestaurantName").GetString(),
-                                Date = DateTime.Parse(item.GetProperty("Date").GetString()).ToString("dd/MM/yyyy HH:mm"),
-                                Status = item.GetProperty("Status").GetString()
-                            });
-                        }
-                    }
-                    else
-                    {
-                        await DisplayAlert("Atención", "No hay pedidos aún.", "OK");
-                    }
-                }
-                else
-                {
-                    var body = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Error", $"No se pudieron obtener los pedidos: {body}", "OK");
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
             }
         }
 
@@ -283,12 +293,12 @@ namespace SaborSostenibleFrontEnd
             }
         }
 
-
         private async void OnRestauranteCardTapped(object sender, TappedEventArgs e)
         {
             if (e.Parameter is Restaurante restaurante)
             {
-                await Navigation.PushAsync(new RestauranteDetallePage(restaurante));
+                //await Navigation.PushAsync(new RestaurantDetailPage(restaurante));
+                Console.WriteLine($"Restaurante seleccionado: {restaurante.nombreRestaurante}");
             }
         }
 

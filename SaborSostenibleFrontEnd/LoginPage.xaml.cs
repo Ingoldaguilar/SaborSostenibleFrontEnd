@@ -118,7 +118,10 @@ public partial class LoginPage : ContentPage
                     Preferences.Set("UserEmail", EmailEntry.Text.Trim());
                     Preferences.Set("UserName", EmailEntry.Text.Trim());
 
-                    Application.Current.MainPage = new NavigationPage(new MainPage());
+                    var mainPage = new MainPage();
+                    NavigationPage.SetHasNavigationBar(mainPage, false);
+                    Application.Current.MainPage = new NavigationPage(mainPage);
+
 
                 }
                 else

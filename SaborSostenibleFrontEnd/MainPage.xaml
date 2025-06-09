@@ -49,21 +49,32 @@
                     </Label>
                 </VerticalStackLayout>
 
-                <!-- Barra de búsqueda (por ahora sin funcionalidad) -->
+                <!-- Barra de búsqueda corregida -->
                 <Grid Padding="10" BackgroundColor="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Text="&#xf002;" FontFamily="FontAwesome" TextColor="#999" FontSize="18" VerticalOptions="Center" Margin="0,0,10,0" />
-                    <Entry Grid.Column="1" Placeholder="Buscar por nombre de restaurante..." PlaceholderColor="#AAA" FontSize="14" />
+                    <Entry Grid.Column="1"
+                           Placeholder="Buscar por nombre de restaurante..."
+                           PlaceholderColor="#AAA"
+                           FontSize="14"
+                           TextColor="Black"
+                           Completed="OnSearchCompleted" />
                 </Grid>
 
-                <!-- Lista dinámica de restaurantes (sin botón) -->
+                <!-- Lista dinámica de restaurantes -->
                 <CollectionView x:Name="RestaurantesCollectionView"
                                 ItemsSource="{Binding Restaurantes}"
-                                EmptyView="No hay restaurantes disponibles."
                                 SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Label Text="No se encontraron restaurantes disponibles."
+                               FontSize="14"
+                               TextColor="#777"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame BackgroundColor="White"
@@ -116,8 +127,14 @@
 
                 <CollectionView x:Name="PedidosCollectionView"
                                 ItemsSource="{Binding Pedidos}"
-                                EmptyView="Aún no tienes pedidos registrados."
                                 SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Label Text="Por el momento no tienes pedidos registrados. ¡Explora y haz tu primer pedido!"
+                               FontSize="14"
+                               TextColor="#777"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame Padding="15"
@@ -136,6 +153,9 @@
                                     <Label Text="{Binding Status}"
                                            FontSize="13"
                                            TextColor="#888"/>
+                                    <Label Text="{Binding Bags} bolsa(s) - ₡{Binding Total}"
+                                           FontSize="13"
+                                           TextColor="#444"/>
                                 </VerticalStackLayout>
                             </Frame>
                         </DataTemplate>
