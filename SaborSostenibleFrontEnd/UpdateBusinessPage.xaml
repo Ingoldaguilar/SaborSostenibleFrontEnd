@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SaborSostenibleFrontEnd.UpdateBusinessPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5"
+    Title="Actualizar Restaurante">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <!-- Cabecera -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+            <Button
+                Text="←"
+                FontSize="24"
+                BackgroundColor="Transparent"
+                TextColor="#8CBF26"
+                Clicked="OnBackButtonClicked" />
+            <Label
+                Grid.Column="1"
+                Text="Actualizar Restaurante"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#8CBF26"
+                HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- Formulario -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="15">
+
+                <Label Text="Nombre" />
+                <Entry x:Name="NameEntry" Placeholder="Value" />
+
+                <Label Text="Descripción" />
+                <Entry x:Name="DescriptionEntry" Placeholder="Value" />
+
+                <Label Text="Logo" />
+                <Button
+                    Text="Seleccionar imagen"
+                    Clicked="OnSelectLogoClicked" />
+
+                <Label Text="Número teléfono" />
+                <Entry
+                    x:Name="PhoneEntry"
+                    Placeholder="Value"
+                    Keyboard="Telephone" />
+
+                <Label Text="Dirección" />
+                <Entry x:Name="AddressEntry" Placeholder="Value" />
+
+                <Label Text="Latitud" />
+                <Entry
+                    x:Name="LatitudeEntry"
+                    Placeholder="Value"
+                    Keyboard="Numeric" />
+
+                <Label Text="Longitud" />
+                <Entry
+                    x:Name="LongitudeEntry"
+                    Placeholder="Value"
+                    Keyboard="Numeric" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botón Actualizar -->
+        <Button
+            Grid.Row="2"
+            Text="Actualizar"
+            HeightRequest="50"
+            CornerRadius="25"
+            BackgroundColor="#8CBF26"
+            TextColor="White"
+            Clicked="OnUpdateClicked" />
+
+    </Grid>
+</ContentPage>

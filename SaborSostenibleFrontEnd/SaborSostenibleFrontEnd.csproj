@@ -71,6 +71,12 @@
 	  <Compile Update="ListBusinessesPage.xaml.cs">
 	    <DependentUpon>ListBusinessesPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="UpdateBusinessPage.xaml.cs">
+	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="UpdateFoodBankPage.xaml.cs">
+	    <DependentUpon>UpdateFoodBankPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="ListFoodBanksPage.xaml.cs">
 	    <DependentUpon>ListFoodBanksPage.xaml</DependentUpon>
 	  </Compile>
@@ -96,6 +102,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ListBusinessesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UpdateBusinessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UpdateFoodBankPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ListFoodBanksPage.xaml">

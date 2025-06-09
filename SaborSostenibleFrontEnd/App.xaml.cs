@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ListBusinessesPage());
+            MainPage = new NavigationPage(new UpdateBusinessPage());
         }
     }
 }
