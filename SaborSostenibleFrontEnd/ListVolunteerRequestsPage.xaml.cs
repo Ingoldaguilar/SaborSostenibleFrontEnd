@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;                     // <-- para Colors.Gray
+using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;

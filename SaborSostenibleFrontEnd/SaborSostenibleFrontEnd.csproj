@@ -68,11 +68,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ConfirmReceptionPage.xaml.cs">
+	    <DependentUpon>ConfirmReceptionPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ListPendingBagsPage.xaml.cs">
+	    <DependentUpon>ListPendingBagsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="ListBusinessesPage.xaml.cs">
 	    <DependentUpon>ListBusinessesPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="UpdateBusinessPage.xaml.cs">
 	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ReceivedBagsHistoryPage.xaml.cs">
+	    <DependentUpon>ReceivedBagsHistoryPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="UpdateFoodBankPage.xaml.cs">
 	    <DependentUpon>UpdateFoodBankPage.xaml</DependentUpon>
@@ -93,6 +102,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ConfirmReceptionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ListPendingBagsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="BuySupriseBagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -106,6 +121,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UpdateBusinessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ReceivedBagsHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UpdateFoodBankPage.xaml">
