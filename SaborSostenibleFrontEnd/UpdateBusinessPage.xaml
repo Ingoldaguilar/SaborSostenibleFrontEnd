@@ -49,7 +49,7 @@
                 <Label Text="Dirección" />
                 <Entry x:Name="AddressEntry" Placeholder="Value" />
 
-                <Label Text="Latitud" />
+                <!--<Label Text="Latitud" />
                 <Entry
                     x:Name="LatitudeEntry"
                     Placeholder="Value"
@@ -59,7 +59,17 @@
                 <Entry
                     x:Name="LongitudeEntry"
                     Placeholder="Value"
-                    Keyboard="Numeric" />
+                    Keyboard="Numeric" />-->
+                <Button Text="📍 Elegir ubicación en el mapa"
+                     BackgroundColor="{StaticResource Primary}"
+                     TextColor="White"
+                     Clicked="OnElegirUbicacionClicked" />
+
+                                    <Label x:Name="UbicacionLabel"
+                    Text="Ubicación no detectada aún."
+                    FontSize="12"
+                    TextColor="{StaticResource PrimaryDarkText}"
+                    HorizontalOptions="Center" />
 
             </VerticalStackLayout>
         </ScrollView>

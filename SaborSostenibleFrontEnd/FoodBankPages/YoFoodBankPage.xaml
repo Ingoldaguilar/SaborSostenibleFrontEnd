@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.FoodBankPages.YoFoodBankPage"
+             Title="Mi Perfil"
+             BackgroundColor="White">
+    <VerticalStackLayout Padding="30" Spacing="25" HorizontalOptions="Center">
+
+        <!-- Imagen de Perfil --><!--
+        <Image Source="profile_placeholder.png"
+               WidthRequest="100" HeightRequest="100"
+               Aspect="AspectFit"
+               Margin="0,20"
+               HorizontalOptions="Center"/>-->
+
+        <!-- Nombre -->
+        <Label x:Name="LabelName"
+               Text="Negocio"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Email -->
+        <Label x:Name="LabelEmail"
+               Text="email@example.com"
+               FontSize="14"
+               TextColor="Gray"
+               HorizontalOptions="Center" />
+
+        <!-- Botón Actualizar -->
+        <Button Text="🔧 Actualizar Banco de Alimentos"
+                Clicked="OnUpdateClicked"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="14" />
+
+        <!-- Botón Cerrar Sesión -->
+        <Button Text="⎋ Cerrar Sesión"
+                Clicked="OnLogoutClicked"
+                BackgroundColor="#2E7D32"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                HeightRequest="50"
+                WidthRequest="250" />
+
+    </VerticalStackLayout>
+    
+</ContentPage>

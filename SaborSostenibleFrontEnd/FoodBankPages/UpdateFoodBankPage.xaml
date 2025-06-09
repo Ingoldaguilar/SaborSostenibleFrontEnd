@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SaborSostenibleFrontEnd.UpdateFoodBankPage"
+    x:Class="SaborSostenibleFrontEnd.FoodBankPages.UpdateFoodBankPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
@@ -46,12 +46,23 @@
                 <Label Text="Dirección" />
                 <Entry x:Name="AddressEntry" Placeholder="Value" />
 
-                <Label Text="Latitud" />
+                <!--<Label Text="Latitud" />
                 <Entry x:Name="LatitudeEntry" Placeholder="Value" Keyboard="Numeric" />
 
                 <Label Text="Longitud" />
-                <Entry x:Name="LongitudeEntry" Placeholder="Value" Keyboard="Numeric" />
+                <Entry x:Name="LongitudeEntry" Placeholder="Value" Keyboard="Numeric" />-->
 
+                <Button Text="📍 Elegir ubicación en el mapa"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                Clicked="OnElegirUbicacionClicked" />
+
+                            <Label x:Name="UbicacionLabel"
+               Text="Ubicación no detectada aún."
+               FontSize="12"
+               TextColor="{StaticResource PrimaryDarkText}"
+               HorizontalOptions="Center" />
+                
             </VerticalStackLayout>
         </ScrollView>
 

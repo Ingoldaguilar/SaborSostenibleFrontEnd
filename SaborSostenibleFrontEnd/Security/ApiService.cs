@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using SaborSostenibleFrontEnd.Response;
+using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -195,6 +196,7 @@ public class ApiService
         // Limpiar datos de sesión
         Preferences.Remove("SessionId");
         Preferences.Remove("UserEmail");
+        Preferences.Remove("UserRole");
         Preferences.Set("IsLoggedIn", false);
 
         // Mostrar mensaje y redirigir al login
@@ -210,13 +212,53 @@ public class ApiService
         return !string.IsNullOrEmpty(Preferences.Get("SessionId", string.Empty));
     }
 
-    // Cerrar sesión
-    public void Logout()
+    public async Task Logout()
     {
+        try
+        {
+            ResBase resBase = new();
+            var sessionId = Preferences.Get("SessionId", null);
+
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessionId);
+            }
+
+            var response = await _httpClient.PostAsync("logOut", null);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            // Deserializar la respuesta aunque sea 200
+            resBase = JsonSerializer.Deserialize<ResBase>(responseContent, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error al cerrar sesión en el servidor: {errorContent}");
+                // (Opcional) Mostrar mensaje al usuario
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error en Logout: {ex.Message}");
+            // (Opcional) Mostrar mensaje de error al usuario
+        }
+
+        // Limpieza local sin importar si el logout fue exitoso
         Preferences.Remove("SessionId");
         Preferences.Remove("UserEmail");
+        Preferences.Remove("UserRole");
         Preferences.Set("IsLoggedIn", false);
         _httpClient.DefaultRequestHeaders.Authorization = null;
+
+        // Mostrar mensaje de confirmación
+        await Application.Current.MainPage.DisplayAlert("Sesión cerrada",
+            "Su sesión se ha cerrado exitosamente.", "OK");
+
+        // Redirigir al login
+        Application.Current.MainPage = new NavigationPage(new LoginPage());
     }
 
     public void Dispose()

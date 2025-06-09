@@ -9,7 +9,7 @@ using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd.FoodBankPages
 {
     public partial class UpdateFoodBankPage : ContentPage
     {
@@ -20,6 +20,8 @@ namespace SaborSostenibleFrontEnd
         private decimal _latitude;
         private decimal _longitude;
 
+        private bool _isFirstLoad = true;
+
         public UpdateFoodBankPage()
         {
             InitializeComponent();
@@ -28,7 +30,11 @@ namespace SaborSostenibleFrontEnd
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _ = LoadFoodBankAsync();
+            if (_isFirstLoad)
+            {
+                _isFirstLoad = false;
+                _ = LoadFoodBankAsync();
+            }
         }
 
         private async Task LoadFoodBankAsync()
@@ -52,8 +58,10 @@ namespace SaborSostenibleFrontEnd
                 _logoImageBase64 = fb.LogoImage;            // base64 existing or URL
                 PhoneEntry.Text = fb.PhoneNumber;
                 AddressEntry.Text = fb.Address;
-                LatitudeEntry.Text = fb.Latitude.ToString(CultureInfo.InvariantCulture);
-                LongitudeEntry.Text = fb.Longitude.ToString(CultureInfo.InvariantCulture);
+                _latitude = fb.Latitude;
+                _longitude = fb.Longitude;
+
+                UbicacionLabel.Text = $"Ubicación elegida: {fb.Latitude.ToString(CultureInfo.InvariantCulture):F5}, {fb.Longitude.ToString(CultureInfo.InvariantCulture):F5}";
             }
             catch (Exception ex)
             {
@@ -83,24 +91,28 @@ namespace SaborSostenibleFrontEnd
              || string.IsNullOrWhiteSpace(DescriptionEntry.Text)
              || string.IsNullOrWhiteSpace(_logoImageBase64)
              || string.IsNullOrWhiteSpace(PhoneEntry.Text)
-             || string.IsNullOrWhiteSpace(AddressEntry.Text)
-             || string.IsNullOrWhiteSpace(LatitudeEntry.Text)
-             || string.IsNullOrWhiteSpace(LongitudeEntry.Text))
+             || string.IsNullOrWhiteSpace(AddressEntry.Text))
             {
                 DisplayAlert("Error", "Complete todos los campos.", "OK");
                 return false;
             }
 
-            if (!decimal.TryParse(LatitudeEntry.Text, NumberStyles.Any,
-                CultureInfo.InvariantCulture, out _latitude)
-             || !decimal.TryParse(LongitudeEntry.Text, NumberStyles.Any,
-                CultureInfo.InvariantCulture, out _longitude))
-            {
-                DisplayAlert("Error", "Latitud o longitud inválidas.", "OK");
-                return false;
-            }
-
             return true;
+        }
+
+        private async void OnElegirUbicacionClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ElegirUbicacionPage((ubicacion) =>
+            {
+                _latitude = (decimal)ubicacion.Latitude;
+                _longitude = (decimal)ubicacion.Longitude;
+
+                // Actualizar la UI desde el hilo principal
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    UbicacionLabel.Text = $"Ubicación elegida: {_latitude:F5}, {_longitude:F5}";
+                });
+            }));
         }
 
         private async void OnUpdateClicked(object sender, EventArgs e)
@@ -129,7 +141,13 @@ namespace SaborSostenibleFrontEnd
                 if (res?.Success == true)
                 {
                     await DisplayAlert("Éxito", "FoodBank actualizado.", "OK");
-                    await Navigation.PopAsync();
+                    await Navigation.PopModalAsync();
+
+                    // Redirige a YoFoodBankPage (reemplaza la página actual)
+                    await Navigation.PushAsync(new YoFoodBankPage());
+
+                    // Y cierra la actual
+                    Navigation.RemovePage(this);
                 }
                 else
                 {

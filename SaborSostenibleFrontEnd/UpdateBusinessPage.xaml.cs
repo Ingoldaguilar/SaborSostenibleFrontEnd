@@ -20,6 +20,7 @@ namespace SaborSostenibleFrontEnd
         private decimal _latitude;
         private decimal _longitude;
 
+        private bool _isFirstLoad = true;
         public UpdateBusinessPage()
         {
             InitializeComponent();
@@ -28,7 +29,13 @@ namespace SaborSostenibleFrontEnd
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _ = LoadBusinessAsync();
+
+            if (_isFirstLoad)
+            {
+                _isFirstLoad = false;
+                _ = LoadBusinessAsync();
+            }
+            
         }
 
         private async Task LoadBusinessAsync()
@@ -52,8 +59,9 @@ namespace SaborSostenibleFrontEnd
                 _logoImageBase64 = b.LogoImage;
                 PhoneEntry.Text = b.PhoneNumber;
                 AddressEntry.Text = b.Address;
-                LatitudeEntry.Text = b.Latitude.ToString(CultureInfo.InvariantCulture);
-                LongitudeEntry.Text = b.Longitude.ToString(CultureInfo.InvariantCulture);
+                _latitude = b.Latitude;
+                _longitude = b.Longitude;
+                UbicacionLabel.Text = $"Ubicación elegida: {b.Latitude.ToString(CultureInfo.InvariantCulture):F5}, {b.Longitude.ToString(CultureInfo.InvariantCulture):F5}";
             }
             catch (Exception ex)
             {
@@ -83,24 +91,28 @@ namespace SaborSostenibleFrontEnd
              || string.IsNullOrWhiteSpace(DescriptionEntry.Text)
              || string.IsNullOrWhiteSpace(_logoImageBase64)
              || string.IsNullOrWhiteSpace(PhoneEntry.Text)
-             || string.IsNullOrWhiteSpace(AddressEntry.Text)
-             || string.IsNullOrWhiteSpace(LatitudeEntry.Text)
-             || string.IsNullOrWhiteSpace(LongitudeEntry.Text))
+             || string.IsNullOrWhiteSpace(AddressEntry.Text))
             {
                 DisplayAlert("Error", "Complete todos los campos.", "OK");
                 return false;
             }
 
-            if (!decimal.TryParse(LatitudeEntry.Text, NumberStyles.Any,
-                    CultureInfo.InvariantCulture, out _latitude)
-             || !decimal.TryParse(LongitudeEntry.Text, NumberStyles.Any,
-                    CultureInfo.InvariantCulture, out _longitude))
-            {
-                DisplayAlert("Error", "Latitud o longitud inválidas.", "OK");
-                return false;
-            }
-
             return true;
+        }
+
+        private async void OnElegirUbicacionClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ElegirUbicacionPage((ubicacion) =>
+            {
+                _latitude = (decimal)ubicacion.Latitude;
+                _longitude = (decimal)ubicacion.Longitude;
+
+                // Actualizar la UI desde el hilo principal
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    UbicacionLabel.Text = $"Ubicación elegida: {_latitude:F5}, {_longitude:F5}";
+                });
+            }));
         }
 
         private async void OnUpdateClicked(object sender, EventArgs e)

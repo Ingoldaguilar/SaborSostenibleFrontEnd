@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:fb="clr-namespace:SaborSostenibleFrontEnd.FoodBankPages"
+             x:Class="SaborSostenibleFrontEnd.FoodBankPages.FoodBankMainPage"
+             Title="Panel de banco alimentos"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             NavigationPage.HasNavigationBar="False"
+             BarBackgroundColor="#2E7D32"
+             BarTextColor="White"
+             SelectedTabColor="White"
+             UnselectedTabColor="#A5D6A7">
+
+    <fb:ListPendingBagsPage 
+        Title="Pendientes"
+        IconImageSource="{FontImage Glyph=&#xf0ae;, FontFamily=FontAwesome}" />
+
+    <fb:ReceivedBagsHistoryPage 
+        Title="Historial"
+        IconImageSource="{FontImage Glyph=&#xf1da;, FontFamily=FontAwesome}" />
+
+    <fb:YoFoodBankPage 
+        Title="Yo"
+        IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome}" />
+    
+</TabbedPage>
