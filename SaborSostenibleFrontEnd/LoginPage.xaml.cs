@@ -117,10 +117,34 @@ public partial class LoginPage : ContentPage
                     Console.WriteLine($"SessionId guardado: {loginResponse.SessionId}");
                     Preferences.Set("UserEmail", EmailEntry.Text.Trim());
                     Preferences.Set("UserName", EmailEntry.Text.Trim());
+                    Preferences.Set("UserRole", loginResponse.UserRole);
 
-                    var mainPage = new MainPage();
-                    NavigationPage.SetHasNavigationBar(mainPage, false);
-                    Application.Current.MainPage = new NavigationPage(mainPage);
+                    Page targetPage;
+
+                    switch (loginResponse.UserRole)
+                    {
+                        case "Customer":
+                            targetPage = new MainPage();
+                            break;
+                        case "Admin":
+                            targetPage = new AdminMainPage();
+                            break;
+                        case "Business":
+                            targetPage = new MainPage();
+                            break;
+                        case "FoodBank":
+                            targetPage = new MainPage();
+                            break;
+                        case "Volunteer":
+                            targetPage = new MainPage();
+                            break;
+                        default:
+                            MostrarError("Rol de usuario no reconocido.");
+                            return;
+                    }
+
+                    NavigationPage.SetHasNavigationBar(targetPage, false);
+                    Application.Current.MainPage = new NavigationPage(targetPage);
 
 
                 }

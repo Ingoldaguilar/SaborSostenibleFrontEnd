@@ -8,7 +8,7 @@ namespace SaborSostenibleFrontEnd
         {
             InitializeComponent();
 
-            var loginPage = new LoginPage();
+            var loginPage = new AdminMainPage();
             NavigationPage.SetHasNavigationBar(loginPage, false);
 
             MainPage = new NavigationPage(loginPage)
