@@ -86,6 +86,9 @@
 	  <MauiXaml Update="CodeVerificationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ElegirUbicacionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ForgotPassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

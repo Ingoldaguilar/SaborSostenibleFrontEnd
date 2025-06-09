@@ -102,34 +102,49 @@ public partial class RegisterPage : ContentPage
         }
     }
 
-    private async void OnObtenerUbicacionClicked(object sender, EventArgs e)
+    //private async void OnObtenerUbicacionClicked(object sender, EventArgs e)
+    //{
+    //    try
+    //    {
+    //        var location = await Geolocation.GetLastKnownLocationAsync();
+
+    //        if (location == null)
+    //        {
+    //            var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+    //            location = await Geolocation.GetLocationAsync(request);
+    //        }
+
+    //        if (location != null)
+    //        {
+    //            latitude = (decimal)location.Latitude;
+    //            longitude = (decimal)location.Longitude;
+    //            UbicacionLabel.Text = $"Ubicación detectada: {latitude:F5}, {longitude:F5}";
+    //        }
+    //        else
+    //        {
+    //            UbicacionLabel.Text = "No se pudo obtener la ubicación.";
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        UbicacionLabel.Text = "Error al obtener ubicación.";
+    //        await DisplayAlert("Error", $"No se pudo obtener la ubicación: {ex.Message}", "OK");
+    //    }
+    //}
+
+    private async void OnElegirUbicacionClicked(object sender, EventArgs e)
     {
-        try
+        await Navigation.PushAsync(new ElegirUbicacionPage((ubicacion) =>
         {
-            var location = await Geolocation.GetLastKnownLocationAsync();
+            latitude = (decimal)ubicacion.Latitude;
+            longitude = (decimal)ubicacion.Longitude;
 
-            if (location == null)
+            // Actualizar la UI desde el hilo principal
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-                location = await Geolocation.GetLocationAsync(request);
-            }
-
-            if (location != null)
-            {
-                latitude = (decimal)location.Latitude;
-                longitude = (decimal)location.Longitude;
-                UbicacionLabel.Text = $"Ubicación detectada: {latitude:F5}, {longitude:F5}";
-            }
-            else
-            {
-                UbicacionLabel.Text = "No se pudo obtener la ubicación.";
-            }
-        }
-        catch (Exception ex)
-        {
-            UbicacionLabel.Text = "Error al obtener ubicación.";
-            await DisplayAlert("Error", $"No se pudo obtener la ubicación: {ex.Message}", "OK");
-        }
+                UbicacionLabel.Text = $"Ubicación elegida: {latitude:F5}, {longitude:F5}";
+            });
+        }));
     }
 
     private async Task RealizarRegistroAsync()
