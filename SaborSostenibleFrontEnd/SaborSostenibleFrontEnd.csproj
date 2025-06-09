@@ -89,6 +89,7 @@
 	  <Compile Update="InsertBusinessPage.xaml.cs">
 	    <DependentUpon>InsertBusinessPage.xaml</DependentUpon>
 	  </Compile>
+
 	</ItemGroup>
 
 	<ItemGroup>
