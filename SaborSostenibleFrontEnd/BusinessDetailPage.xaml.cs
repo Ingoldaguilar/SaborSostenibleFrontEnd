@@ -33,13 +33,26 @@ public partial class BusinessDetailPage : ContentPage
     {
         try
         {
+            var token = Preferences.Get("SessionId", null);
+            if (string.IsNullOrEmpty(token))
+            {
+                await DisplayAlert("Error", "No hay sesión activa", "OK");
+                return;
+            }
+
             using var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var request = new { BusinessId = _restaurante.idRestaurante };
             var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync("http://34.39.128.125/api/surpriseBagsAvailableForCustomers/post", content);
             if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", $"No autorizado: {error}", "OK");
                 return;
+            }
 
             var json = await response.Content.ReadAsStringAsync();
             var doc = JsonDocument.Parse(json);

@@ -78,10 +78,10 @@ public partial class BuySupriseBagPage : ContentPage
 
         var payload = new
         {
-            BagsIdsVarchar = _bolsa.Description,
+            BagsIdsVarchar = _bolsa.Id,
             BusinessId = _restaurante.idRestaurante,
             IsDonation = DonacionSwitch.IsToggled,
-            FoodBankId = foodBankId ?? 0
+            FoodBankId = foodBankId ?? null
         };
 
         try

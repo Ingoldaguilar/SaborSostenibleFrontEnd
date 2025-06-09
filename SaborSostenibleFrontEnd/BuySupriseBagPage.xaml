@@ -8,25 +8,58 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
 
+            <Image x:Name="RestauranteImagen" IsVisible="False"/>
+
             <!-- Paso 1: Confirmar Bolsa -->
-            <StackLayout x:Name="Paso1" IsVisible="True" Spacing="20">
-                <Label Text="Confirmación de Bolsa" FontSize="24" FontAttributes="Bold" TextColor="#2C3E50"/>
-                <Label x:Name="DescripcionBolsaLabel" FontSize="16" TextColor="#555"/>
-                <Label x:Name="PrecioBolsaLabel" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32"/>
+            <StackLayout x:Name="Paso1" IsVisible="True" Spacing="25">
+                <!-- Encabezado -->
+                <Label Text="Confirmación de Bolsa" FontSize="26" FontAttributes="Bold" TextColor="#2C3E50" />
 
-                <Switch x:Name="DonacionSwitch" Toggled="OnDonacionToggled"/>
-                <Label Text="¿Deseas donar esta bolsa?" FontSize="14" TextColor="#666"/>
+                <!-- Tarjeta de restaurante -->
+                <Frame BackgroundColor="#F5F5F5" CornerRadius="15" HasShadow="True" Padding="15">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                        <Image Source="{Binding Source={x:Reference RestauranteImagen}, Path=Source}" WidthRequest="70" HeightRequest="70" Aspect="AspectFill" 
+                   Clip="RectangleGeometry RadiusX=10 RadiusY=10 Rect='0,0,70,70'" />
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="4">
+                            <Label x:Name="RestauranteNombreLabel" FontSize="18" FontAttributes="Bold" TextColor="#2E7D32"/>
+                            <Label x:Name="RestauranteDescripcionLabel" FontSize="14" TextColor="#777"/>
+                            <Label x:Name="RestauranteTelefonoLabel" FontSize="13" TextColor="#999"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
 
+                <!-- Descripción de la bolsa -->
+                <Frame BackgroundColor="White" CornerRadius="12" Padding="15" HasShadow="True" BorderColor="#A5D6A7">
+                    <VerticalStackLayout Spacing="10">
+                        <Label x:Name="DescripcionBolsaLabel" FontSize="16" TextColor="#444" />
+                        <Label x:Name="PrecioBolsaLabel" FontSize="20" FontAttributes="Bold" TextColor="#2E7D32" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Donación: Toggle y texto a la par -->
+                <Grid ColumnDefinitions="Auto, *" VerticalOptions="Center">
+                    <Switch x:Name="DonacionSwitch" Toggled="OnDonacionToggled" HorizontalOptions="Start" />
+                    <Label Text="¿Deseas donar esta bolsa?" FontSize="14" VerticalOptions="Center" TextColor="#666" Padding="10,0,0,0" />
+                </Grid>
+
+                <!-- Picker para banco de comida -->
                 <Picker x:Name="FoodBankPicker"
-                        Title="Selecciona un banco de comida"
-                        IsVisible="False"/>
+            Title="Selecciona un banco de comida"
+            IsVisible="False"
+            BackgroundColor="#FAFAFA"
+            TextColor="#2E7D32"
+            TitleColor="#2E7D32"
+            FontSize="14" />
 
+                <!-- Botón de compra -->
                 <Button Text="Proceder con Compra"
-                        Clicked="OnProcederCompraClicked"
-                        BackgroundColor="#2E7D32"
-                        TextColor="White"
-                        CornerRadius="12"
-                        FontAttributes="Bold"/>
+            Clicked="OnProcederCompraClicked"
+            BackgroundColor="#2E7D32"
+            TextColor="White"
+            FontAttributes="Bold"
+            CornerRadius="12"
+            HeightRequest="50"
+            FontSize="16"/>
             </StackLayout>
 
             <!-- Paso 2: Instrucciones de Pago -->
