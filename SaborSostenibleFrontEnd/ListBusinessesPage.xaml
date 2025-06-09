@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SaborSostenibleFrontEnd.ListBusinessesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5"
+    Title="Lista negocios para activar o desactivar">
+
+    <Grid RowDefinitions="Auto,*" Padding="0">
+        <!-- HEADER -->
+        <Grid Grid.Row="0" Padding="20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Text="←"
+                FontSize="24"
+                BackgroundColor="Transparent"
+                TextColor="#8CBF26"
+                Clicked="OnBackButtonClicked" />
+
+            <Label
+                Grid.Column="1"
+                Text="Lista negocios para activar o desactivar"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#8CBF26"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                x:Name="BusinessesContainer"
+                Spacing="12"
+                Padding="20" />
+        </ScrollView>
+    </Grid>
+</ContentPage>

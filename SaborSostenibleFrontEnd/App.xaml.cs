@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ListVolunteerRequestsPage());
+            MainPage = new NavigationPage(new ListBusinessesPage());
         }
     }
 }
