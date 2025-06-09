@@ -79,9 +79,7 @@ namespace SaborSostenibleFrontEnd
              || _logoFileResult == null
              || string.IsNullOrWhiteSpace(EmailEntry.Text)
              || string.IsNullOrWhiteSpace(PhoneEntry.Text)
-             || string.IsNullOrWhiteSpace(AddressEntry.Text)
-             || string.IsNullOrWhiteSpace(LatitudeEntry.Text)
-             || string.IsNullOrWhiteSpace(LongitudeEntry.Text))
+             || string.IsNullOrWhiteSpace(AddressEntry.Text))
             {
                 DisplayAlert("Error", "Complete todos los campos y seleccione un logo", "OK");
                 return false;
@@ -93,14 +91,28 @@ namespace SaborSostenibleFrontEnd
                 return false;
             }
 
-            if (!decimal.TryParse(LatitudeEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out _latitude)
-             || !decimal.TryParse(LongitudeEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out _longitude))
+            if (_latitude == 0 || _longitude == 0)
             {
-                DisplayAlert("Error", "Latitud o longitud inválidas", "OK");
+                DisplayAlert("Error", "Debe seleccionar una ubicación en el mapa", "OK");
                 return false;
             }
 
             return true;
+        }
+
+        private async void OnElegirUbicacionClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ElegirUbicacionPage((ubicacion) =>
+            {
+                _latitude = (decimal)ubicacion.Latitude;
+                _longitude = (decimal)ubicacion.Longitude;
+
+                // Actualizar la UI desde el hilo principal
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    UbicacionLabel.Text = $"Ubicación elegida: {_latitude:F5}, {_longitude:F5}";
+                });
+            }));
         }
 
         private async void OnInsertClicked(object sender, EventArgs e)

@@ -33,9 +33,20 @@
                 <Label Text="Dirección (opcional)" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="AddressEntry" Placeholder="Dirección" BackgroundColor="White" TextColor="{StaticResource Black}" />
 
-                <Button Text="📍 Usar mi ubicación actual" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnObtenerUbicacionClicked" />
+                <Button Text="📍 Elegir ubicación en el mapa"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    Clicked="OnElegirUbicacionClicked" />
 
-                <Label x:Name="UbicacionLabel" Text="Ubicación no detectada aún." FontSize="12" TextColor="{StaticResource PrimaryDarkText}" HorizontalOptions="Center" />
+                            <Label x:Name="UbicacionLabel"
+                   Text="Ubicación no detectada aún."
+                   FontSize="12"
+                   TextColor="{StaticResource PrimaryDarkText}"
+                   HorizontalOptions="Center" />
+
+                <!--<Button Text="📍 Usar mi ubicación actual" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnObtenerUbicacionClicked" />
+
+                <Label x:Name="UbicacionLabel" Text="Ubicación no detectada aún." FontSize="12" TextColor="{StaticResource PrimaryDarkText}" HorizontalOptions="Center" />-->
 
                 <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
                 <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />

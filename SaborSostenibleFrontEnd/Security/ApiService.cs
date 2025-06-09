@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
@@ -116,7 +117,11 @@ public class ApiService
 
             foreach (var prop in props)
             {
-                var value = prop.GetValue(data)!.ToString()!;
+                var raw = prop.GetValue(data)!;
+                string value = raw is IFormattable formattable
+                    ? formattable.ToString(null, CultureInfo.InvariantCulture)
+                    : raw.ToString()!;
+
                 content.Add(new StringContent(value, System.Text.Encoding.UTF8), prop.Name);
             }
 

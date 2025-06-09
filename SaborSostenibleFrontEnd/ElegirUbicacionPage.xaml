@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage  
+   x:Class="SaborSostenibleFrontEnd.ElegirUbicacionPage"  
+   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+   BackgroundColor="{StaticResource backgroundColor}">
+
+    <Grid>
+        <WebView x:Name="mapWebView" />
+        <Label x:Name="UbicacionLabel" 
+               Text="Toca el mapa para seleccionar ubicación"
+               BackgroundColor="LightGray"
+               VerticalOptions="End" 
+               HorizontalOptions="Center"
+               Padding="10"/>
+        <Button Text="Confirmar" 
+                VerticalOptions="End" 
+                HorizontalOptions="Center" 
+                Margin="0,0,0,50"
+                Clicked="OnConfirmarClicked"/>
+    </Grid>
+</ContentPage>
