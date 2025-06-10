@@ -87,6 +87,10 @@ public partial class BuySupriseBagPage : ContentPage
         try
         {
             using var client = new HttpClient();
+            var token = Preferences.Get("SessionId", null);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
