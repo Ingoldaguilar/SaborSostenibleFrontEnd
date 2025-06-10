@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.BusinessDetailPage"
+             Title="Detalle del Restaurante"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="0">
+
+            <!-- Encabezado con botón de volver -->
+            <Grid Padding="20,40,20,10">
+                <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                    <Label Text="←" FontSize="20" TextColor="#2E7D32" />
+                    <Label Text="Volver" FontSize="16" TextColor="#2E7D32" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnVolverClicked" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- Imagen destacada sin márgenes -->
+            <Frame Padding="0" CornerRadius="0" HasShadow="False" Margin="0">
+                <Image x:Name="RestauranteImagen"
+                   Aspect="AspectFill"
+                   HeightRequest="200"
+                   HorizontalOptions="FillAndExpand">
+                    <Image.Clip>
+                        <RectangleGeometry Rect="0,0,1000,200" />
+                    </Image.Clip>
+                </Image>
+
+
+            </Frame>
+
+            <!-- Nombre y descripción -->
+            <VerticalStackLayout Padding="20,10">
+                <Label x:Name="RestauranteNombreLabel"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       FontFamily="OpenSansSemibold"
+                       TextColor="#2E7D32" />
+
+                <Label x:Name="RestauranteDescripcionLabel"
+                       FontSize="14"
+                       TextColor="#555"
+                       LineBreakMode="WordWrap"
+                       FontFamily="OpenSansRegular" />
+
+                <!-- Teléfono -->
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="📞" FontSize="16" />
+                    <Label x:Name="RestauranteTelefonoLabel"
+                           FontSize="14"
+                           TextColor="#2E7D32"
+                           FontFamily="OpenSansRegular" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Título sección de bolsas -->
+            <Label Text="Bolsas Sorpresa Disponibles"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   FontFamily="OpenSansSemibold"
+                   TextColor="#2E7D32"
+                   Margin="20,0,20,0" />
+
+            <!-- Lista de bolsas -->
+            <CollectionView x:Name="BolsasCollectionView"
+                            ItemsSource="{Binding BolsasDisponibles}"
+                            SelectionMode="None"
+                            Margin="20,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="White"
+                               CornerRadius="15"
+                               Padding="20"
+                               Margin="0,10"
+                               HasShadow="True">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Description}"
+                                       FontSize="16"
+                                       FontFamily="OpenSansRegular"
+                                       TextColor="#444"/>
+                                <Label Text="{Binding Price, StringFormat='₡{0:N2}'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       FontFamily="OpenSansSemibold"
+                                       TextColor="#2E7D32"/>
+                                <Button Text="Comprar"
+                                        Clicked="OnComprarClicked"
+                                        CommandParameter="{Binding}"
+                                        BackgroundColor="#2E7D32"
+                                        TextColor="White"
+                                        CornerRadius="10"
+                                        FontAttributes="Bold"
+                                        HeightRequest="40"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No hay bolsas disponibles en este momento."
+                           FontSize="14"
+                           TextColor="#777"
+                           HorizontalOptions="Center"
+                           Margin="20,10" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

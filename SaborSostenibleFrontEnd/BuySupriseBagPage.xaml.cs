@@ -1,135 +1,179 @@
-using Microsoft.Maui.Controls;
-using SaborSostenibleFrontEnd.Entities;
-using System;
-using System.Net.Http;
+ï»¿using SaborSostenibleFrontEnd.Entities;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.Maui.Storage;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd;
+
+public partial class BuySupriseBagPage : ContentPage
 {
-    public partial class BuySupriseBagPage : ContentPage
+    private readonly Restaurante _restaurante;
+    private readonly SurpriseBag _bolsa;
+    private int _orderId = 0;
+    private List<(int Id, string Name)> _foodBanks = new();
+
+    public BuySupriseBagPage(Restaurante restaurante, SurpriseBag bolsa)
     {
-        private Restaurante _restaurante;
-        private string _orderCode;
+        InitializeComponent();
+        _restaurante = restaurante;
+        _bolsa = bolsa;
 
-        public BuySupriseBagPage(Restaurante restaurante)
+        DescripcionBolsaLabel.Text = _bolsa.Description;
+        PrecioBolsaLabel.Text = $"Precio: â‚¡{_bolsa.Price:N2}";
+
+        _ = CargarFoodBanksAsync();
+    }
+
+    private void OnDonacionToggled(object sender, ToggledEventArgs e)
+    {
+        FoodBankPicker.IsVisible = e.Value;
+    }
+
+    private async Task CargarFoodBanksAsync()
+    {
+        try
         {
-            InitializeComponent();
-            _restaurante = restaurante;
-            _orderCode = GenerateOrderCode();
+            using var client = new HttpClient();
+            var response = await client.GetAsync("http://34.39.128.125/api/activeFoodBanksDetails/get");
 
-            RestauranteNombreLabel.Text = _restaurante.nombreRestaurante;
-            RestauranteDescripcionLabel.Text = _restaurante.descripcionRestaurante;
-            RestauranteImagen.Source = _restaurante.imagen;
-            RestauranteTelefonoLabel.Text = _restaurante.telefono;
-            SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
-        }
-
-        private string GenerateOrderCode()
-        {
-            Random random = new Random();
-            return $"ORD{random.Next(100000, 999999)}";
-        }
-
-        private async void OnProcederCompraClicked(object sender, EventArgs e)
-        {
-            // Eliminamos la validación del teléfono
-            await CompraStep.FadeTo(0, 200);
-            CompraStep.IsVisible = false;
-
-            InstruccionesStep.Opacity = 0;
-            InstruccionesStep.IsVisible = true;
-            await InstruccionesStep.FadeTo(1, 200);
-
-            Paso1Icon.BackgroundColor = Colors.LightGray;
-            Paso2Icon.BackgroundColor = Application.Current.Resources["Primary"] as Color;
-        }
-
-        private async void OnCopiarDetalleClicked(object sender, EventArgs e)
-        {
-            try
+            if (response.IsSuccessStatusCode)
             {
-                await Clipboard.Default.SetTextAsync(SinpeDetalleLabel.Text);
-                await DisplayAlert("Copiado", "Detalle de SINPE copiado al portapapeles", "OK");
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("Error", "No se pudo copiar el texto al portapapeles", "OK");
-            }
-        }
+                var json = await response.Content.ReadAsStringAsync();
+                var doc = JsonDocument.Parse(json);
 
-        private async void OnFinalizarClicked(object sender, EventArgs e)
-        {
-            await InstruccionesStep.FadeTo(0, 200);
-            InstruccionesStep.IsVisible = false;
-
-            ConfirmacionStep.Opacity = 0;
-            ConfirmacionStep.IsVisible = true;
-            await ConfirmacionStep.FadeTo(1, 200);
-
-            OrdenFinalLabel.Text = _orderCode;
-            TelefonoFinalLabel.Text = _restaurante.telefono;
-
-            Paso2Icon.BackgroundColor = Colors.LightGray;
-            Paso3Icon.BackgroundColor = Application.Current.Resources["Primary"] as Color;
-
-            // ?? Hacer POST a /api/order/insert
-            await InsertarOrdenAsync();
-        }
-
-        private async Task InsertarOrdenAsync()
-        {
-            try
-            {
-                using var httpClient = new HttpClient();
-
-                var payload = new
+                if (doc.RootElement.TryGetProperty("FoodBanks", out var banks))
                 {
-                    BagsIdsVarchar = _orderCode,
-                    BusinessId = _restaurante.idRestaurante,
-                    IsDonation = false,
-                    FoodBankId = 1 // Esto puedes ajustarlo si viene del restaurante o es fijo
-                };
+                    _foodBanks.Clear();
+                    FoodBankPicker.Items.Clear();
 
-                var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync("http://34.39.128.125/api/order/insert", content);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Error", $"No se pudo registrar la orden: {error}", "OK");
+                    foreach (var fb in banks.EnumerateArray())
+                    {
+                        var name = fb.GetProperty("Name").GetString();
+                        var id = fb.GetProperty("FoodBankId").GetInt32();
+                        _foodBanks.Add((id, name));
+                        FoodBankPicker.Items.Add(name);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", $"Error inesperado al registrar la orden: {ex.Message}", "OK");
-            }
         }
-
-        private async void OnBackButtonClicked(object sender, EventArgs e)
+        catch
         {
-            var result = await DisplayAlert("Confirmar", "¿Deseas regresar?", "Sí", "No");
-            if (result)
-            {
-                await Navigation.PopAsync();
-            }
-        }
-
-        private async void OnVolverInicioClicked(object sender, EventArgs e)
-        {
-            await Navigation.PopToRootAsync();
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            return true; // Desactiva botón físico de retroceso
+            await DisplayAlert("Error", "No se pudieron cargar los bancos de comida", "OK");
         }
     }
+
+    private async void OnProcederCompraClicked(object sender, EventArgs e)
+    {
+        int? foodBankId = null;
+
+        if (DonacionSwitch.IsToggled)
+        {
+            if (FoodBankPicker.SelectedIndex < 0)
+            {
+                await DisplayAlert("Error", "Selecciona un banco de comida para donar", "OK");
+                return;
+            }
+
+            foodBankId = _foodBanks[FoodBankPicker.SelectedIndex].Id;
+        }
+
+        var payload = new
+        {
+            BagsIdsVarchar = _bolsa.Id,
+            BusinessId = _restaurante.idRestaurante,
+            IsDonation = DonacionSwitch.IsToggled,
+            FoodBankId = foodBankId ?? null
+        };
+
+        try
+        {
+            using var client = new HttpClient();
+            var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("http://34.39.128.125/api/order/insert", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var doc = JsonDocument.Parse(responseJson);
+                _orderId = doc.RootElement.GetProperty("OrderId").GetInt32();
+
+                await MostrarPaso2Async();
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se pudo registrar la orden", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task MostrarPaso2Async()
+    {
+        try
+        {
+            var payload = new { OrderId = _orderId };
+            var json = JsonSerializer.Serialize(payload);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using var client = new HttpClient();
+            var response = await client.PostAsync("http://34.39.128.125/api/customerPurchaseInstructions/post", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+                var info = doc.RootElement.GetProperty("PurchaseInstructions");
+
+                PagoNombreNegocioLabel.Text = $"Negocio: {info.GetProperty("NameBusiness").GetString()}";
+                PagoTelefonoLabel.Text = $"TelÃ©fono: {info.GetProperty("PhoneNumberBusiness").GetString()}";
+                PagoCodigoOrdenLabel.Text = $"CÃ³digo: {info.GetProperty("OrderCode").GetString()}";
+
+                Paso1.IsVisible = false;
+                Paso2.IsVisible = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error al obtener instrucciones de pago: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnContinuarClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(new { OrderId = _orderId });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using var client = new HttpClient();
+            var response = await client.PostAsync("http://34.39.128.125/api/customerFinalPaymentData/post", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+                var data = doc.RootElement.GetProperty("FinalPaymentData");
+
+                ConfirmacionCodigoOrdenLabel.Text = $"CÃ³digo: {data.GetProperty("OrderCode").GetString()}";
+                ConfirmacionNombreNegocioLabel.Text = $"Negocio: {data.GetProperty("NameBusiness").GetString()}";
+                ConfirmacionEstadoLabel.Text = $"Estado: {data.GetProperty("State").GetString()}";
+
+                Paso2.IsVisible = false;
+                Paso3.IsVisible = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error al confirmar el pago: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnVolverInicioClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopToRootAsync();
+    }
+
+    protected override bool OnBackButtonPressed() => true;
 }
