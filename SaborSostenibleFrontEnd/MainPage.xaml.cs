@@ -2,8 +2,8 @@
 using SaborSostenibleFrontEnd.Entities;
 using System.Collections.ObjectModel;
 using System.Net.Http;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SaborSostenibleFrontEnd
@@ -17,7 +17,9 @@ namespace SaborSostenibleFrontEnd
         {
             InitializeComponent();
             BindingContext = this;
+
             NavigationPage.SetHasNavigationBar(this, false);
+            Padding = new Thickness(0);
 
             _ = CargarSaludoPersonalizadoAsync();
             _ = CargarRestaurantesDesdeApiAsync();
@@ -35,6 +37,7 @@ namespace SaborSostenibleFrontEnd
                     httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage response;
+
                 if (string.IsNullOrWhiteSpace(searchText))
                 {
                     response = await httpClient.GetAsync("http://34.39.128.125/api/activeBusinessesDetails/get");
@@ -49,7 +52,8 @@ namespace SaborSostenibleFrontEnd
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var doc = JsonDocument.Parse(json);
-                    if (doc.RootElement.TryGetProperty("Businesses", out JsonElement empresas) && empresas.GetArrayLength() > 0)
+
+                    if (doc.RootElement.TryGetProperty("Businesses", out var empresas))
                     {
                         Restaurantes.Clear();
                         foreach (var item in empresas.EnumerateArray())
@@ -97,7 +101,7 @@ namespace SaborSostenibleFrontEnd
                     var json = await response.Content.ReadAsStringAsync();
                     var doc = JsonDocument.Parse(json);
 
-                    if (doc.RootElement.TryGetProperty("OrdersByUserId", out JsonElement ordenes) && ordenes.GetArrayLength() > 0)
+                    if (doc.RootElement.TryGetProperty("OrdersByUserId", out var ordenes))
                     {
                         foreach (var item in ordenes.EnumerateArray())
                         {
@@ -112,10 +116,6 @@ namespace SaborSostenibleFrontEnd
                             });
                         }
                     }
-                    else
-                    {
-                        Pedidos.Clear();
-                    }
                 }
                 else
                 {
@@ -124,8 +124,7 @@ namespace SaborSostenibleFrontEnd
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Ha ocurrido un error, porfavor reinicie la aplicación", "OK");
-                Console.Write("Excepción al cargar pedidos: " + ex.Message);
+                await DisplayAlert("Error", $"Ha ocurrido un error al cargar pedidos.\n\n{ex.Message}", "OK");
             }
         }
 
@@ -134,14 +133,7 @@ namespace SaborSostenibleFrontEnd
             if (sender is Entry entry)
             {
                 var texto = entry.Text?.Trim();
-                if (!string.IsNullOrEmpty(texto))
-                {
-                    await CargarRestaurantesDesdeApiAsync(texto);
-                }
-                else
-                {
-                    await CargarRestaurantesDesdeApiAsync();
-                }
+                await CargarRestaurantesDesdeApiAsync(string.IsNullOrEmpty(texto) ? null : texto);
             }
         }
 
@@ -150,79 +142,93 @@ namespace SaborSostenibleFrontEnd
             try
             {
                 var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    await DisplayAlert("Error", "No hay sesión activa", "OK");
-                    return;
-                }
+                if (string.IsNullOrEmpty(token)) return;
 
                 using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var json = JsonDocument.Parse(content);
+                    var json = await response.Content.ReadAsStringAsync();
+                    var doc = JsonDocument.Parse(json);
 
-                    if (json.RootElement.TryGetProperty("GreetingInfo", out JsonElement info))
+                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
                     {
                         string Safe(string key) =>
                             info.TryGetProperty(key, out var val) && !string.IsNullOrWhiteSpace(val.GetString()) ? val.GetString() : null;
 
-                        // Nombre completo sin "N/A"
+                        // Nombre completo
                         string[] nombreComponentes = { Safe("FirstName1"), Safe("FirstName2"), Safe("LastName1"), Safe("LastName2") };
-                        string fullName = string.Join(" ", nombreComponentes.Where(x => !string.IsNullOrWhiteSpace(x)));
-                        UsuarioNombreLabel.Text = string.IsNullOrWhiteSpace(fullName) ? "Sin nombre registrado" : fullName;
+                        UsuarioNombreLabel.Text = string.Join(" ", nombreComponentes.Where(s => !string.IsNullOrWhiteSpace(s)));
 
-                        // Correo (nunca debe estar vacío si hay sesión activa)
                         UsuarioEmailLabel.Text = Safe("Email") ?? "N/A";
-
-                        // Teléfono y dirección con N/A si están vacíos
                         UsuarioTelefonoLabel.Text = Safe("PhoneNumber") ?? "N/A";
                         UsuarioDireccionLabel.Text = Safe("Address") ?? "N/A";
-
-                        // Rol fijo por ahora
                         UsuarioRolLabel.Text = "Usuario";
-
                     }
-                    else
-                    {
-                        await DisplayAlert("Error", "No se encontró la información del usuario", "OK");
-                    }
-                }
-                else
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Error", $"Error al obtener perfil: {error}", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Excepción: {ex.Message}", "OK");
+                await DisplayAlert("Error", $"Error al obtener datos del usuario.\n\n{ex.Message}", "OK");
+            }
+        }
+
+        private async Task CargarSaludoPersonalizadoAsync()
+        {
+            try
+            {
+                var token = Preferences.Get("SessionId", null);
+                if (string.IsNullOrEmpty(token))
+                {
+                    SaludoLabel.Text = "¡Hola! 👋";
+                    return;
+                }
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var doc = JsonDocument.Parse(json);
+
+                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
+                    {
+                        var nombre = info.GetProperty("FirstName1").GetString();
+                        SaludoLabel.Text = $"¡Hola, {nombre}! 👋";
+                    }
+                }
+            }
+            catch
+            {
+                SaludoLabel.Text = "¡Hola! 👋";
+            }
+        }
+
+        private async void OnRestauranteCardTapped(object sender, TappedEventArgs e)
+        {
+            if (e.Parameter is Restaurante restaurante)
+            {
+                await Navigation.PushAsync(new BusinessDetailPage(restaurante));
             }
         }
 
         private async void OnCerrarSesionClicked(object sender, EventArgs e)
         {
-            var confirm = await DisplayAlert("Cerrar Sesión", "¿Estás seguro que deseas cerrar sesión?", "Sí", "No");
-            if (confirm)
-            {
-                Preferences.Remove("SessionId");
-                Preferences.Remove("UserEmail");
-                Preferences.Remove("UserName");
+            bool confirm = await DisplayAlert("Cerrar Sesión", "¿Estás seguro que deseas cerrar sesión?", "Sí", "No");
+            if (!confirm) return;
 
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
-            }
+            Preferences.Clear();
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
         private async void OnSolicitarVoluntariadoClicked(object sender, EventArgs e)
         {
-            var confirmar = await DisplayAlert("Solicitud de Voluntariado",
-                "¿Deseas solicitar ser voluntario en Sabor Sostenible?", "Sí", "No");
-
-            if (!confirmar) return;
+            bool confirm = await DisplayAlert("Solicitud de Voluntariado", "¿Deseas solicitar ser voluntario en Sabor Sostenible?", "Sí", "No");
+            if (!confirm) return;
 
             try
             {
@@ -234,7 +240,7 @@ namespace SaborSostenibleFrontEnd
                 }
 
                 using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 var response = await client.PostAsync("http://34.39.128.125/api/createVolunteerRequest/post", null);
 
@@ -251,55 +257,6 @@ namespace SaborSostenibleFrontEnd
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
-            }
-        }
-
-        private async Task CargarSaludoPersonalizadoAsync()
-        {
-            try
-            {
-                var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    SaludoLabel.Text = "¡Hola! 👋";
-                    return;
-                }
-
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer " + token);
-
-                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var json = JsonDocument.Parse(content);
-                    if (json.RootElement.TryGetProperty("GreetingInfo", out JsonElement info))
-                    {
-                        var nombre = info.GetProperty("FirstName1").GetString();
-                        SaludoLabel.Text = $"¡Hola, {nombre}! 👋";
-                    }
-                    else
-                    {
-                        SaludoLabel.Text = "¡Hola! 👋";
-                    }
-                }
-                else
-                {
-                    SaludoLabel.Text = "¡Hola! 👋";
-                }
-            }
-            catch
-            {
-                SaludoLabel.Text = "¡Hola! 👋";
-            }
-        }
-
-        private async void OnRestauranteCardTapped(object sender, TappedEventArgs e)
-        {
-            if (e.Parameter is Restaurante restaurante)
-            {
-                await Navigation.PushAsync(new BusinessDetailPage(restaurante));
             }
         }
     }
