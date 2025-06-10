@@ -1,4 +1,5 @@
-﻿using SaborSostenibleFrontEnd.Entities;
+﻿using Microsoft.Maui.Controls;
+using SaborSostenibleFrontEnd.Entities;
 using System.Text;
 using System.Text.Json;
 
@@ -10,6 +11,7 @@ public partial class BuySupriseBagPage : ContentPage
     private readonly SurpriseBag _bolsa;
     private int _orderId = 0;
     private List<(int Id, string Name)> _foodBanks = new();
+    private string _orderCode = "";
 
     public BuySupriseBagPage(Restaurante restaurante, SurpriseBag bolsa)
     {
@@ -17,8 +19,19 @@ public partial class BuySupriseBagPage : ContentPage
         _restaurante = restaurante;
         _bolsa = bolsa;
 
+        _orderCode = $"ORD{new Random().Next(100000, 999999)}";
+
+        RestauranteNombreLabel.Text = _restaurante.nombreRestaurante;
+        RestauranteDescripcionLabel.Text = _restaurante.descripcionRestaurante;
+        RestauranteImagen.Source = _restaurante.imagen;
+        RestauranteTelefonoLabel.Text = _restaurante.telefono;
+
         DescripcionBolsaLabel.Text = _bolsa.Description;
         PrecioBolsaLabel.Text = $"Precio: ₡{_bolsa.Price:N2}";
+
+        SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
+        PagoMontoLabel.Text = $"₡{_bolsa.Price:N0}";
+        PagoTelefonoLabel.Text = _restaurante.telefono;
 
         _ = CargarFoodBanksAsync();
     }
@@ -63,6 +76,12 @@ public partial class BuySupriseBagPage : ContentPage
 
     private async void OnProcederCompraClicked(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(CustomerPhoneEntry.Text))
+        {
+            await DisplayAlert("Error", "Por favor ingresa tu número de teléfono", "OK");
+            return;
+        }
+
         int? foodBankId = null;
 
         if (DonacionSwitch.IsToggled)
@@ -101,6 +120,9 @@ public partial class BuySupriseBagPage : ContentPage
                 var responseJson = await response.Content.ReadAsStringAsync();
                 var doc = JsonDocument.Parse(responseJson);
                 _orderId = doc.RootElement.GetProperty("OrderId").GetInt32();
+                Paso1Icon.BackgroundColor = Colors.LightGray;
+                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32");
+
 
                 await MostrarPaso2Async();
             }
@@ -119,11 +141,14 @@ public partial class BuySupriseBagPage : ContentPage
     {
         try
         {
-            var payload = new { OrderId = _orderId };
+            var payload = new { OrderId = _orderId.ToString() };
             var json = JsonSerializer.Serialize(payload);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
             using var client = new HttpClient();
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var token = Preferences.Get("SessionId", null);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var response = await client.PostAsync("http://34.39.128.125/api/customerPurchaseInstructions/post", content);
 
             if (response.IsSuccessStatusCode)
@@ -131,12 +156,15 @@ public partial class BuySupriseBagPage : ContentPage
                 var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
                 var info = doc.RootElement.GetProperty("PurchaseInstructions");
 
-                PagoNombreNegocioLabel.Text = $"Negocio: {info.GetProperty("NameBusiness").GetString()}";
-                PagoTelefonoLabel.Text = $"Teléfono: {info.GetProperty("PhoneNumberBusiness").GetString()}";
-                PagoCodigoOrdenLabel.Text = $"Código: {info.GetProperty("OrderCode").GetString()}";
+                PagoTelefonoLabel.Text = info.GetProperty("PhoneNumberBusiness").GetString();
+                PagoMontoLabel.Text = $"₡{_bolsa.Price:N0}";
+                SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
 
+                await Paso1.FadeTo(0, 200);
                 Paso1.IsVisible = false;
-                Paso2.IsVisible = true;
+                InstruccionesStep.Opacity = 0;
+                InstruccionesStep.IsVisible = true;
+                await InstruccionesStep.FadeTo(1, 200);
             }
         }
         catch (Exception ex)
@@ -145,14 +173,20 @@ public partial class BuySupriseBagPage : ContentPage
         }
     }
 
-    private async void OnContinuarClicked(object sender, EventArgs e)
+    private async void OnFinalizarClicked(object sender, EventArgs e)
     {
         try
         {
-            var json = JsonSerializer.Serialize(new { OrderId = _orderId });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            Paso2Icon.BackgroundColor = Colors.LightGray;
+            Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32");
 
+            var json = JsonSerializer.Serialize(new { OrderId = _orderId });
             using var client = new HttpClient();
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var token = Preferences.Get("SessionId", null);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var response = await client.PostAsync("http://34.39.128.125/api/customerFinalPaymentData/post", content);
 
             if (response.IsSuccessStatusCode)
@@ -160,17 +194,32 @@ public partial class BuySupriseBagPage : ContentPage
                 var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
                 var data = doc.RootElement.GetProperty("FinalPaymentData");
 
-                ConfirmacionCodigoOrdenLabel.Text = $"Código: {data.GetProperty("OrderCode").GetString()}";
-                ConfirmacionNombreNegocioLabel.Text = $"Negocio: {data.GetProperty("NameBusiness").GetString()}";
-                ConfirmacionEstadoLabel.Text = $"Estado: {data.GetProperty("State").GetString()}";
+                OrdenFinalLabel.Text = $"Código: {data.GetProperty("OrderCode").GetString()}";
+                TelefonoFinalLabel.Text = $"Teléfono: {data.GetProperty("PhoneNumberBusiness").GetString()}";
 
-                Paso2.IsVisible = false;
-                Paso3.IsVisible = true;
+                await InstruccionesStep.FadeTo(0, 200);
+                InstruccionesStep.IsVisible = false;
+                ConfirmacionStep.Opacity = 0;
+                ConfirmacionStep.IsVisible = true;
+                await ConfirmacionStep.FadeTo(1, 200);
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Error al confirmar el pago: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnCopiarDetalleClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await Clipboard.Default.SetTextAsync(SinpeDetalleLabel.Text);
+            await DisplayAlert("Copiado", "Detalle de SINPE copiado al portapapeles", "OK");
+        }
+        catch
+        {
+            await DisplayAlert("Error", "No se pudo copiar el texto al portapapeles", "OK");
         }
     }
 
