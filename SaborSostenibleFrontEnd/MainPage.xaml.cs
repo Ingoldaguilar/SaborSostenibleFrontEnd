@@ -18,6 +18,8 @@ namespace SaborSostenibleFrontEnd
             InitializeComponent();
             BindingContext = this;
             NavigationPage.SetHasNavigationBar(this, false);
+            Padding = new Thickness(0);
+
 
             _ = CargarSaludoPersonalizadoAsync();
             _ = CargarRestaurantesDesdeApiAsync();
