@@ -54,6 +54,7 @@ public partial class BusinessDetailPage : ContentPage
                 {
                     BolsasDisponibles.Add(new SurpriseBag
                     {
+                        Id = item.GetProperty("BagId").GetInt32().ToString(),
                         Description = item.GetProperty("Description").GetString(),
                         Price = item.GetProperty("Price").GetDecimal()
                     });
