@@ -20,6 +20,7 @@ namespace SaborSostenibleFrontEnd.Entities
             StateCode switch
             {
                 6 => "Completado",
+                10 => "Denegado",
                 // otros códigos...
                 _ => "Desconocido"
             };
