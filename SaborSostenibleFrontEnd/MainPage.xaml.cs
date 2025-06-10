@@ -42,7 +42,7 @@ namespace SaborSostenibleFrontEnd
                 else
                 {
                     var content = new StringContent(JsonSerializer.Serialize(new { SearchText = searchText }), Encoding.UTF8, "application/json");
-                    response = await httpClient.PostAsync("http://34.39.128.125/api/searchBusinesses/get", content);
+                    response = await httpClient.PostAsync("http://34.39.128.125/api/searchBusinesses/post", content);
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -128,6 +128,7 @@ namespace SaborSostenibleFrontEnd
                 Console.Write("Excepción al cargar pedidos: " + ex.Message);
             }
         }
+
         private async void OnSearchCompleted(object sender, EventArgs e)
         {
             if (sender is Entry entry)
@@ -141,13 +142,6 @@ namespace SaborSostenibleFrontEnd
                 {
                     await CargarRestaurantesDesdeApiAsync();
                 }
-            }
-        }
-        private async void OnComprarClicked(object sender, EventArgs e)
-        {
-            if (sender is Button button && button.CommandParameter is Restaurante restaurante)
-            {
-                await Navigation.PushAsync(new BuySupriseBagPage(restaurante));
             }
         }
 
@@ -175,15 +169,23 @@ namespace SaborSostenibleFrontEnd
                     if (json.RootElement.TryGetProperty("GreetingInfo", out JsonElement info))
                     {
                         string Safe(string key) =>
-                            info.TryGetProperty(key, out var val) && !string.IsNullOrWhiteSpace(val.GetString()) ? val.GetString() : "N/A";
+                            info.TryGetProperty(key, out var val) && !string.IsNullOrWhiteSpace(val.GetString()) ? val.GetString() : null;
 
-                        string fullName = $"{Safe("FirstName1")} {Safe("FirstName2")} {Safe("LastName1")} {Safe("LastName2")}".Trim();
-                        UsuarioNombreLabel.Text = string.IsNullOrWhiteSpace(fullName) ? "N/A" : fullName;
+                        // Nombre completo sin "N/A"
+                        string[] nombreComponentes = { Safe("FirstName1"), Safe("FirstName2"), Safe("LastName1"), Safe("LastName2") };
+                        string fullName = string.Join(" ", nombreComponentes.Where(x => !string.IsNullOrWhiteSpace(x)));
+                        UsuarioNombreLabel.Text = string.IsNullOrWhiteSpace(fullName) ? "Sin nombre registrado" : fullName;
 
-                        UsuarioEmailLabel.Text = Safe("Email");
-                        UsuarioTelefonoLabel.Text = Safe("PhoneNumber");
-                        UsuarioDireccionLabel.Text = Safe("Address");
+                        // Correo (nunca debe estar vacío si hay sesión activa)
+                        UsuarioEmailLabel.Text = Safe("Email") ?? "N/A";
+
+                        // Teléfono y dirección con N/A si están vacíos
+                        UsuarioTelefonoLabel.Text = Safe("PhoneNumber") ?? "N/A";
+                        UsuarioDireccionLabel.Text = Safe("Address") ?? "N/A";
+
+                        // Rol fijo por ahora
                         UsuarioRolLabel.Text = "Usuario";
+
                     }
                     else
                     {
@@ -297,10 +299,8 @@ namespace SaborSostenibleFrontEnd
         {
             if (e.Parameter is Restaurante restaurante)
             {
-                //await Navigation.PushAsync(new RestaurantDetailPage(restaurante));
-                Console.WriteLine($"Restaurante seleccionado: {restaurante.nombreRestaurante}");
+                await Navigation.PushAsync(new BusinessDetailPage(restaurante));
             }
         }
-
     }
 }

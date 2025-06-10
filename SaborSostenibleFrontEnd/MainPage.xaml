@@ -170,47 +170,53 @@
         <ScrollView>
             <VerticalStackLayout Padding="20" Spacing="20">
 
-                <Label Text="Mi Perfil" FontSize="24" FontAttributes="Bold" TextColor="#2E7D32" />
+                <Label Text="Mi Perfil" FontSize="28" FontAttributes="Bold" TextColor="#2E7D32" />
 
-                <Frame BackgroundColor="White" CornerRadius="12" Padding="15" HasShadow="True">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Nombre completo:" FontSize="14" TextColor="#888" />
-                        <Label x:Name="UsuarioNombreLabel" FontSize="16" TextColor="#2E7D32" FontAttributes="Bold"/>
+                <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True" BorderColor="#A5D6A7">
+                    <VerticalStackLayout Spacing="15">
 
-                        <Label Text="Correo electrónico:" FontSize="14" TextColor="#888" Margin="0,10,0,0"/>
-                        <Label x:Name="UsuarioEmailLabel" FontSize="16" TextColor="#2E7D32" FontAttributes="Bold"/>
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10">
 
-                        <Label Text="Teléfono:" FontSize="14" TextColor="#888" Margin="0,10,0,0"/>
-                        <Label x:Name="UsuarioTelefonoLabel" FontSize="14" TextColor="#2E7D32" />
+                            <Label Grid.Row="0" Grid.Column="0" Text="👤" FontSize="20" VerticalOptions="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Source={x:Reference UsuarioNombreLabel}, Path=Text}" x:Name="UsuarioNombreLabel"
+                               FontSize="18" TextColor="#2E7D32" FontAttributes="Bold"/>
 
-                        <Label Text="Dirección:" FontSize="14" TextColor="#888" Margin="0,10,0,0"/>
-                        <Label x:Name="UsuarioDireccionLabel" FontSize="14" TextColor="#2E7D32" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="📧" FontSize="20" VerticalOptions="Center"/>
+                            <Label Grid.Row="1" Grid.Column="1" x:Name="UsuarioEmailLabel" FontSize="16" TextColor="#555"/>
 
-                        <Label Text="Rol actual:" FontSize="14" TextColor="#888" Margin="0,10,0,0"/>
-                        <Label x:Name="UsuarioRolLabel" FontSize="14" TextColor="#2E7D32" FontAttributes="Bold" />
+                            <Label Grid.Row="2" Grid.Column="0" Text="📱" FontSize="20" VerticalOptions="Center"/>
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="UsuarioTelefonoLabel" FontSize="16" TextColor="#555"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="📍" FontSize="20" VerticalOptions="Center"/>
+                            <Label Grid.Row="3" Grid.Column="1" x:Name="UsuarioDireccionLabel" FontSize="16" TextColor="#555"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="🎭" FontSize="20" VerticalOptions="Center"/>
+                            <Label Grid.Row="4" Grid.Column="1" x:Name="UsuarioRolLabel" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32"/>
+
+                        </Grid>
+
                     </VerticalStackLayout>
                 </Frame>
 
                 <Button Text="Solicitar ser voluntario"
-                        Clicked="OnSolicitarVoluntariadoClicked"
-                        BackgroundColor="#2E7D32"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="10"/>
+                    Clicked="OnSolicitarVoluntariadoClicked"
+                    BackgroundColor="#2E7D32"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"/>
 
                 <Button Text="Cerrar Sesión"
-                        Clicked="OnCerrarSesionClicked"
-                        BackgroundColor="#E53935"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="10" />
+                    Clicked="OnCerrarSesionClicked"
+                    BackgroundColor="#E53935"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12" />
 
                 <Label Text="Versión de la App: 1.0.0"
-                       FontSize="12"
-                       HorizontalOptions="Center"
-                       TextColor="#AAA"
-                       Margin="0,30,0,0"/>
-
+                   FontSize="12"
+                   HorizontalOptions="Center"
+                   TextColor="#AAA"
+                   Margin="0,30,0,0"/>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage>
