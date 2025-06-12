@@ -6,7 +6,7 @@ using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd.BusinessPages
 {
     public partial class BusinessPendingSaleDetailsPage : ContentPage
     {

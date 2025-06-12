@@ -1,6 +1,6 @@
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd;
+namespace SaborSostenibleFrontEnd.BusinessPages;
 
 public partial class YoBusinessPage : ContentPage
 {

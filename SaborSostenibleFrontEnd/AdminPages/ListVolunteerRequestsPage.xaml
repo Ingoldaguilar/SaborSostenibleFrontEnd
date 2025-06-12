@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SaborSostenibleFrontEnd.PendingSalesHistoryPage"
+    x:Class="SaborSostenibleFrontEnd.AdminPages.ListVolunteerRequestsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="#F5F5F5"
     NavigationPage.HasNavigationBar="False"
-    Title="Ventas en proceso">
+    BackgroundColor="#F5F5F5"
+    Title="Lista solicitudes voluntarios">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto, *" Padding="0">
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*">
+        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto, *">
             <Button
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
-                TextColor="#2E7D32"
+                TextColor="{StaticResource Primary}"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
-                Text="Ventas en proceso"
-                FontSize="18"
+                Text="Lista solicitudes voluntarios"
+                FontSize="20"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+                TextColor="{StaticResource Primary}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
         </Grid>
 
-        <!-- LISTA -->
+        <!-- CONTENIDO -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
-                x:Name="SalesContainer"
+                x:Name="RequestsContainer"
                 Spacing="12"
                 Padding="20" />
         </ScrollView>

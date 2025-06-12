@@ -1,4 +1,4 @@
-namespace SaborSostenibleFrontEnd;
+namespace SaborSostenibleFrontEnd.BusinessPages;
 
 public partial class BusinessMainPage : TabbedPage
 {

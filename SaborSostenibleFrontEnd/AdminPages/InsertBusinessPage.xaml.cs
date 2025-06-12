@@ -14,7 +14,7 @@ using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd
+namespace SaborSostenibleFrontEnd.AdminPages
 {
     public partial class InsertBusinessPage : ContentPage
     {

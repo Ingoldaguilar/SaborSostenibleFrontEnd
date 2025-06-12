@@ -1,6 +1,6 @@
 using SaborSostenibleFrontEnd.Security;
 
-namespace SaborSostenibleFrontEnd;
+namespace SaborSostenibleFrontEnd.AdminPages;
 
 public partial class AdminMainPage : TabbedPage
 {

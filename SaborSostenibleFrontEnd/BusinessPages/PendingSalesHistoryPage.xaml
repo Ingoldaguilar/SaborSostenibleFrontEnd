@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SaborSostenibleFrontEnd.ListBusinessesPage"
+    x:Class="SaborSostenibleFrontEnd.BusinessPages.PendingSalesHistoryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F5F5F5"
-    Title="Lista negocios para activar o desactivar">
+    NavigationPage.HasNavigationBar="False"
+    Title="Ventas en proceso">
 
-    <Grid RowDefinitions="Auto,*" Padding="0">
+    <Grid RowDefinitions="Auto,*">
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
+        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*">
             <Button
                 Text="←"
                 FontSize="24"
                 BackgroundColor="Transparent"
                 TextColor="#2E7D32"
                 Clicked="OnBackButtonClicked" />
-
             <Label
                 Grid.Column="1"
-                Text="Lista negocios para activar o desactivar"
-                FontSize="20"
+                Text="Ventas en proceso"
+                FontSize="18"
                 FontAttributes="Bold"
                 TextColor="#2E7D32"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
+                HorizontalOptions="Center" />
         </Grid>
 
-        <!-- CONTENIDO -->
+        <!-- LISTA -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
-                x:Name="BusinessesContainer"
+                x:Name="SalesContainer"
                 Spacing="12"
                 Padding="20" />
         </ScrollView>

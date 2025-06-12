@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="SaborSostenibleFrontEnd.ListFoodBanksPage"
+    x:Class="SaborSostenibleFrontEnd.BusinessPages.SalesHistoryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F5F5F5"
-    Title="Lista banco de alimentos para activar o desactivar">
+    Title="Historial de ventas">
 
     <Grid RowDefinitions="Auto,*" Padding="0">
-        <!-- HEADER -->
+        <!-- Header -->
         <Grid Grid.Row="0" Padding="20,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -24,18 +24,17 @@
 
             <Label
                 Grid.Column="1"
-                Text="Lista banco de alimentos para activar o desactivar"
-                FontSize="20"
+                Text="Historial de ventas"
+                FontSize="18"
                 FontAttributes="Bold"
                 TextColor="#2E7D32"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
+                HorizontalOptions="Center" />
         </Grid>
 
-        <!-- CONTENIDO -->
+        <!-- Contenedor dinámico -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
-                x:Name="BanksContainer"
+                x:Name="HistoryContainer"
                 Spacing="12"
                 Padding="20" />
         </ScrollView>

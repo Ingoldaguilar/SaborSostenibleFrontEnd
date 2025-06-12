@@ -74,46 +74,46 @@
 	  <Compile Update="FoodBankPages\ListPendingBagsPage.xaml.cs">
 	    <DependentUpon>ListPendingBagsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ListBusinessesPage.xaml.cs">
+	  <Compile Update="AdminPages\ListBusinessesPage.xaml.cs">
 	    <DependentUpon>ListBusinessesPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="InsertSurpriseBagPage.xaml.cs">
+	  <Compile Update="BusinessPages\InsertSurpriseBagPage.xaml.cs">
 	    <DependentUpon>InsertSurpriseBagPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="OrderDetailsPage.xaml.cs">
 	    <DependentUpon>OrderDetailsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="BusinessPendingSaleDetailsPage.xaml.cs">
+	  <Compile Update="BusinessPages\BusinessPendingSaleDetailsPage.xaml.cs">
 	    <DependentUpon>BusinessPendingSaleDetailsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="UpdateBusinessPage.xaml.cs">
+	  <Compile Update="BusinessPages\UpdateBusinessPage.xaml.cs">
 	    <DependentUpon>UpdateBusinessPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="FoodBankPages\ReceivedBagsHistoryPage.xaml.cs">
 	    <DependentUpon>ReceivedBagsHistoryPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="SalesHistoryPage.xaml.cs">
+	  <Compile Update="BusinessPages\SalesHistoryPage.xaml.cs">
 	    <DependentUpon>SalesHistoryPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="FoodBankPages\UpdateFoodBankPage.xaml.cs">
 	    <DependentUpon>UpdateFoodBankPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ListFoodBanksPage.xaml.cs">
+	  <Compile Update="AdminPages\ListFoodBanksPage.xaml.cs">
 	    <DependentUpon>ListFoodBanksPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ListVolunteerRequestsPage.xaml.cs">
+	  <Compile Update="AdminPages\ListVolunteerRequestsPage.xaml.cs">
 	    <DependentUpon>ListVolunteerRequestsPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="InsertFoodBankPage.xaml.cs">
+	  <Compile Update="AdminPages\InsertFoodBankPage.xaml.cs">
 	    <DependentUpon>InsertFoodBankPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="InsertBusinessPage.xaml.cs">
+	  <Compile Update="AdminPages\InsertBusinessPage.xaml.cs">
 	    <DependentUpon>InsertBusinessPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="PendingSalesHistoryPage.xaml.cs">
+	  <Compile Update="BusinessPages\PendingSalesHistoryPage.xaml.cs">
 	    <DependentUpon>PendingSalesHistoryPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="SurpriseBagsForBusinessPage.xaml.cs">
+	  <Compile Update="BusinessPages\SurpriseBagsForBusinessPage.xaml.cs">
 	    <DependentUpon>SurpriseBagsForBusinessPage.xaml</DependentUpon>
 	  </Compile>
 
@@ -123,7 +123,7 @@
 	  <MauiXaml Update="BusinessDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="BusinessMainPage.xaml">
+	  <MauiXaml Update="BusinessPages\BusinessMainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="FoodBankPages\ConfirmReceptionPage.xaml">
@@ -135,7 +135,7 @@
 	  <MauiXaml Update="FoodBankPages\ListPendingBagsPage.xaml">
 	  	<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="AdminMainPage.xaml">
+	  <MauiXaml Update="AdminPages\AdminMainPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="BuySupriseBagPage.xaml">
@@ -153,37 +153,37 @@
 	  <MauiXaml Update="ForgotPassword.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ListBusinessesPage.xaml">
+	  <MauiXaml Update="AdminPages\ListBusinessesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InsertSurpriseBagPage.xaml">
+	  <MauiXaml Update="BusinessPages\InsertSurpriseBagPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="OrderDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="BusinessPendingSaleDetailsPage.xaml">
+	  <MauiXaml Update="BusinessPages\BusinessPendingSaleDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="UpdateBusinessPage.xaml">
+	  <MauiXaml Update="BusinessPages\UpdateBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="FoodBankPages\ReceivedBagsHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SalesHistoryPage.xaml">
+	  <MauiXaml Update="BusinessPages\SalesHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="FoodBankPages\UpdateFoodBankPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ListFoodBanksPage.xaml">
+	  <MauiXaml Update="AdminPages\ListFoodBanksPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ListVolunteerRequestsPage.xaml">
+	  <MauiXaml Update="AdminPages\ListVolunteerRequestsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InsertFoodBankPage.xaml">
+	  <MauiXaml Update="AdminPages\InsertFoodBankPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="LoadingPage.xaml">
@@ -192,7 +192,7 @@
 	  <MauiXaml Update="LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InsertBusinessPage.xaml">
+	  <MauiXaml Update="AdminPages\InsertBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="RegisterPage.xaml">
@@ -207,13 +207,13 @@
 	  <MauiXaml Update="Resources\Styles\Styles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="PendingSalesHistoryPage.xaml">
+	  <MauiXaml Update="BusinessPages\PendingSalesHistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SurpriseBagsForBusinessPage.xaml">
+	  <MauiXaml Update="BusinessPages\SurpriseBagsForBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="YoBusinessPage.xaml">
+	  <MauiXaml Update="BusinessPages\YoBusinessPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
