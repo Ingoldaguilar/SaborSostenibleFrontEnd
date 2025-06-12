@@ -136,24 +136,22 @@ namespace SaborSostenibleFrontEnd
 
             try
             {
-                var res = await _api.PostAsync<ReqUpdateBusiness, ResBase>(
-                    "business/update", req);
+                var res = await _api.PostAsync<ReqUpdateBusiness, ResBase>("business/update", req);
 
                 if (res?.Success == true)
                 {
                     await DisplayAlert("Éxito", "Restaurante actualizado.", "OK");
                     await Navigation.PopModalAsync();
 
-                    // Redirige a YoFoodBankPage (reemplaza la página actual)
-                    await Navigation.PushAsync(new YoBusinessPage());
+                    //// Redirige a YoFoodBankPage (reemplaza la página actual)
+                    //await Navigation.PushAsync(new YoBusinessPage());
 
-                    // Y cierra la actual
-                    Navigation.RemovePage(this);
+                    //// Y cierra la actual
+                    //Navigation.RemovePage(this);
                 }
                 else
                 {
-                    var errs = res?.Errors?.Select(x => x.Description)
-                               ?? new[] { "Error desconocido" };
+                    var errs = res?.Errors?.Select(x => x.Description) ?? new[] { "Error desconocido" };
                     await DisplayAlert("Error", string.Join("\n", errs), "OK");
                 }
             }
@@ -163,7 +161,8 @@ namespace SaborSostenibleFrontEnd
             }
             finally
             {
-                await Navigation.PopModalAsync();
+                if (Navigation.ModalStack.Count > 0)
+                    await Navigation.PopModalAsync();
             }
         }
 

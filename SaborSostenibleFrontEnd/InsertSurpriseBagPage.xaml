@@ -1,66 +1,132 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
-  x:Class="SaborSostenibleFrontEnd.InsertSurpriseBagPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  NavigationPage.HasNavigationBar="False"
-  BackgroundColor="#F5F5F5"
-  Title="Subir Bolsa Sorpresa">
+    x:Class="SaborSostenibleFrontEnd.InsertSurpriseBagPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5"
+    Title="Subir bolsa sorpresa">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
-        <!-- CABECERA -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
-            <Button
-                Text="←"
-                FontSize="24"
-                BackgroundColor="Transparent"
-                TextColor="#2E7D32"
-                Clicked="OnBackButtonClicked"/>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="0,0,0,4"
+            HeightRequest="50">
             <Label
                 Grid.Column="1"
-                Text="Subir Bolsa Sorpresa"
-                FontSize="20"
+                Text="Subir bolsa sorpresa"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center"/>
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
         </Grid>
 
-        <!-- FORMULARIO -->
+        <!-- CONTENT -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="20">
+            <VerticalStackLayout
+                Padding="2"
+                Spacing="7">
 
-                <Label Text="Descripción del producto" />
-                <Entry x:Name="DescriptionEntry" Placeholder="Pan dulce"/>
+                <Frame
+                    Margin="20,50"
+                    Padding="24"
+                    CornerRadius="12"
+                    HasShadow="True"
+                    BackgroundColor="White"
+                    BorderColor="Transparent">
 
-                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                    <Label Text="Donación" VerticalOptions="Center"/>
-                    <Switch x:Name="DonationSwitch" Toggled="OnDonationToggled"/>
-                </HorizontalStackLayout>
+                    <VerticalStackLayout Spacing="7">
+                        <!-- Descripción -->
+                        <VerticalStackLayout Spacing="7">
+                            <Label
+                                Text="Descripción"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                TextColor="Black" />
+                            <Entry
+                                x:Name="DescriptionEntry"
+                                Placeholder="Descripción bolsa sorpresa"
+                                FontSize="11"
+                                HeightRequest="40" />
+                        </VerticalStackLayout>
 
-                <!-- Este bloque se alterna -->
-                <Entry
-                    x:Name="PriceEntry"
-                    Placeholder="Precio"
-                    Keyboard="Numeric"
-                    IsVisible="True"/>
+                        <!-- Toggle Donación -->
+                        <VerticalStackLayout Spacing="7">
+                            <HorizontalStackLayout Spacing="100" VerticalOptions="Center">
+                                <Label
+                                    Text="Donación"
+                                    FontSize="12"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    VerticalOptions="Center" />
+                                <Switch
+                                    x:Name="DonationSwitch"
+                                    Toggled="OnDonationToggled"
+                                    ThumbColor="White"
+                                    OnColor="#2E7D32" />
+                            </HorizontalStackLayout>
 
-                <Picker
-                    x:Name="FoodBankPicker"
-                    Title="Seleccione el banco de alimento a donar"
-                    IsVisible="False"/>
+                            <!-- Condicional: Precio vs Banco -->
+                            <VerticalStackLayout Spacing="8">
+                                <!-- Precio -->
+                                <StackLayout
+                                    x:Name="PriceContainer"
+                                    Spacing="0"
+                                    IsVisible="True">
+                                    <Label
+                                        Text="Precio"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
+                                        TextColor="Black" />
+                                    <Entry
+                                        x:Name="PriceEntry"
+                                        Placeholder="0.00"
+                                        Keyboard="Numeric"
+                                        FontSize="12"
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
 
+                                <!-- Banco de alimentos -->
+                                <StackLayout
+                                    x:Name="FoodBankContainer"
+                                    Spacing="0"
+                                    IsVisible="False">
+                                    <Label
+                                        Text="Seleccione el banco de alimentos a donar"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
+                                        TextColor="Black" />
+                                    <Picker
+                                        x:Name="FoodBankPicker"
+                                        Title="Seleccione un banco de alimentos"
+                                        FontSize="11"
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Botón Registrar -->
+                        <Button
+                            Text="Registrar"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            HeightRequest="40"
+                            CornerRadius="8"
+                            BackgroundColor="#2E7D32"
+                            TextColor="White"
+                            Clicked="OnRegisterClicked"
+                            HorizontalOptions="FillAndExpand" />
+                        
+                    </VerticalStackLayout>
+                </Frame>
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- BOTÓN -->
-        <Button
-            Grid.Row="2"
-            Text="Registrar y notificar"
-            HeightRequest="50"
-            CornerRadius="25"
-            BackgroundColor="#2E7D32"
-            TextColor="White"
-            Clicked="OnRegisterClicked"/>
-
+        <!-- (sin footer; el botón ya está dentro del card) -->
     </Grid>
 </ContentPage>

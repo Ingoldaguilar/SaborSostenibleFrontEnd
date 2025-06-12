@@ -7,82 +7,148 @@
     BackgroundColor="#F5F5F5"
     Title="Actualizar Restaurante">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
-        <!-- Cabecera -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="12,1"
+            ColumnDefinitions="Auto,*,Auto">
+
+            <!-- Back button -->
             <Button
-                Text="←"
-                FontSize="24"
+                Text="↩"
+                FontAttributes="Bold"
+                FontSize="22"
                 BackgroundColor="Transparent"
-                TextColor="#2E7D32"
+                TextColor="White"
                 Clicked="OnBackButtonClicked" />
+
+            <!-- Title -->
             <Label
                 Grid.Column="1"
-                Text="Actualizar Restaurante"
-                FontSize="20"
+                Text="Actualizar restaurante"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="0,14" />
+
+            <!-- Spacer -->
+            <BoxView
+                Grid.Column="2"
+                WidthRequest="24"
+                Color="#2E7D32" />
         </Grid>
 
-        <!-- Formulario -->
+        <!-- CONTENT -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="15">
+            <Frame
+                Margin="20,20"
+                Padding="24"
+                CornerRadius="12"
+                HasShadow="True"
+                BackgroundColor="White"
+                BorderColor="Transparent">
+                <VerticalStackLayout Spacing="7">
 
-                <Label Text="Nombre" />
-                <Entry x:Name="NameEntry" Placeholder="Value" />
+                    <!-- Nombre -->
+                    <VerticalStackLayout Spacing="0">
+                        <Label
+                            Text="Nombre"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="NameEntry"
+                            Placeholder="Ingrese el nombre del restaurante"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
 
-                <Label Text="Descripción" />
-                <Entry x:Name="DescriptionEntry" Placeholder="Value" />
+                    <!-- Descripción -->
+                    <VerticalStackLayout Spacing="0">
+                        <Label
+                            Text="Descripción"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Editor
+                            x:Name="DescriptionEntry"
+                            Placeholder="Ingrese la descripción del restaurante"
+                            FontSize="11"
+                            AutoSize="TextChanges"
+                            HeightRequest="40" />
+                    </VerticalStackLayout>
 
-                <!--<Label Text="Logo" />
-                <Button
-                    Text="Seleccionar imagen"
-                    Clicked="OnSelectLogoClicked" />-->
+                    <!-- Teléfono -->
+                    <VerticalStackLayout Spacing="0">
+                        <Label
+                            Text="Número de teléfono"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="PhoneEntry"
+                            Placeholder="Ingrese el número de teléfono"
+                            Keyboard="Telephone"
+                            FontSize="12"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
 
-                <Label Text="Número teléfono" />
-                <Entry
-                    x:Name="PhoneEntry"
-                    Placeholder="Value"
-                    Keyboard="Telephone" />
+                    <!-- Dirección -->
+                    <VerticalStackLayout Spacing="0">
+                        <Label
+                            Text="Dirección"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="AddressEntry"
+                            Placeholder="Ingrese la dirección"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
 
-                <Label Text="Dirección" />
-                <Entry x:Name="AddressEntry" Placeholder="Value" />
+                    <!-- Elegir ubicación -->
+                    <Button
+                        Text="📍  Elegir ubicación en el mapa"
+                        FontSize="12"
+                        HeightRequest="40"
+                        CornerRadius="8"
+                        BorderColor="#2E7D32"
+                        BorderWidth="1"
+                        BackgroundColor="Transparent"
+                        TextColor="#2E7D32"
+                        Clicked="OnElegirUbicacionClicked"
+                        HorizontalOptions="FillAndExpand" />
 
-                <!--<Label Text="Latitud" />
-                <Entry
-                    x:Name="LatitudeEntry"
-                    Placeholder="Value"
-                    Keyboard="Numeric" />
+                    <!-- Etiqueta ubicación -->
+                    <Label
+                        x:Name="UbicacionLabel"
+                        Text="Ubicación no detectada aún."
+                        FontSize="11"
+                        TextColor="Black"
+                        HorizontalOptions="Center" />
 
-                <Label Text="Longitud" />
-                <Entry
-                    x:Name="LongitudeEntry"
-                    Placeholder="Value"
-                    Keyboard="Numeric" />-->
-                <Button Text="📍 Elegir ubicación en el mapa"
-                     BackgroundColor="{StaticResource Primary}"
-                     TextColor="White"
-                     Clicked="OnElegirUbicacionClicked" />
+                    <!-- Botón actualizar -->
+                    <Button
+                        Text="Actualizar"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        HeightRequest="40"
+                        CornerRadius="8"
+                        BackgroundColor="#2E7D32"
+                        TextColor="White"
+                        Clicked="OnUpdateClicked"
+                        HorizontalOptions="FillAndExpand" />
 
-                                    <Label x:Name="UbicacionLabel"
-                    Text="Ubicación no detectada aún."
-                    FontSize="12"
-                    TextColor="{StaticResource PrimaryDarkText}"
-                    HorizontalOptions="Center" />
-
-            </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
         </ScrollView>
-
-        <!-- Botón Actualizar -->
-        <Button
-            Grid.Row="2"
-            Text="Actualizar"
-            HeightRequest="50"
-            CornerRadius="25"
-            BackgroundColor="#2E7D32"
-            TextColor="White"
-            Clicked="OnUpdateClicked" />
-
     </Grid>
 </ContentPage>

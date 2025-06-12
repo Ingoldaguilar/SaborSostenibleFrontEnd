@@ -4,100 +4,144 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
-    BackgroundColor="#F5F5F5"
-    Title="Confirmación recibida">
+    BackgroundColor="#F5F5F5">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+    <Grid RowDefinitions="Auto, *">
         <!-- HEADER -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
-            <Button
-                Text="←"
-                FontSize="24"
-                BackgroundColor="Transparent"
-                TextColor="#2E7D32"
-                Clicked="OnBackButtonClicked" />
-            <Label
-                Grid.Column="1"
-                Text="Confirmación recibida"
-                FontSize="20"
-                FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+        <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="51" />
+                <RowDefinition Height="1" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                ColumnDefinitions="Auto,*,Auto"
+                Padding="0">
+                
+                <Button
+                    Text="↩"
+                    FontSize="22"
+                    FontAttributes="Bold"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    Clicked="OnBackButtonClicked" />
+
+                <Label
+                    Grid.Column="1"
+                    Text="Confirmar como recibida"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Padding="0,14" />
+
+                <!-- Spacer para alinear el título centrado -->
+                <BoxView
+                    Grid.Column="2"
+                    WidthRequest="24"
+                    Color="#2E7D32"/>
+                
+            </Grid>
+
         </Grid>
 
-        <!-- CONTENIDO -->
+        <!-- CONTENIDO: carta unitaria con medidas del ejemplo -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="15">
+            <VerticalStackLayout Padding="20" Spacing="0">
 
+                <!-- Frame -->
                 <Frame
-                    CornerRadius="10"
+                    CornerRadius="6"
+                    Margin="0,0,0,4"
                     Padding="0"
                     BackgroundColor="White"
-                    HasShadow="True">
-                    <VerticalStackLayout Spacing="0">
+                    HasShadow="True"
+                    BorderColor="#04000000">
 
-                        <!-- Logo + negocio -->
+                    <!-- Grid -->
+                    <Grid
+                        Padding="6"
+                        ColumnSpacing="6"
+                        RowSpacing="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="56" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- 1) Logo circular -->
+                        <Image
+                            x:Name="LogoImage"
+                            WidthRequest="56"
+                            HeightRequest="56"
+                            Aspect="AspectFill"
+                            Grid.RowSpan="3"
+                            Grid.Column="0">
+                            <Image.Clip>
+                                <EllipseGeometry Center="28,28" RadiusX="28" RadiusY="28" />
+                            </Image.Clip>
+                        </Image>
+
+                        <!-- 2) Nombre restaurante -->
+                        <Label
+                            x:Name="BusinessNameLabel"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="11"
+                            TextColor="Black"
+                            LineBreakMode="WordWrap" />
+
+                        <!-- 3) Nombre de la bolsa -->
+                        <Label
+                            x:Name="DescriptionLabel"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="10"
+                            TextColor="#2E7D32"
+                            LineBreakMode="WordWrap" />
+
+                        <!-- 4) Fecha con icono -->
                         <HorizontalStackLayout
-                            Spacing="10"
-                            Padding="12,10"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Spacing="4"
                             VerticalOptions="Center">
-                            <Image
-                                x:Name="LogoImage"
-                                WidthRequest="40"
-                                HeightRequest="40"
-                                Aspect="AspectFill" />
                             <Label
-                                x:Name="BusinessNameLabel"
-                                FontAttributes="Bold"
-                                FontSize="16"
-                                TextColor="Black"
+                                Text="📅"
+                                FontFamily="FontAwesome"
+                                FontSize="9"
+                                TextColor="Gray"
                                 VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-
-                        <!-- Fecha + descripción -->
-                        <HorizontalStackLayout
-                            Spacing="6"
-                            Padding="12,0"
-                            VerticalOptions="Center">
-                            <Image
-                                Source="calendar.png"
-                                WidthRequest="16"
-                                HeightRequest="16"
-                                Aspect="AspectFit" />
                             <Label
                                 x:Name="DateLabel"
-                                FontSize="14"
-                                TextColor="Gray"
-                                VerticalOptions="Center" />
-                            <Label
-                                x:Name="DescriptionLabel"
-                                FontSize="14"
+                                FontSize="9"
                                 TextColor="Gray"
                                 VerticalOptions="Center" />
                         </HorizontalStackLayout>
 
-                        <!-- Estado -->
-                        <Label
-                            x:Name="StateLabel"
-                            BackgroundColor="#556B2F"
+                        <!-- 5) Botón “Recibida” -->
+                        <Button
+                            Grid.RowSpan="3"
+                            Grid.Column="2"
+                            x:Name="ConfirmButton"
+                            Text="Recibida"
+                            FontAttributes="Bold"
+                            FontSize="9"
+                            HeightRequest="26"
+                            Padding="12,6"
+                            CornerRadius="16"
+                            BackgroundColor="#2E7D32"
                             TextColor="White"
-                            FontSize="14"
-                            HorizontalTextAlignment="Center"
-                            VerticalTextAlignment="Center"
-                            HeightRequest="28" />
-
-                    </VerticalStackLayout>
+                            Clicked="OnConfirmClicked" />
+                    </Grid>
                 </Frame>
-
-                <!-- Botón Recibida -->
-                <Button
-                    x:Name="ConfirmButton"
-                    Text="Recibida"
-                    HeightRequest="50"
-                    CornerRadius="25"
-                    BackgroundColor="#2E7D32"
-                    TextColor="White"
-                    Clicked="OnConfirmClicked" />
 
             </VerticalStackLayout>
         </ScrollView>

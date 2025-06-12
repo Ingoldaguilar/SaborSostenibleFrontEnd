@@ -48,8 +48,10 @@ namespace SaborSostenibleFrontEnd
         private void OnDonationToggled(object sender, ToggledEventArgs e)
         {
             _isDonation = e.Value;
-            PriceEntry.IsVisible = !_isDonation;
-            FoodBankPicker.IsVisible = _isDonation;
+
+            // Cuando es donación, se muestra Picker, se oculta Precio
+            PriceContainer.IsVisible = !_isDonation;
+            FoodBankContainer.IsVisible = _isDonation;
         }
 
         private bool Validate()
@@ -112,7 +114,7 @@ namespace SaborSostenibleFrontEnd
                 DonationSwitch.IsToggled = false;
                 FoodBankPicker.SelectedIndex = -1;
 
-                await DisplayAlert("Éxito", "Bolsa registrada y notificada.", "OK");
+                await DisplayAlert("Éxito", "Bolsa registrada correctamente.", "OK");
                 await Navigation.PopAsync();
             }
             else
@@ -122,8 +124,5 @@ namespace SaborSostenibleFrontEnd
                 await DisplayAlert("Error", string.Join("\n", errs), "OK");
             }
         }
-
-        private void OnBackButtonClicked(object sender, EventArgs e)
-            => _ = Navigation.PopAsync();
     }
 }

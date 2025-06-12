@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-  x:Class="SaborSostenibleFrontEnd.FoodBankPages.ReceivedBagsHistoryPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  NavigationPage.HasNavigationBar="False"
-  BackgroundColor="#F5F5F5"
-  Title="Historial de bolsas recibidas">
+    x:Class="SaborSostenibleFrontEnd.FoodBankPages.ReceivedBagsHistoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5">
 
-    <Grid RowDefinitions="Auto,*" Padding="0">
+    <Grid RowDefinitions="Auto,*">
+
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
 
-            <Button
-                Text="←"
-                FontSize="24"
-                BackgroundColor="Transparent"
-                TextColor="#2E7D32"
-                Clicked="OnBackButtonClicked" />
-
+            <!-- Título centrado -->
             <Label
-                Grid.Column="1"
-                FontSize="18"
+                Grid.Row="0"
+                Text="Historial de bolsas recibidas"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
+                TextColor="White"
                 HorizontalOptions="Center"
-                Text="Historial de bolsas recibidas" />
+                VerticalOptions="Center"
+                Padding="0,14"/>
+
+            <!-- Línea inferior -->
+            <BoxView
+                Grid.Row="1"
+                HeightRequest="1"
+                BackgroundColor="#E5E5E5"
+                HorizontalOptions="FillAndExpand" />
         </Grid>
 
-        <!-- LISTADO -->
+        <!-- CONTENIDO: cada tarjeta se añade dinámicamente -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
                 x:Name="HistoryContainer"
-                Spacing="12"
+                Spacing="0"
                 Padding="20" />
         </ScrollView>
+
     </Grid>
 </ContentPage>

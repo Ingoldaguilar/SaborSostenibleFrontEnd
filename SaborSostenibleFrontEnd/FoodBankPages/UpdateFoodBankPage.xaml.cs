@@ -143,11 +143,11 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
                     await DisplayAlert("Éxito", "FoodBank actualizado.", "OK");
                     await Navigation.PopModalAsync();
 
-                    // Redirige a YoFoodBankPage (reemplaza la página actual)
-                    await Navigation.PushAsync(new YoFoodBankPage());
+                    //// Redirige a YoFoodBankPage (reemplaza la página actual)
+                    //await Navigation.PushAsync(new YoFoodBankPage());
 
-                    // Y cierra la actual
-                    Navigation.RemovePage(this);
+                    //// Y cierra la actual
+                    //Navigation.RemovePage(this);
                 }
                 else
                 {
@@ -161,7 +161,8 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
             }
             finally
             {
-                await Navigation.PopModalAsync();
+                if (Navigation.ModalStack.Count > 0)
+                    await Navigation.PopModalAsync();
             }
         }
 

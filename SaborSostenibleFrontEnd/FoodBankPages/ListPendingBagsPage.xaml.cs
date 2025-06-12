@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
@@ -51,92 +52,132 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
 
             foreach (var bag in resp.PendingBags)
             {
+                // Frame con esquinas suaves y margen inferior
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
+                    CornerRadius = 6,
+                    Margin = new Thickness(0, 0, 0, 4),
                     Padding = 0,
                     BackgroundColor = Colors.White,
-                    HasShadow = true
+                    HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                var layout = new VerticalStackLayout { Spacing = 0 };
-
-                // Encabezado: logo + negocio
-                var header = new HorizontalStackLayout
+                // Grid: 3 columnas (logo, info, botón) × 3 filas
+                var grid = new Grid
                 {
-                    Spacing = 10,
-                    Padding = new Thickness(12, 10),
-                    VerticalOptions = LayoutOptions.Center
+                    Padding = new Thickness(6),
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = 56 },
+                        new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Auto }
+                    },
+                    RowDefinitions =
+                    {
+                        new RowDefinition { Height = GridLength.Auto },
+                        new RowDefinition { Height = GridLength.Auto },
+                        new RowDefinition { Height = GridLength.Auto }
+                    },
+                    ColumnSpacing = 6,
+                    RowSpacing = 1
                 };
-                header.Children.Add(new Image
+
+                // 1) Logo circular
+                var logoImage = new Image
                 {
                     Source = ImageSource.FromUri(new Uri(_baseUrl + bag.LogoUrl)),
-                    WidthRequest = 40,
-                    HeightRequest = 40,
-                    Aspect = Aspect.AspectFill
-                });
-                header.Children.Add(new Label
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
+                    {
+                        Center = new Point(28, 28),
+                        RadiusX = 28,
+                        RadiusY = 28
+                    }
+                };
+                Grid.SetRowSpan(logoImage, 3);
+                Grid.SetColumn(logoImage, 0);
+                grid.Children.Add(logoImage);
+
+                // 2) Nombre del restaurante
+                var nameLabel = new Label
                 {
                     Text = bag.BusinessName,
                     FontAttributes = FontAttributes.Bold,
-                    FontSize = 16,
+                    FontSize = 11,
                     TextColor = Colors.Black,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                layout.Children.Add(header);
-
-                // Fecha + descripción
-                var descRow = new HorizontalStackLayout
-                {
-                    Spacing = 6,
-                    Padding = new Thickness(12, 0),
-                    VerticalOptions = LayoutOptions.Center
+                    LineBreakMode = LineBreakMode.WordWrap
                 };
-                descRow.Children.Add(new Image
-                {
-                    Source = "calendar.png",
-                    WidthRequest = 16,
-                    HeightRequest = 16,
-                    Aspect = Aspect.AspectFit
-                });
-                descRow.Children.Add(new Label
-                {
-                    Text = bag.DonationDate.ToLocalTime().ToString("dd/MM/yyyy"),
-                    FontSize = 14,
-                    TextColor = Colors.Gray,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                descRow.Children.Add(new Label
+                Grid.SetRow(nameLabel, 0);
+                Grid.SetColumn(nameLabel, 1);
+                grid.Children.Add(nameLabel);
+
+                // 3) Nombre de la bolsa
+                var bagLabel = new Label
                 {
                     Text = bag.BagDescription,
-                    FontSize = 14,
+                    FontSize = 10,
+                    TextColor = Color.FromArgb("#2E7D32"),
+                    LineBreakMode = LineBreakMode.WordWrap
+                };
+                Grid.SetRow(bagLabel, 1);
+                Grid.SetColumn(bagLabel, 1);
+                grid.Children.Add(bagLabel);
+
+                // 4) Fecha con icono
+                var dateLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center
+                };
+
+                dateLayout.Children.Add(new Label
+                {
+                    Text = "\uf133", // Emoji de calendario
+                    FontFamily = "FontAwesome",
+                    TextColor = Colors.Gray,
+                    FontSize = 9,
+                    VerticalOptions = LayoutOptions.Center,
+                });
+
+                // Fecha
+                dateLayout.Children.Add(new Label
+                {
+                    Text = bag.DonationDate.ToLocalTime().ToString("dd/MM/yyyy"),
+                    FontSize = 9,
                     TextColor = Colors.Gray,
                     VerticalOptions = LayoutOptions.Center
                 });
-                layout.Children.Add(descRow);
 
-                // Botón Pendiente que navega
+                Grid.SetRow(dateLayout, 2);
+                Grid.SetColumn(dateLayout, 1);
+                grid.Children.Add(dateLayout);
+
+                // 5) Botón “Pendiente”
                 var btn = new Button
                 {
-                    Visual = VisualMarker.Default,
                     Text = bag.State,
-                    BackgroundColor = Color.FromArgb("#556B2F"),
+                    BackgroundColor = Color.FromArgb("#2E7D32"),
                     TextColor = Colors.White,
-                    CornerRadius = 0,
-                    FontSize = 14,
-                    HeightRequest = 32,
-                    Padding = new Thickness(20, 0)
+                    FontAttributes = FontAttributes.Bold,
+                    CornerRadius = 16,
+                    FontSize = 9,
+                    HeightRequest = 26,
+                    Padding = new Thickness(12, 6),
+                    Visual = VisualMarker.Default,
+                    VerticalOptions = LayoutOptions.Center
                 };
-                btn.Clicked += (_, __) =>
-                    Navigation.PushAsync(new ConfirmReceptionPage(bag));
-                layout.Children.Add(btn);
+                btn.Clicked += (_, __) => Navigation.PushAsync(new ConfirmReceptionPage(bag));
+                Grid.SetRowSpan(btn, 3);
+                Grid.SetColumn(btn, 2);
+                grid.Children.Add(btn);
 
-                frame.Content = layout;
+                // Ensamblar y agregar
+                frame.Content = grid;
                 BagsContainer.Children.Add(frame);
             }
         }
-
-        private void OnBackButtonClicked(object sender, EventArgs e) =>
-            _ = Navigation.PopAsync();
     }
 }

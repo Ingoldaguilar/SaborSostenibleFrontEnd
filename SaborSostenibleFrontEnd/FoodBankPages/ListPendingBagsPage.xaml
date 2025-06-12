@@ -5,37 +5,41 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F5F5F5"
-    Title="Bolsas pendientes">
+    Title="">
 
-    <Grid RowDefinitions="Auto,*" Padding="0">
+    <Grid RowDefinitions="Auto,*">
+
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
 
-            <Button
-                Text="←"
-                FontSize="24"
-                BackgroundColor="Transparent"
-                TextColor="#2E7D32"
-                Clicked="OnBackButtonClicked" />
-
+            <!-- Título centrado -->
             <Label
-                Grid.Column="1"
+                Grid.Row="0"
                 Text="Bolsas pendientes"
-                FontSize="18"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="0,14"/>
+
+            <!-- Línea inferior -->
+            <BoxView
+                Grid.Row="1"
+                HeightRequest="1"
+                BackgroundColor="#E5E5E5"
+                HorizontalOptions="FillAndExpand" />
         </Grid>
 
-        <!-- LISTA -->
+        <!-- CONTENIDO: cada tarjeta se añade dinámicamente en el code-behind -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
                 x:Name="BagsContainer"
-                Spacing="12"
+                Spacing="0"
                 Padding="20" />
         </ScrollView>
     </Grid>

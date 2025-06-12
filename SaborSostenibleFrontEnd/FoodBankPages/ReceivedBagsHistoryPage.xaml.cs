@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
@@ -50,98 +51,147 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
 
             foreach (var item in resp.ReceivedBagsHistory)
             {
-                // Card
+                // Frame con esquinas suaves y margen inferior
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
+                    CornerRadius = 6,
+                    Margin = new Thickness(0, 0, 0, 4),
                     Padding = 0,
                     BackgroundColor = Colors.White,
-                    HasShadow = true
+                    HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                var layout = new VerticalStackLayout { Spacing = 0 };
-
-                // 1) Encabezado: logo + nombre
-                var header = new HorizontalStackLayout
+                // Grid: 3 columnas (logo, info, badge) × 3 filas
+                var grid = new Grid
                 {
-                    Spacing = 10,
-                    Padding = new Thickness(12, 10),
-                    VerticalOptions = LayoutOptions.Center
+                    Padding = new Thickness(6),
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = 56 },
+                        new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Auto }
+                    },
+                    RowDefinitions =
+                    {
+                        new RowDefinition { Height = GridLength.Auto },
+                        new RowDefinition { Height = GridLength.Auto },
+                        new RowDefinition { Height = GridLength.Auto }
+                    },
+                    ColumnSpacing = 6,
+                    RowSpacing = 1
                 };
-                header.Children.Add(new Image
+
+                // 1) Logo circular
+                var logoImage = new Image
                 {
                     Source = ImageSource.FromUri(new Uri(_baseUrl + item.LogoUrl)),
-                    WidthRequest = 40,
-                    HeightRequest = 40,
-                    Aspect = Aspect.AspectFill
-                });
-                header.Children.Add(new Label
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
+                    {
+                        Center = new Point(28, 28),
+                        RadiusX = 28,
+                        RadiusY = 28
+                    }
+                };
+                Grid.SetRowSpan(logoImage, 3);
+                Grid.SetColumn(logoImage, 0);
+                grid.Children.Add(logoImage);
+
+                // 2) Nombre del restaurante
+                var nameLabel = new Label
                 {
                     Text = item.BusinessName,
                     FontAttributes = FontAttributes.Bold,
-                    FontSize = 16,
+                    FontSize = 11,
                     TextColor = Colors.Black,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                layout.Children.Add(header);
-
-                // 2) Descripción y fecha
-                var descSection = new HorizontalStackLayout
-                {
-                    Spacing = 6,
-                    Padding = new Thickness(12, 0),
-                    VerticalOptions = LayoutOptions.Center
+                    LineBreakMode = LineBreakMode.WordWrap
                 };
-                // icono calendario (reemplazar “calendar.png” por tu recurso)
-                descSection.Children.Add(new Image
-                {
-                    Source = "calendar.png",
-                    WidthRequest = 16,
-                    HeightRequest = 16,
-                    Aspect = Aspect.AspectFit
-                });
-                descSection.Children.Add(new Label
-                {
-                    Text = item.DonationDate.ToLocalTime().ToString("dd/MM/yyyy"),
-                    FontSize = 14,
-                    TextColor = Colors.Gray,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                // bolsa sorpresa
-                descSection.Children.Add(new Label
+                Grid.SetRow(nameLabel, 0);
+                Grid.SetColumn(nameLabel, 1);
+                grid.Children.Add(nameLabel);
+
+                // 3) Nombre de la bolsa (verde)
+                var bagLabel = new Label
                 {
                     Text = item.BagDescription,
-                    FontSize = 14,
+                    FontSize = 10,
+                    TextColor = Color.FromArgb("#2E7D32"),
+                    LineBreakMode = LineBreakMode.WordWrap
+                };
+                Grid.SetRow(bagLabel, 1);
+                Grid.SetColumn(bagLabel, 1);
+                grid.Children.Add(bagLabel);
+
+                // 4) Fecha con icono
+                var dateLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                dateLayout.Children.Add(new Label
+                {
+                    Text = "\uf133", // icono calendario FontAwesome
+                    FontFamily = "FontAwesome",
+                    TextColor = Colors.Gray,
+                    FontSize = 9,
+                    VerticalOptions = LayoutOptions.Center,
+                });
+                dateLayout.Children.Add(new Label
+                {
+                    Text = item.DonationDate.ToLocalTime().ToString("dd/MM/yyyy"),
+                    FontSize = 9,
                     TextColor = Colors.Gray,
                     VerticalOptions = LayoutOptions.Center
                 });
-                layout.Children.Add(descSection);
+                Grid.SetRow(dateLayout, 2);
+                Grid.SetColumn(dateLayout, 1);
+                grid.Children.Add(dateLayout);
 
-                // 3) Estado en barra inferior
-                layout.Children.Add(new BoxView
+                // 5) Badge “Completado”
+                var badgeFrame = new Frame
                 {
-                    Color = Colors.Green,
-                    HeightRequest = 4,
-                    HorizontalOptions = LayoutOptions.Fill
-                });
-                layout.Children.Add(new Label
+                    Padding = new Thickness(12, 6),
+                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    CornerRadius = 16,
+                    HeightRequest = 26,
+                    HasShadow = false,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                badgeFrame.Content = new HorizontalStackLayout
                 {
-                    Text = item.State,
-                    BackgroundColor = Colors.Green,
-                    TextColor = Colors.White,
-                    FontSize = 14,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                    HeightRequest = 28,
-                    Margin = new Thickness(0, 0, 0, -4)
-                });
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = "\uf058", // ícono check-circle FontAwesome
+                            FontFamily = "FontAwesome",
+                            FontSize = 9,
+                            TextColor = Colors.White,
+                            VerticalOptions = LayoutOptions.Center
+                        },
+                        new Label
+                        {
+                            Text = item.State,
+                            FontSize = 9,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                };
+                Grid.SetRowSpan(badgeFrame, 3);
+                Grid.SetColumn(badgeFrame, 2);
+                grid.Children.Add(badgeFrame);
 
-                frame.Content = layout;
+                // Ensamblar y agregar
+                frame.Content = grid;
                 HistoryContainer.Children.Add(frame);
             }
         }
-
-        private void OnBackButtonClicked(object sender, EventArgs e)
-            => _ = Navigation.PopAsync();
     }
 }

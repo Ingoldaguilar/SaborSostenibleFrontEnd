@@ -16,7 +16,16 @@ namespace SaborSostenibleFrontEnd.Entities
         public string StateText =>
             StateCode switch
             {
+                1 => "Disponible",
+                2 => "Vendida",
+                3 => "Donada",
+                4 => "Expirada",
                 5 => "Pendiente",
+                6 => "Completado",
+                7 => "Cancelado",
+                8 => "Recogido",
+                9 => "Entregado",
+                10 => "Denegado",
                 _ => "Desconocido"
             };
     }

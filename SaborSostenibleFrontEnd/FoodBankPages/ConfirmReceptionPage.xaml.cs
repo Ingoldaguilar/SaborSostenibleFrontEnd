@@ -22,9 +22,9 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
             // Poblamos UI
             LogoImage.Source = ImageSource.FromUri(new Uri($"http://34.39.128.125/{bag.LogoUrl}"));
             BusinessNameLabel.Text = bag.BusinessName;
-            DateLabel.Text = bag.DonationDate.ToLocalTime().ToString("dd/MM/yyyy");
             DescriptionLabel.Text = bag.BagDescription;
-            StateLabel.Text = bag.State;
+            DateLabel.Text = bag.DonationDate.ToLocalTime().ToString("dd/MM/yyyy");
+            // Estado ya está reflejado en el botón, no necesitamos StateLabel
         }
 
         private async void OnConfirmClicked(object sender, EventArgs e)
