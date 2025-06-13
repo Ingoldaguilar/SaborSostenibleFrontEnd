@@ -9,20 +9,15 @@
 
     <Grid RowDefinitions="Auto,*">
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto,*">
-            <Button
-                Text="←"
-                FontSize="24"
-                BackgroundColor="Transparent"
-                TextColor="#2E7D32"
-                Clicked="OnBackButtonClicked" />
+        <Grid Grid.Row="0" BackgroundColor="#2E7D32" Padding="20,17" ColumnDefinitions="Auto,*">
             <Label
                 Grid.Column="1"
                 Text="Ventas en proceso"
-                FontSize="18"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
         </Grid>
 
         <!-- LISTA -->

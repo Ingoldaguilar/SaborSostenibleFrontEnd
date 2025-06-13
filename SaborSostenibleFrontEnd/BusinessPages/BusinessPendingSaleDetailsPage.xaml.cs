@@ -42,22 +42,18 @@ namespace SaborSostenibleFrontEnd.BusinessPages
             }
 
             OrderCodeLabel.Text = res.Detail.OrderCode;
-            StateLabel.Text = $"Estado actual: {res.Detail.StateText}";
-            TotalLabel.Text = $"Total: {res.Detail.TotalAmount} colones";
+            StateBadgeLabel.Text = res.Detail.StateText;
+            TotalAmountLabel.Text = $"\u20A1{res.Detail.TotalAmount:N0}";
         }
 
         private void OnViewBagsClicked(object sender, EventArgs e)
             => _ = Navigation.PushAsync(new OrderDetailsPage(_orderId));
 
         private async void OnConfirmPaymentClicked(object sender, EventArgs e)
-        {
-            await UpdatePaymentStatusAsync(6); // 6 = Completado
-        }
+            => await UpdatePaymentStatusAsync(6);  // 6 = Completado
 
         private async void OnDenyPaymentClicked(object sender, EventArgs e)
-        {
-            await UpdatePaymentStatusAsync(10); //10 = Denegado
-        }
+            => await UpdatePaymentStatusAsync(10); //10 = Denegado
 
         private async Task UpdatePaymentStatusAsync(int stateCode)
         {

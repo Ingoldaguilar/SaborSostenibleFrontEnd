@@ -5,45 +5,41 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F5F5F5"
-    Title="Detalles del Pedido">
+    Title="Detalles del pedido">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
-        <!-- Header -->
-        <Grid Grid.Row="0" Padding="20,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="20,4"
+            ColumnDefinitions="Auto,*,Auto">
             <Button
-                Text="←"
-                FontSize="24"
+                Text="↩"
+                FontSize="22"
                 BackgroundColor="Transparent"
-                TextColor="#2E7D32"
+                TextColor="White"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
-                Text="Detalles del Pedido"
-                FontSize="18"
+                Text="Detalles del pedido"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="#2E7D32"
-                HorizontalOptions="Center" />
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+            <BoxView
+                Grid.Column="2"
+                WidthRequest="24"
+                Color="#2E7D32"/>
         </Grid>
 
-        <!-- Lista de bolsas -->
+        <!-- LISTA DE BOLSAS -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
                 x:Name="DetailsContainer"
                 Spacing="12"
                 Padding="20" />
         </ScrollView>
-
-        <!-- Ver más -->
-        <Button
-            Grid.Row="2"
-            Text="Ver más ↓"
-            BackgroundColor="Transparent"
-            TextColor="#2E7D32"
-            FontAttributes="Italic"
-            Clicked="OnShowMoreClicked" />
     </Grid>
 </ContentPage>

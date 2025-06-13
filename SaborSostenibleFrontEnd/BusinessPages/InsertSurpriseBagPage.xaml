@@ -13,7 +13,7 @@
             Grid.Row="0"
             BackgroundColor="#2E7D32"
             Padding="0,0,0,4"
-            HeightRequest="50">
+            HeightRequest="57">
             <Label
                 Grid.Column="1"
                 Text="Subir bolsa sorpresa"
@@ -55,7 +55,7 @@
 
                         <!-- Toggle Donación -->
                         <VerticalStackLayout Spacing="7">
-                            <HorizontalStackLayout Spacing="100" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="129" VerticalOptions="Center">
                                 <Label
                                     Text="Donación"
                                     FontSize="12"

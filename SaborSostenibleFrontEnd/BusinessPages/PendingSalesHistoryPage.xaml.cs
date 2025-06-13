@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
@@ -52,110 +53,112 @@ namespace SaborSostenibleFrontEnd.BusinessPages
 
             foreach (var order in resp.PendingSalesHistory)
             {
+                // Card frame
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
+                    CornerRadius = 6,
+                    Margin = new Thickness(0, 0, 0, 4),
                     Padding = 0,
                     BackgroundColor = Colors.White,
-                    HasShadow = true
+                    HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                var layout = new VerticalStackLayout { Spacing = 0 };
-
-                // Header: código + logo
-                var header = new HorizontalStackLayout
+                // Contenido horizontal
+                var content = new HorizontalStackLayout
                 {
-                    Padding = new Thickness(12, 10),
-                    Spacing = 8,
-                    VerticalOptions = LayoutOptions.Center
-                };
-                header.Children.Add(new Label
-                {
-                    Text = order.OrderCode,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 14,
-                    TextColor = Colors.Black,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                header.Children.Add(new Image
-                {
-                    Source = ImageSource.FromUri(new Uri(_baseUrl + order.LogoImage)),
-                    WidthRequest = 24,
-                    HeightRequest = 24,
-                    Aspect = Aspect.AspectFill
-                });
-                layout.Children.Add(header);
-
-                // Fecha, hora y monto
-                var infoRow = new HorizontalStackLayout
-                {
-                    Padding = new Thickness(12, 0),
+                    Padding = new Thickness(12),
                     Spacing = 20,
                     VerticalOptions = LayoutOptions.Center
                 };
-                // Fecha
-                infoRow.Children.Add(new HorizontalStackLayout
+
+                // Logo circular
+                var logo = new Image
                 {
-                    Spacing = 6,
-                    Children =
+                    Source = ImageSource.FromUri(new Uri(_baseUrl + order.LogoImage)),
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
                     {
-                        new Image
-                        {
-                            Source        = "calendar.png",
-                            WidthRequest  = 16,
-                            HeightRequest = 16,
-                            Aspect        = Aspect.AspectFit
-                        },
-                        new Label
-                        {
-                            Text           = order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm"),
-                            FontSize       = 14,
-                            TextColor      = Colors.Gray,
-                            VerticalOptions= LayoutOptions.Center
-                        }
+                        Center = new Point(28, 28),
+                        RadiusX = 28,
+                        RadiusY = 28
                     }
-                });
-                // Total
-                infoRow.Children.Add(new HorizontalStackLayout
+                };
+                content.Children.Add(logo);
+
+                // Detalles (código, monto, fecha)
+                var details = new VerticalStackLayout
                 {
                     Spacing = 4,
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text           = order.TotalAmount.ToString() + " colones",
-                            FontSize       = 14,
-                            TextColor      = Colors.Gray,
-                            VerticalOptions = LayoutOptions.Center
-                        }
-                    }
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                };
+
+                details.Children.Add(new Label
+                {
+                    Text = order.OrderCode,
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 11,
+                    TextColor = Colors.Black,
+                    LineBreakMode = LineBreakMode.TailTruncation
                 });
 
-                layout.Children.Add(infoRow);
+                details.Children.Add(new Label
+                {
+                    Text = $"\u20A1{order.TotalAmount:N0}",
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 10,
+                    TextColor = Color.FromArgb("#2E7D32")
+                });
+
+                var dateLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                // Icono reloj (FontAwesome \uf017)
+                dateLayout.Children.Add(new Label
+                {
+                    Text = "\uf017",
+                    FontFamily = "FontAwesome",
+                    FontSize = 9,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
+                });
+                dateLayout.Children.Add(new Label
+                {
+                    Text = order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm"),
+                    FontSize = 9,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
+                });
+                details.Children.Add(dateLayout);
+
+                content.Children.Add(details);
 
                 // Botón “Pendiente”
                 var btn = new Button
                 {
-                    Visual = VisualMarker.Default,
                     Text = order.StateText,
-                    BackgroundColor = Color.FromArgb("#3E7B31"),
+                    BackgroundColor = Color.FromArgb("#2E7D32"),
                     TextColor = Colors.White,
-                    CornerRadius = 0,
-                    FontSize = 14,
-                    HeightRequest = 32,
-                    Padding = new Thickness(20, 0)
+                    FontAttributes = FontAttributes.Bold,
+                    CornerRadius = 16,
+                    FontSize = 9,
+                    HeightRequest = 26,
+                    Padding = new Thickness(12, 6),
+                    Visual = VisualMarker.Default,
+                    VerticalOptions = LayoutOptions.Center
                 };
                 btn.Clicked += (_, __) =>
                     Navigation.PushAsync(new BusinessPendingSaleDetailsPage(order.OrderId));
 
-                layout.Children.Add(btn);
+                content.Children.Add(btn);
 
-                frame.Content = layout;
+                frame.Content = content;
                 SalesContainer.Children.Add(frame);
             }
         }
-
-        private void OnBackButtonClicked(object sender, EventArgs e)
-            => _ = Navigation.PopAsync();
     }
 }

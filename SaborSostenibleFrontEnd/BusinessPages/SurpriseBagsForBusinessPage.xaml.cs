@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
@@ -11,7 +12,8 @@ namespace SaborSostenibleFrontEnd.BusinessPages
     public partial class SurpriseBagsForBusinessPage : ContentPage
     {
         private readonly ApiService _api = new ApiService();
-        const string _placeholderUrl = "http://34.39.128.125/Uploads/Logos/bolsaSorpresaEstandar.jpg";
+        const string _placeholderUrl =
+            "http://34.39.128.125/Uploads/Logos/bolsaSorpresaEstandar.jpg";
 
         public SurpriseBagsForBusinessPage()
         {
@@ -28,7 +30,8 @@ namespace SaborSostenibleFrontEnd.BusinessPages
         {
             BagsContainer.Children.Clear();
 
-            var resp = await _api.GetAsync<ResSurpriseBagsForBusiness>("surpriseBagsForBusiness/get");
+            var resp = await _api.GetAsync<ResSurpriseBagsForBusiness>(
+                "surpriseBagsForBusiness/get");
             if (resp == null)
             {
                 await DisplayAlert("Error", "No se pudo conectar al servidor.", "OK");
@@ -43,94 +46,153 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     FontSize = 16,
                     TextColor = Colors.Gray,
                     HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.CenterAndExpand
+                    VerticalOptions = LayoutOptions.Center
                 });
                 return;
             }
 
             foreach (var bag in resp.SurpriseBagForBusiness)
             {
+                // tarjeta
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
+                    CornerRadius = 6,
+                    Margin = new Thickness(0, 0, 0, 4),
                     Padding = 0,
-                    BackgroundColor = Color.FromArgb("#FFF5F5F5"),
-                    HasShadow = true
+                    BackgroundColor = Colors.White,
+                    HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                var layout = new VerticalStackLayout { Spacing = 0 };
-
-                // Imagen de bolsa + descripción y fecha
-                var header = new HorizontalStackLayout
+                // Grid con tres columnas y separación uniforme
+                var contentGrid = new Grid
                 {
-                    Padding = new Thickness(12, 10),
-                    Spacing = 10,
-                    VerticalOptions = LayoutOptions.Center
+                    Padding = new Thickness(12),
+                    ColumnSpacing = 20,
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(56) },
+                        new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Auto }
+                    }
                 };
-                header.Children.Add(new Image
+
+                // 1) Imagen circular
+                var logo = new Image
                 {
                     Source = ImageSource.FromUri(new Uri(_placeholderUrl)),
-                    WidthRequest = 40,
-                    HeightRequest = 40,
-                    Aspect = Aspect.AspectFill
-                });
-                header.Children.Add(new Label
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
+                    {
+                        Center = new Point(28, 28),
+                        RadiusX = 28,
+                        RadiusY = 28
+                    },
+                    VerticalOptions = LayoutOptions.Start
+                };
+                Grid.SetColumn(logo, 0);
+                contentGrid.Children.Add(logo);
+
+                // 2) Detalles (descripción, precio, fecha)
+                var details = new VerticalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.FillAndExpand
+                };
+
+                // Descripción con wrap
+                details.Children.Add(new Label
                 {
                     Text = bag.Description,
-                    FontSize = 16,
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 12,
                     TextColor = Colors.Black,
-                    VerticalOptions = LayoutOptions.Center
+                    LineBreakMode = LineBreakMode.WordWrap
                 });
-                // Fecha a la derecha
-                header.Children.Add(new Label
-                {
-                    Text = bag.CreatedAt.ToLocalTime().ToString("d/M/yyyy"),
-                    FontSize = 14,
-                    TextColor = Colors.Gray,
-                    HorizontalOptions = LayoutOptions.EndAndExpand,
-                    VerticalOptions = LayoutOptions.Center
-                });
-                layout.Children.Add(header);
 
-                // Precio y estado
-                var infoRow = new HorizontalStackLayout
+                // Precio en verde con símbolo ?
+                details.Children.Add(new Label
                 {
-                    Padding = new Thickness(12, 0, 12, 0),
-                    Spacing = 10,
+                    Text = $"\u20A1{bag.Price:N0}",
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 11,
+                    TextColor = Color.FromArgb("#2E7D32")
+                });
+
+                // Fecha con icono
+                var dateLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
                     VerticalOptions = LayoutOptions.Center
                 };
-                infoRow.Children.Add(new Label
+                dateLayout.Children.Add(new Label
                 {
-                    Text = $"{bag.Price} colones",
-                    FontSize = 14,
+                    Text = "\uf133",
+                    FontFamily = "FontAwesome",
+                    FontSize = 9,
                     TextColor = Colors.Gray,
                     VerticalOptions = LayoutOptions.Center
                 });
-                infoRow.Children.Add(new Label
+                dateLayout.Children.Add(new Label
                 {
-                    Text = bag.State,
-                    FontSize = 14,
+                    Text =
+                        bag.CreatedAt
+                           .ToLocalTime()
+                           .ToString("dd/MM/yyyy"),
+                    FontSize = 9,
                     TextColor = Colors.Gray,
                     VerticalOptions = LayoutOptions.Center
                 });
-                layout.Children.Add(infoRow);
+                details.Children.Add(dateLayout);
 
-                frame.Content = layout;
+                Grid.SetColumn(details, 1);
+                contentGrid.Children.Add(details);
+
+                // 3) Badge en lugar de botón de estado
+                var badgeFrame = new Frame
+                {
+                    Padding = new Thickness(12, 6),
+                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    CornerRadius = 16,
+                    HeightRequest = 26,
+                    HasShadow = false,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.End
+                };
+                badgeFrame.Content = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = "\uf058", // ícono check-circle FontAwesome
+                            FontFamily = "FontAwesome",
+                            FontSize = 9,
+                            TextColor = Colors.White,
+                            VerticalOptions = LayoutOptions.Center
+                        },
+                        new Label
+                        {
+                            Text = bag.State,
+                            FontSize = 9,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                };
+                Grid.SetColumn(badgeFrame, 2);
+                contentGrid.Children.Add(badgeFrame);
+
+                frame.Content = contentGrid;
                 BagsContainer.Children.Add(frame);
             }
-
-            // Ver más al final
-            var more = new Label
-            {
-                Text = "Ver más ?",
-                FontSize = 14,
-                TextColor = Color.FromArgb("#2E7D32"),
-                HorizontalOptions = LayoutOptions.Center
-            };
-            var tap = new TapGestureRecognizer();
-            tap.Tapped += (_, __) => { /* lógica de cargar más */ };
-            more.GestureRecognizers.Add(tap);
-            BagsContainer.Children.Add(more);
         }
 
         private void OnBackButtonClicked(object sender, EventArgs e)

@@ -13,7 +13,6 @@ namespace SaborSostenibleFrontEnd
     {
         private readonly ApiService _api = new ApiService();
         private readonly int _orderId;
-        private bool _showAll = false;
 
         public OrderDetailsPage(int orderId)
         {
@@ -41,63 +40,77 @@ namespace SaborSostenibleFrontEnd
                 return;
             }
 
-            var list = resp.OrderDetailsWithBagDetails
-                .Take(_showAll ? int.MaxValue : 3);
+            var list = resp.OrderDetailsWithBagDetails;
 
             foreach (var bag in list)
             {
-                var frame = new Frame
+                var grid = new Grid
                 {
-                    CornerRadius = 10,
-                    Padding = 0,
-                    BackgroundColor = Colors.White,
-                    HasShadow = true
-                };
-
-                var hl = new HorizontalStackLayout
-                {
-                    Spacing = 10,
-                    Padding = new Thickness(12, 10),
+                    Padding = new Thickness(12),
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(56) }, // Imagen fija
+                        new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }, // Bolsa
+                        new ColumnDefinition { Width = new GridLength(80) } // Precio
+                    },
                     VerticalOptions = LayoutOptions.Center
                 };
 
-                // Imagen genérica de Bolsa sorpresa
-                hl.Children.Add(new Image
+                // Imagen
+                var logoFrame = new Frame
                 {
-                    Source = ImageSource.FromUri(new Uri("http://34.39.128.125/Uploads/Logos/bolsaSorpresaEstandar.jpg")),
-                    WidthRequest = 60,
-                    HeightRequest = 60,
-                    Aspect = Aspect.AspectFill
-                });
+                    CornerRadius = 28,
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Padding = 0,
+                    BackgroundColor = Colors.Gray,
+                    IsClippedToBounds = true,
+                    HasShadow = false,
+                    Content = new Image
+                    {
+                        Source = ImageSource.FromUri(new Uri("http://34.39.128.125/Uploads/Logos/bolsaSorpresaEstandar.jpg")),
+                        Aspect = Aspect.AspectFill
+                    }
+                };
+                grid.Add(logoFrame, 0, 0);
 
-                var info = new VerticalStackLayout { Spacing = 4 };
-                info.Children.Add(new Label
+                // Descripción
+                grid.Add(new Label
                 {
                     Text = bag.BagDescription,
                     FontSize = 16,
-                    TextColor = Colors.Black
-                });
-                info.Children.Add(new Label
-                {
-                    Text = $"{bag.Price} colones",
-                    FontSize = 14,
-                    TextColor = Colors.Gray
-                });
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.Black,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = new Thickness(8, 0, 0, 0),
+                    LineBreakMode = LineBreakMode.WordWrap,
+                }, 1, 0);
 
-                hl.Children.Add(info);
-                frame.Content = hl;
+                // Precio
+                grid.Add(new Label
+                {
+                    Text = $"\u20A1{bag.Price:N0}",
+                    FontSize = 16,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromArgb("#2E7D32"),
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalTextAlignment = TextAlignment.End
+                }, 2, 0);
+
+                // Card
+                var frame = new Frame
+                {
+                    CornerRadius = 6,
+                    Padding = 0,
+                    BackgroundColor = Colors.White,
+                    HasShadow = true,
+                    BorderColor = Colors.Transparent,
+                    Margin = new Thickness(0, 0, 0, 4),
+                    Content = grid
+                };
+
                 DetailsContainer.Children.Add(frame);
             }
-
-            // Ajusta texto del botón Ver más/menos
-            ((Button)FindByName("OnShowMoreClicked")).Text =
-                _showAll ? "Ver menos ?" : "Ver más ?";
-        }
-
-        private async void OnShowMoreClicked(object sender, EventArgs e)
-        {
-            _showAll = !_showAll;
-            await LoadOrderDetailsAsync();
         }
 
         private void OnBackButtonClicked(object sender, EventArgs e)

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
@@ -12,7 +13,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
     public partial class SalesHistoryPage : ContentPage
     {
         private readonly ApiService _api = new ApiService();
-        private const string baseUrl = "http://34.39.128.125/";
+        private const string _baseUrl = "http://34.39.128.125/";
 
         public SalesHistoryPage()
         {
@@ -51,115 +52,113 @@ namespace SaborSostenibleFrontEnd.BusinessPages
 
             foreach (var order in resp.SalesHistory)
             {
+                // Card frame
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
+                    CornerRadius = 6,
+                    Margin = new Thickness(0, 0, 0, 4),
                     Padding = 0,
-                    BackgroundColor = Color.FromArgb("#FFF5F5F5"),
-                    HasShadow = true
+                    BackgroundColor = Colors.White,
+                    HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                var layout = new VerticalStackLayout { Spacing = 0 };
-
-                // 1) Código de orden + logo
-                var header = new HorizontalStackLayout
+                // Contenido horizontal
+                var content = new HorizontalStackLayout
                 {
-                    Padding = new Thickness(12, 10),
-                    Spacing = 10,
-                    VerticalOptions = LayoutOptions.Center
-                };
-
-                header.Children.Add(new Label
-                {
-                    Text = order.OrderCode,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 14,
-                    TextColor = Colors.Black,
-                    VerticalOptions = LayoutOptions.Center
-                });
-
-                header.Children.Add(new Image
-                {
-                    Source = ImageSource.FromUri(new Uri(baseUrl + order.LogoImage)),
-                    WidthRequest = 24,
-                    HeightRequest = 24,
-                    Aspect = Aspect.AspectFill
-                });
-
-                layout.Children.Add(header);
-
-                // 2) Fecha + hora + total
-                var infoRow = new HorizontalStackLayout
-                {
-                    Padding = new Thickness(12, 0),
+                    Padding = new Thickness(12),
                     Spacing = 20,
                     VerticalOptions = LayoutOptions.Center
                 };
 
-                infoRow.Children.Add(new HorizontalStackLayout
+                // Logo circular
+                var logo = new Image
                 {
-                    Spacing = 6,
-                    Children =
+                    Source = ImageSource.FromUri(new Uri(_baseUrl + order.LogoImage)),
+                    WidthRequest = 56,
+                    HeightRequest = 56,
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
                     {
-                        new Image
-                        {
-                            Source = "calendar.png",
-                            WidthRequest = 16,
-                            HeightRequest= 16,
-                            Aspect = Aspect.AspectFit
-                        },
-                        new Label
-                        {
-                            Text = order.OrderDate
-                                .ToLocalTime()
-                                .ToString("dd/MM/yyyy HH:mm"),
-                            FontSize = 14,
-                            TextColor= Colors.Gray,
-                            VerticalOptions = LayoutOptions.Center
-                        }
+                        Center = new Point(28, 28),
+                        RadiusX = 28,
+                        RadiusY = 28
                     }
+                };
+                content.Children.Add(logo);
+
+                // Detalles (código, monto, fecha)
+                var details = new VerticalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                };
+
+                details.Children.Add(new Label
+                {
+                    Text = order.OrderCode,
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 11,
+                    TextColor = Colors.Black,
+                    LineBreakMode = LineBreakMode.TailTruncation
                 });
 
-                infoRow.Children.Add(new HorizontalStackLayout
+                details.Children.Add(new Label
                 {
-                    Spacing = 6,
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text      = order.TotalAmount.ToString() + " colones",
-                            FontSize  = 14,
-                            TextColor = Colors.Gray,
-                            VerticalOptions = LayoutOptions.Center
-                        }
-                    }
+                    Text = $"\u20A1{order.TotalAmount:N0}",
+                    FontAttributes = FontAttributes.Bold,
+                    FontSize = 10,
+                    TextColor = Color.FromArgb("#2E7D32")
                 });
 
-                layout.Children.Add(infoRow);
+                var dateLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                dateLayout.Children.Add(new Label
+                {
+                    Text = "\uf133",
+                    FontFamily = "FontAwesome",
+                    FontSize = 9,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
+                });
+                dateLayout.Children.Add(new Label
+                {
+                    Text = order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm"),
+                    FontSize = 9,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
+                });
+                details.Children.Add(dateLayout);
 
-                // 3) Botón estado
+                content.Children.Add(details);
+
+                // Botón estado con color dinámico
                 var btn = new Button
                 {
-                    Visual = VisualMarker.Default,
                     Text = order.StateText,
-                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    BackgroundColor = order.StateText == "Completado"
+                        ? Color.FromArgb("#2E7D32")
+                        : Colors.Gray,
                     TextColor = Colors.White,
-                    CornerRadius = 0,
-                    FontSize = 14,
-                    HeightRequest = 32,
-                    Padding = new Thickness(20, 0)
+                    FontAttributes = FontAttributes.Bold,
+                    CornerRadius = 16,
+                    FontSize = 9,
+                    HeightRequest = 26,
+                    Padding = new Thickness(12, 6),
+                    Visual = VisualMarker.Default,
+                    VerticalOptions = LayoutOptions.Center
                 };
                 btn.Clicked += (_, __) =>
                     Navigation.PushAsync(new OrderDetailsPage(order.OrderId));
 
-                layout.Children.Add(btn);
+                content.Children.Add(btn);
 
-                frame.Content = layout;
+                frame.Content = content;
                 HistoryContainer.Children.Add(frame);
             }
         }
-
-        private void OnBackButtonClicked(object sender, EventArgs e)
-            => _ = Navigation.PopAsync();
     }
 }
