@@ -33,9 +33,7 @@ namespace SaborSostenibleFrontEnd.AdminPages
 
                 var resp = await _api.GetAsync<ResPendingVolunteerRequests>("allPendingVolunteerRequests/get");
                 if (resp == null)
-                {
                     throw new Exception("La respuesta es nula.");
-                }
 
                 if (!resp.Success || resp.Requests?.Any() != true)
                 {
@@ -52,15 +50,19 @@ namespace SaborSostenibleFrontEnd.AdminPages
 
                 foreach (var req in resp.Requests)
                 {
+                    // tarjeta
                     var frame = new Frame
                     {
                         CornerRadius = 8,
                         Padding = 12,
                         Margin = new Thickness(0, 0, 0, 10),
                         BackgroundColor = Colors.White,
-                        HasShadow = true
+                        HasShadow = true,
+                        BorderColor = Color.FromRgba(0, 0, 0, 0.02),
+                        HorizontalOptions = LayoutOptions.Fill  // asegúrate de que el frame llene
                     };
 
+                    // Nombre
                     var nameLabel = new Label
                     {
                         Text = req.FullName,
@@ -69,52 +71,74 @@ namespace SaborSostenibleFrontEnd.AdminPages
                         TextColor = Colors.Black
                     };
 
-                    var dateLabel = new Label
+                    // Fecha
+                    var dateLayout = new HorizontalStackLayout
+                    {
+                        Spacing = 4,
+                        VerticalOptions = LayoutOptions.Center
+                    };
+                    dateLayout.Children.Add(new Label
+                    {
+                        Text = "\uf133",           // FontAwesome calendar
+                        FontFamily = "FontAwesome",
+                        FontSize = 10,
+                        TextColor = Colors.Gray,
+                        VerticalOptions = LayoutOptions.Center
+                    });
+                    dateLayout.Children.Add(new Label
                     {
                         Text = req.RequestDate.ToLocalTime().ToString("dd/MM/yyyy"),
-                        FontSize = 14,
-                        TextColor = Colors.Gray
-                    };
+                        FontSize = 12,
+                        TextColor = Colors.Gray,
+                        VerticalOptions = LayoutOptions.Center
+                    });
 
-                    var deny = new Button
-                    {
-                        Visual = VisualMarker.Default,
-                        Text = "Denegar",
-                        BackgroundColor = Color.FromArgb("#E53935"),
-                        TextColor = Colors.White,
-                        CornerRadius = 15,
-                        FontSize = 14,
-                        HeightRequest = 32,
-                        Padding = new Thickness(20, 0),
-                        CommandParameter = req.RequestId
-                    };
-                    deny.Clicked += (s, e) => _ = ProcessRequestAsync((int)deny.CommandParameter, false);
-
+                    // Botones con Grid para ancho idéntico
                     var approve = new Button
                     {
-                        Visual = VisualMarker.Default,
                         Text = "Aprobar",
-                        BackgroundColor = Color.FromArgb("#3E7B31"),
+                        BackgroundColor = Color.FromArgb("#2E7D32"),
                         TextColor = Colors.White,
-                        CornerRadius = 15,
-                        FontSize = 14,
-                        HeightRequest = 32,
-                        Padding = new Thickness(20, 0),
+                        CornerRadius = 6,
+                        FontSize = 12,
+                        HeightRequest = 36,
+                        FontAttributes = FontAttributes.Bold,
                         CommandParameter = req.RequestId
                     };
                     approve.Clicked += (s, e) => _ = ProcessRequestAsync((int)approve.CommandParameter, true);
 
-                    var btnLayout = new HorizontalStackLayout
+                    var deny = new Button
                     {
-                        Spacing = 10,
-                        HorizontalOptions = LayoutOptions.End,
-                        Children = { deny, approve }
+                        Text = "Denegar",
+                        BackgroundColor = Colors.White,
+                        BorderColor = Colors.Gray,
+                        BorderWidth = 1,
+                        TextColor = Colors.Gray,
+                        CornerRadius = 6,
+                        FontSize = 12,
+                        HeightRequest = 36,
+                        FontAttributes = FontAttributes.Bold,
+                        CommandParameter = req.RequestId
                     };
+                    deny.Clicked += (s, e) => _ = ProcessRequestAsync((int)deny.CommandParameter, false);
+
+                    var btnGrid = new Grid
+                    {
+                        ColumnSpacing = 10,
+                        ColumnDefinitions =
+                        {
+                            new ColumnDefinition { Width = GridLength.Star },
+                            new ColumnDefinition { Width = GridLength.Star }
+                        },
+                        HorizontalOptions = LayoutOptions.Fill
+                    };
+                    btnGrid.Add(approve, 0, 0);
+                    btnGrid.Add(deny, 1, 0);
 
                     frame.Content = new VerticalStackLayout
                     {
                         Spacing = 6,
-                        Children = { nameLabel, dateLabel, btnLayout }
+                        Children = { nameLabel, dateLayout, btnGrid }
                     };
 
                     RequestsContainer.Children.Add(frame);
@@ -122,7 +146,6 @@ namespace SaborSostenibleFrontEnd.AdminPages
             }
             catch (Exception ex)
             {
-                // si falla, mostramos un mensaje para diagnosticar
                 await DisplayAlert("Error cargando solicitudes", ex.Message, "OK");
             }
         }
@@ -145,13 +168,17 @@ namespace SaborSostenibleFrontEnd.AdminPages
 
             if (res?.Success == true)
             {
-                await DisplayAlert("Éxito",
-                    status ? "Solicitud aprobada" : "Solicitud denegada", "OK");
+                await DisplayAlert(
+                    "Éxito",
+                    status ? "Solicitud aprobada" : "Solicitud denegada",
+                    "OK");
                 await LoadRequestsAsync();
             }
             else
             {
-                var errs = res?.Errors?.Select(x => x.Description) ?? new[] { "Error desconocido" };
+                var errs = res?.Errors?
+                              .Select(x => x.Description)
+                              ?? new[] { "Error desconocido" };
                 await DisplayAlert("Error", string.Join("\n", errs), "OK");
             }
         }

@@ -7,26 +7,30 @@
     BackgroundColor="#F5F5F5"
     Title="Lista solicitudes voluntarios">
 
-    <Grid RowDefinitions="Auto, *" Padding="0">
+    <Grid RowDefinitions="Auto,*">
         <!-- HEADER -->
-        <Grid Grid.Row="0" Padding="20,10" ColumnDefinitions="Auto, *">
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="20,3"
+            ColumnDefinitions="Auto,*">
             <Button
-                Text="←"
-                FontSize="24"
+                Text="↩"
+                FontSize="22"
                 BackgroundColor="Transparent"
-                TextColor="{StaticResource Primary}"
+                TextColor="White"
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
                 Text="Lista solicitudes voluntarios"
-                FontSize="20"
+                FontSize="16"
                 FontAttributes="Bold"
-                TextColor="{StaticResource Primary}"
+                TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
         </Grid>
 
-        <!-- CONTENIDO -->
+        <!-- CONTENIDO DINÁMICO -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout
                 x:Name="RequestsContainer"

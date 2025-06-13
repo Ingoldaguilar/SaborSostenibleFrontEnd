@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using SaborSostenibleFrontEnd.Request;
 using SaborSostenibleFrontEnd.Response;
@@ -48,68 +49,109 @@ namespace SaborSostenibleFrontEnd.AdminPages
                 return;
             }
 
+            const string baseUrl = "http://34.39.128.125/";
+
             foreach (var bank in resp.FoodBanks)
             {
+                // 1) Frame tarjeta
                 var frame = new Frame
                 {
-                    CornerRadius = 10,
-                    Padding = 12,
+                    CornerRadius = 6,
+                    Padding = 0,
+                    Margin = new Thickness(0, 0, 0, 10),
                     BackgroundColor = Colors.White,
                     HasShadow = true,
+                    BorderColor = Color.FromRgba(0, 0, 0, 0.02),
+                    HorizontalOptions = LayoutOptions.Fill
                 };
 
-                // grid de 3 columnas: logo | info | switch
+                // 2) Grid de 3 columnas
                 var grid = new Grid
                 {
+                    Padding = new Thickness(12),
+                    ColumnSpacing = 20,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Fill,
                     ColumnDefinitions =
                     {
-                        new ColumnDefinition{ Width = GridLength.Auto },
-                        new ColumnDefinition{ Width = GridLength.Star },
-                        new ColumnDefinition{ Width = GridLength.Auto }
-                    },
-                    VerticalOptions = LayoutOptions.Center
+                        new ColumnDefinition { Width = new GridLength(40) },    // logo 40px
+                        new ColumnDefinition { Width = GridLength.Star },        // info
+                        new ColumnDefinition { Width = GridLength.Auto }         // switch
+                    }
                 };
 
-                const string baseUrl = "http://34.39.128.125/";
-
-                // 1) Logo
-                var img = new Image
+                // 3) Logo circular
+                var logo = new Image
                 {
                     Source = ImageSource.FromUri(new Uri($"{baseUrl}{bank.LogoImage}")),
                     WidthRequest = 40,
                     HeightRequest = 40,
-                    Aspect = Aspect.AspectFill
+                    Aspect = Aspect.AspectFill,
+                    Clip = new EllipseGeometry
+                    {
+                        Center = new Point(20, 20),
+                        RadiusX = 20,
+                        RadiusY = 20
+                    },
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Start
                 };
-                grid.Add(img, 0, 0);
+                grid.Add(logo, 0, 0);
 
-                // 2) Nombre + teléfono
-                var info = new VerticalStackLayout { Spacing = 4, Padding = new Thickness(10, 0) };
+                // 4) Info: nombre (warp) + teléfono
+                var info = new VerticalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.FillAndExpand
+                };
+                // Nombre con wrap
                 info.Children.Add(new Label
                 {
                     Text = bank.Name,
                     FontAttributes = FontAttributes.Bold,
-                    FontSize = 16,
-                    TextColor = Colors.Black
+                    FontSize = 13,
+                    TextColor = Colors.Black,
+                    LineBreakMode = LineBreakMode.WordWrap
                 });
-                info.Children.Add(new Label
+                // Teléfono con icono
+                var phoneLayout = new HorizontalStackLayout
+                {
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center
+                };
+                phoneLayout.Children.Add(new Label
+                {
+                    Text = "\uf095", // FontAwesome phone
+                    FontFamily = "FontAwesome",
+                    FontSize = 10,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
+                });
+                phoneLayout.Children.Add(new Label
                 {
                     Text = bank.PhoneNumber,
-                    FontSize = 14,
-                    TextColor = Colors.Gray
+                    FontSize = 12,
+                    TextColor = Colors.Gray,
+                    VerticalOptions = LayoutOptions.Center
                 });
+                info.Children.Add(phoneLayout);
+
                 grid.Add(info, 1, 0);
 
-                // 3) Switch
+                // 5) Switch
                 var toggle = new Switch
                 {
                     IsToggled = bank.IsActive,
-                    HorizontalOptions = LayoutOptions.End
+                    HorizontalOptions = LayoutOptions.End,
+                    VerticalOptions = LayoutOptions.Center
                 };
                 toggle.Toggled += async (_, args) =>
                     await UpdateIsActiveAsync(bank.FoodBankId, args.Value, toggle);
 
                 grid.Add(toggle, 2, 0);
 
+                // 6) Montar y agregar
                 frame.Content = grid;
                 BanksContainer.Children.Add(frame);
             }

@@ -4,89 +4,225 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     NavigationPage.HasNavigationBar="False"
-    Title="Insertar Banco de Comida">
+    BackgroundColor="#F5F5F5"
+    Title="Insertar banco de alimentos">
 
-    <Grid Padding="20" RowDefinitions="Auto,*,Auto">
-        <!-- Header personalizado -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+    <Grid RowDefinitions="Auto,*">
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="12,3"
+            ColumnDefinitions="Auto,*,Auto">
+
+            <!-- Back button -->
             <Button
-                Text="←"
-                FontSize="Large"
+                Text="↩"
+                FontAttributes="Bold"
+                FontSize="22"
                 BackgroundColor="Transparent"
-                TextColor="{StaticResource Primary}"
+                TextColor="White"
                 Clicked="OnBackButtonClicked" />
+
+            <!-- Title -->
             <Label
                 Grid.Column="1"
-                Text="Insertar Banco de Comida"
-                FontSize="Title"
+                Text="Insertar banco de alimentos"
+                FontSize="16"
                 FontAttributes="Bold"
+                TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
+
+            <!-- Spacer -->
+            <BoxView
+                Grid.Column="2"
+                WidthRequest="24"
+                Color="#2E7D32" />
         </Grid>
 
-        <!-- Formulario -->
+        <!-- CONTENT -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="15">
+            <Frame
+                Margin="20,20"
+                Padding="24"
+                CornerRadius="12"
+                HasShadow="True"
+                BackgroundColor="White"
+                BorderColor="Transparent">
+                <VerticalStackLayout Spacing="12">
 
-                <Label Text="Nombre" />
-                <Entry x:Name="NameEntry" Placeholder="Value" />
+                    <!-- Nombre -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Nombre"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="NameEntry"
+                            Placeholder="Nombre del banco de alimentos"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
 
-                <Label Text="Descripción" />
-                <Entry x:Name="DescriptionEntry" Placeholder="Value" />
+                    <!-- Descripción -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Descripción"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Editor
+                            x:Name="DescriptionEntry"
+                            Placeholder="Descripción del banco de alimentos"
+                            FontSize="11"
+                            AutoSize="TextChanges"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
 
-                <Label Text="Logo" />
-                <HorizontalStackLayout Spacing="10">
+                    <!-- Logo -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Logo"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+
+                        <!-- área punteada para seleccionar imagen -->
+                        <Frame
+                            Padding="12"
+                            CornerRadius="8"
+                            HasShadow="False"
+                            BorderColor="#E0E0E0"
+                            BackgroundColor="Transparent"
+                            HeightRequest="40">
+                            <HorizontalStackLayout
+                                Spacing="10"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center">
+                                <Label
+                                    Text="&#xf093;"
+                                    FontFamily="FontAwesome"
+                                    FontSize="16"
+                                    TextColor="#2E7D32"/>
+                                <Label
+                                    Text="Seleccionar imagen"
+                                    FontSize="11"
+                                    TextColor="#666"/>
+                            </HorizontalStackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSelectLogoClicked"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                        <!-- Nombre de archivo seleccionado -->
+                        <Label
+                            x:Name="LogoSelectedLabel"
+                            Text=""
+                            FontSize="11"
+                            TextColor="Gray"
+                            HorizontalOptions="Start"/>
+                    </VerticalStackLayout>
+
+                    <!-- Usuario administrador -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Usuario administrador"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Picker
+                            x:Name="AdminPicker"
+                            Title="Seleccionar administrador"
+                            ItemDisplayBinding="{Binding FullName}"
+                            SelectedIndexChanged="AdminPicker_SelectedIndexChanged" />
+                    </VerticalStackLayout>
+
+                    <!-- Email -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Email"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="EmailEntry"
+                            Placeholder="correo@ejemplo.com"
+                            Keyboard="Email"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
+
+                    <!-- Número teléfono -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Número de teléfono"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="PhoneEntry"
+                            Placeholder="+506 1234 5678"
+                            Keyboard="Telephone"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
+
+                    <!-- Dirección -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label
+                            Text="Dirección"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="Black" />
+                        <Entry
+                            x:Name="AddressEntry"
+                            Placeholder="Dirección del banco de alimentos"
+                            FontSize="11"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
+
+                    <!-- Elegir ubicación -->
                     <Button
-                        Text="Seleccionar imagen"
-                        Clicked="OnSelectLogoClicked" />
-                    <Label x:Name="LogoSelectedLabel" VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                        Text="📍  Elegir ubicación en el mapa"
+                        FontSize="12"
+                        HeightRequest="40"
+                        CornerRadius="8"
+                        BorderColor="#2E7D32"
+                        BorderWidth="1"
+                        BackgroundColor="Transparent"
+                        TextColor="#2E7D32"
+                        Clicked="OnElegirUbicacionClicked"
+                        HorizontalOptions="FillAndExpand" />
 
-                <Label Text="Usuario administrador" />
-                <Picker
-                    x:Name="AdminPicker"
-                    Title="Seleccionar admin"
-                    ItemDisplayBinding="{Binding FullName}"
-                    SelectedIndexChanged="AdminPicker_SelectedIndexChanged" />
+                    <!-- Etiqueta ubicación -->
+                    <Label
+                      x:Name="UbicacionLabel"
+                      Text="Ubicación no detectada aún."
+                      FontSize="11"
+                      TextColor="Gray"
+                      HorizontalOptions="Center" />
 
-                <Label Text="Email" />
-                <Entry
-                    x:Name="EmailEntry"
-                    Placeholder="Value"
-                    Keyboard="Email" />
+                    <!-- Botón Insertar -->
+                    <Button
+                        Text="Insertar"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        HeightRequest="40"
+                        CornerRadius="8"
+                        BackgroundColor="#2E7D32"
+                        TextColor="White"
+                        Clicked="OnInsertClicked"
+                        HorizontalOptions="FillAndExpand" />
 
-                <Label Text="Número teléfono" />
-                <Entry
-                    x:Name="PhoneEntry"
-                    Placeholder="Value"
-                    Keyboard="Telephone" />
-
-                <Label Text="Dirección" />
-                <Entry x:Name="AddressEntry" Placeholder="Value" />
-
-                <Button Text="📍 Elegir ubicación en el mapa"
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="White"
-                    Clicked="OnElegirUbicacionClicked" />
-
-               <Label x:Name="UbicacionLabel"
-                   Text="Ubicación no detectada aún."
-                   FontSize="12"
-                   TextColor="{StaticResource PrimaryDarkText}"
-                   HorizontalOptions="Center" />
-
-            </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
         </ScrollView>
-
-        <!-- Botón Insertar -->
-        <Button
-            Grid.Row="2"
-            Text="Insertar"
-            HeightRequest="50"
-            CornerRadius="25"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="White"
-            Clicked="OnInsertClicked" />
-
     </Grid>
 </ContentPage>
