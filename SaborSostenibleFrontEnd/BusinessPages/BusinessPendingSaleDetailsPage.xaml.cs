@@ -47,7 +47,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
         }
 
         private void OnViewBagsClicked(object sender, EventArgs e)
-            => _ = Navigation.PushAsync(new OrderDetailsPage(_orderId));
+            => _ = Navigation.PushAsync(new BusinessOrderDetailsPage(_orderId));
 
         private async void OnConfirmPaymentClicked(object sender, EventArgs e)
             => await UpdatePaymentStatusAsync(6);  // 6 = Completado

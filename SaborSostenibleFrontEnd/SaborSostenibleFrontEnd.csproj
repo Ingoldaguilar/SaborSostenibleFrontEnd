@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="BusinessPages\BusinessOrderDetailsPage.xaml.cs">
+	    <DependentUpon>BusinessOrderDetailsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="FoodBankPages\ConfirmReceptionPage.xaml.cs">
 	    <DependentUpon>ConfirmReceptionPage.xaml</DependentUpon>
 	  </Compile>
@@ -127,6 +130,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="BusinessPages\BusinessMainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="BusinessPages\BusinessOrderDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="FoodBankPages\ConfirmReceptionPage.xaml">

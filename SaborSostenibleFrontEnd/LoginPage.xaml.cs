@@ -123,6 +123,7 @@ public partial class LoginPage : ContentPage
                     Preferences.Set("UserName", EmailEntry.Text.Trim());
                     Preferences.Set("UserRole", loginResponse.UserRole);
                     Console.WriteLine($"UserRole guardado: {loginResponse.UserRole}");
+                    Preferences.Set("PendingRequest", loginResponse.PendingRequest ?? false);
 
                     Page targetPage;
 

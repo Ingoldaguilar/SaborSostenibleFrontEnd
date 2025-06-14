@@ -152,7 +152,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     VerticalOptions = LayoutOptions.Center
                 };
                 btn.Clicked += (_, __) =>
-                    Navigation.PushAsync(new OrderDetailsPage(order.OrderId));
+                    Navigation.PushAsync(new BusinessOrderDetailsPage(order.OrderId));
 
                 content.Children.Add(btn);
 

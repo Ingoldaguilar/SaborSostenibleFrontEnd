@@ -258,6 +258,9 @@ namespace SaborSostenibleFrontEnd
                 if (response.IsSuccessStatusCode)
                 {
                     await DisplayAlert("Éxito", "Tu solicitud de voluntariado ha sido enviada.", "OK");
+
+                    Preferences.Set("PendingRequest", true);
+                    ConfigurarBotonesPorRol();
                 }
                 else
                 {
@@ -288,6 +291,7 @@ namespace SaborSostenibleFrontEnd
         {
             // Obtener el rol del usuario desde las preferencias
             string userRole = Preferences.Get("UserRole", string.Empty);
+            bool pendingRequest = Preferences.Get("PendingRequest", false);
 
             // Ocultar ambos botones por defecto
             SolicitarVoluntarioButton.IsVisible = false;
@@ -298,6 +302,12 @@ namespace SaborSostenibleFrontEnd
             {
                 case "customer":
                     SolicitarVoluntarioButton.IsVisible = true;
+                    SolicitarVoluntarioButton.IsEnabled = !pendingRequest;
+
+                    if (pendingRequest)
+                    {
+                        SolicitarVoluntarioButton.Text = "¡Solicitud de voluntario enviada!";
+                    }
                     break;
                 case "volunteer":
                     DonacionesPendientesButton.IsVisible = true;

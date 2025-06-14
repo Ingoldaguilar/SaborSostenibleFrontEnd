@@ -10,5 +10,6 @@ namespace SaborSostenibleFrontEnd.Response
     {
         public string? SessionId { get; set; }
         public string UserRole { get; set; }
+        public bool? PendingRequest { get; set; }
     }
 }

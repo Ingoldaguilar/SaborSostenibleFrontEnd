@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SaborSostenibleFrontEnd.BusinessOrderDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F5F5F5"
+    Title="Detalles del pedido">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="20,1"
+            ColumnDefinitions="Auto,*,Auto">
+            <Button
+                Text="↩"
+                FontSize="22"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                Clicked="OnBackButtonClicked" />
+            <Label
+                Grid.Column="1"
+                Text="Bolsas del pedido"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+            <BoxView
+                Grid.Column="2"
+                WidthRequest="24"
+                Color="#2E7D32"/>
+        </Grid>
+
+        <!-- LISTA DE BOLSAS -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                x:Name="DetailsContainer"
+                Spacing="12"
+                Padding="20" />
+        </ScrollView>
+    </Grid>
+</ContentPage>
