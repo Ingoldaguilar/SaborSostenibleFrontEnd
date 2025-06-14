@@ -35,7 +35,7 @@
                     TextColor="White"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Padding="0,18"/>
+                    Padding="0,15"/>
                 <BoxView
                     Grid.Row="1"
                     HeightRequest="1"
@@ -296,7 +296,7 @@
                     TextColor="White"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Padding="0,18"/>
+                    Padding="0,15"/>
                 <BoxView
                     Grid.Row="1"
                     HeightRequest="1"

@@ -13,7 +13,7 @@
             Grid.Row="0"
             BackgroundColor="#2E7D32"
             Padding="0,0,0,4"
-            HeightRequest="57">
+            HeightRequest="54">
             <Label
                 Grid.Column="1"
                 Text="Subir bolsa sorpresa"

@@ -12,7 +12,7 @@
         <Grid
             Grid.Row="0"
             BackgroundColor="#2E7D32"
-            Padding="20,17"
+            Padding="20,15"
             ColumnDefinitions="Auto,*">
 
             <Label

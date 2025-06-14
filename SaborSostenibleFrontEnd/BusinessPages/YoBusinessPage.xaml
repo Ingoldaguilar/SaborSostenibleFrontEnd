@@ -66,7 +66,7 @@
 
                     <!-- Rol -->
                     <Label
-                        Text="Negocio"
+                        Text="Restaurante"
                         FontSize="18"
                         FontAttributes="Bold"
                         TextColor="Black"
@@ -86,7 +86,7 @@
                     <!-- Email -->
                     <Label
                         x:Name="LabelEmail"
-                        Text="negocio@email.com"
+                        Text="restaurante@gmail.com"
                         FontSize="14"
                         TextColor="Gray"
                         HorizontalOptions="Center"
