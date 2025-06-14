@@ -10,7 +10,9 @@ public partial class ForgotPassword : ContentPage
     public ForgotPassword()
 	{
 		InitializeComponent();
-	}
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
+    }
 
     private async void OnInicio_Tapped(object sender, TappedEventArgs e)
     {

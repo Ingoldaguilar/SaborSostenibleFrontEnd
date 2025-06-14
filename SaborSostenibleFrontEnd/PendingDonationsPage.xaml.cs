@@ -12,6 +12,7 @@ public partial class PendingDonationsPage : ContentPage
     {
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
     }
 
     protected override async void OnAppearing()

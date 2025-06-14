@@ -21,10 +21,22 @@ namespace SaborSostenibleFrontEnd
             NavigationPage.SetHasNavigationBar(this, false);
             Padding = new Thickness(0);
 
+            // Suscribirse al evento de cambio de tab
+            this.CurrentPageChanged += OnCurrentPageChanged;
+
             _ = CargarSaludoPersonalizadoAsync();
             _ = CargarRestaurantesDesdeApiAsync();
             _ = CargarPedidosAsync();
             _ = MostrarDatosUsuarioAsync();
+        }
+
+        private async void OnCurrentPageChanged(object sender, EventArgs e)
+        {
+            // Verificar si el tab actual es el de "Pedidos"
+            if (this.CurrentPage != null && this.CurrentPage.Title == "Pedidos")
+            {
+                await CargarPedidosAsync();
+            }
         }
 
         private async Task CargarRestaurantesDesdeApiAsync(string searchText = null)
@@ -165,7 +177,6 @@ namespace SaborSostenibleFrontEnd
                         UsuarioEmailLabel.Text = Safe("Email") ?? "N/A";
                         UsuarioTelefonoLabel.Text = Safe("PhoneNumber") ?? "N/A";
                         UsuarioDireccionLabel.Text = Safe("Address") ?? "N/A";
-                        UsuarioRolLabel.Text = "Usuario";
                     }
                 }
             }
@@ -265,5 +276,44 @@ namespace SaborSostenibleFrontEnd
             await Navigation.PushAsync(new SaborSostenibleFrontEnd.VolunteerPages.PendingDonationsPage());
         }
 
+        // Método para limpiar recursos cuando se destruye la página
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            this.CurrentPageChanged -= OnCurrentPageChanged;
+        }
+
+        // Método para configurar la visibilidad de los botones según el rol del usuario
+        private void ConfigurarBotonesPorRol()
+        {
+            // Obtener el rol del usuario desde las preferencias
+            string userRole = Preferences.Get("UserRole", string.Empty);
+
+            // Ocultar ambos botones por defecto
+            SolicitarVoluntarioButton.IsVisible = false;
+            DonacionesPendientesButton.IsVisible = false;
+
+            // Mostrar el botón correspondiente según el rol
+            switch (userRole?.ToLower())
+            {
+                case "customer":
+                    SolicitarVoluntarioButton.IsVisible = true;
+                    break;
+                case "volunteer":
+                    DonacionesPendientesButton.IsVisible = true;
+                    break;
+                default:
+                    // Si no hay rol o es desconocido, no mostrar ningún botón especial
+                    break;
+            }
+        }
+
+        // Llamar este método en el constructor o en OnAppearing
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ConfigurarBotonesPorRol();
+            // ... resto de tu código de OnAppearing
+        }
     }
 }

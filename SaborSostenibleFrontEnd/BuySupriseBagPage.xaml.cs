@@ -12,6 +12,7 @@ public partial class BuySupriseBagPage : ContentPage
     private int _orderId = 0;
     private List<(int Id, string Name)> _foodBanks = new();
     private string _orderCode = "";
+    private const string BASE_URL = "http://34.39.128.125/api";
 
     public BuySupriseBagPage(Restaurante restaurante, SurpriseBag bolsa)
     {
@@ -21,24 +22,42 @@ public partial class BuySupriseBagPage : ContentPage
 
         _orderCode = $"ORD{new Random().Next(100000, 999999)}";
 
+        InicializarInterfaz();
+        _ = CargarFoodBanksAsync();
+
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
+    }
+
+    private void InicializarInterfaz()
+    {
+        // Información del restaurante
         RestauranteNombreLabel.Text = _restaurante.nombreRestaurante;
         RestauranteDescripcionLabel.Text = _restaurante.descripcionRestaurante;
-        RestauranteImagen.Source = _restaurante.imagen;
         RestauranteTelefonoLabel.Text = _restaurante.telefono;
 
+        // Información de la bolsa
         DescripcionBolsaLabel.Text = _bolsa.Description;
-        PrecioBolsaLabel.Text = $"Precio: ₡{_bolsa.Price:N2}";
+        PrecioBolsaLabel.Text = $"₡{_bolsa.Price:N0}";
 
-        SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
+        // Preparar información de pago
+        SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode}";
         PagoMontoLabel.Text = $"₡{_bolsa.Price:N0}";
         PagoTelefonoLabel.Text = _restaurante.telefono;
 
-        _ = CargarFoodBanksAsync();
+        HeaderPaso1.IsVisible = true;
     }
 
     private void OnDonacionToggled(object sender, ToggledEventArgs e)
     {
-        FoodBankPicker.IsVisible = e.Value;
+        FoodBankFrame.IsVisible = e.Value;
+
+        // Animación suave para mostrar/ocultar
+        if (e.Value)
+        {
+            FoodBankFrame.Opacity = 0;
+            FoodBankFrame.FadeTo(1, 300, Easing.CubicOut);
+        }
     }
 
     private async Task CargarFoodBanksAsync()
@@ -46,42 +65,65 @@ public partial class BuySupriseBagPage : ContentPage
         try
         {
             using var client = new HttpClient();
-            var response = await client.GetAsync("http://34.39.128.125/api/activeFoodBanksDetails/get");
+            var token = Preferences.Get("SessionId", null);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            // Usar la API correcta que especificaste
+            var response = await client.GetAsync($"{BASE_URL}/allFoodBanksDetails/get");
 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
                 var doc = JsonDocument.Parse(json);
 
-                if (doc.RootElement.TryGetProperty("FoodBanks", out var banks))
+                if (doc.RootElement.TryGetProperty("Success", out var success) && success.GetBoolean())
                 {
-                    _foodBanks.Clear();
-                    FoodBankPicker.Items.Clear();
-
-                    foreach (var fb in banks.EnumerateArray())
+                    if (doc.RootElement.TryGetProperty("FoodBanks", out var banks))
                     {
-                        var name = fb.GetProperty("Name").GetString();
-                        var id = fb.GetProperty("FoodBankId").GetInt32();
-                        _foodBanks.Add((id, name));
-                        FoodBankPicker.Items.Add(name);
+                        _foodBanks.Clear();
+                        FoodBankPicker.Items.Clear();
+
+                        foreach (var fb in banks.EnumerateArray())
+                        {
+                            // Verificar si está activo
+                            if (fb.TryGetProperty("IsActive", out var isActive) && isActive.GetBoolean())
+                            {
+                                var name = fb.GetProperty("Name").GetString();
+                                var id = fb.GetProperty("FoodBankId").GetInt32();
+                                _foodBanks.Add((id, name));
+                                FoodBankPicker.Items.Add(name);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Manejar errores de la API
+                    if (doc.RootElement.TryGetProperty("Errors", out var errors))
+                    {
+                        var errorMessages = errors.EnumerateArray()
+                            .Select(e => e.GetProperty("Description").GetString())
+                            .ToList();
+                        await DisplayAlert("Error", string.Join(", ", errorMessages), "OK");
                     }
                 }
             }
+            else
+            {
+                await DisplayAlert("Error", "No se pudieron cargar los bancos de comida", "OK");
+            }
         }
-        catch
+        catch (Exception ex)
         {
-            await DisplayAlert("Error", "No se pudieron cargar los bancos de comida", "OK");
+            await DisplayAlert("Error", $"Error al cargar bancos de comida: {ex.Message}", "OK");
         }
     }
 
     private async void OnProcederCompraClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(CustomerPhoneEntry.Text))
-        {
-            await DisplayAlert("Error", "Por favor ingresa tu número de teléfono", "OK");
-            return;
-        }
-
+        // Validar selección de banco de comida si es donación
         int? foodBankId = null;
 
         if (DonacionSwitch.IsToggled)
@@ -91,16 +133,16 @@ public partial class BuySupriseBagPage : ContentPage
                 await DisplayAlert("Error", "Selecciona un banco de comida para donar", "OK");
                 return;
             }
-
             foodBankId = _foodBanks[FoodBankPicker.SelectedIndex].Id;
         }
 
+        // Preparar payload para crear orden
         var payload = new
         {
             BagsIdsVarchar = _bolsa.Id,
             BusinessId = _restaurante.idRestaurante,
             IsDonation = DonacionSwitch.IsToggled,
-            FoodBankId = foodBankId ?? null
+            FoodBankId = foodBankId
         };
 
         try
@@ -108,23 +150,39 @@ public partial class BuySupriseBagPage : ContentPage
             using var client = new HttpClient();
             var token = Preferences.Get("SessionId", null);
             if (!string.IsNullOrEmpty(token))
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("http://34.39.128.125/api/order/insert", content);
+            var response = await client.PostAsync($"{BASE_URL}/order/insert", content);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseJson = await response.Content.ReadAsStringAsync();
                 var doc = JsonDocument.Parse(responseJson);
-                _orderId = doc.RootElement.GetProperty("OrderId").GetInt32();
-                Paso1Icon.BackgroundColor = Colors.LightGray;
-                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32");
 
-
-                await MostrarPaso2Async();
+                if (doc.RootElement.TryGetProperty("Success", out var success) && success.GetBoolean())
+                {
+                    _orderId = doc.RootElement.GetProperty("OrderId").GetInt32();
+                    await ActualizarProgresoPasos(2);
+                    await MostrarPaso2Async();
+                }
+                else
+                {
+                    // Manejar errores
+                    if (doc.RootElement.TryGetProperty("Errors", out var errors))
+                    {
+                        var errorMessages = errors.EnumerateArray()
+                            .Select(e => e.GetProperty("Description").GetString())
+                            .ToList();
+                        await DisplayAlert("Error", string.Join(", ", errorMessages), "OK");
+                    }
+                }
             }
             else
             {
@@ -137,34 +195,103 @@ public partial class BuySupriseBagPage : ContentPage
         }
     }
 
+    private async Task ActualizarProgresoPasos(int pasoActual)
+    {
+        // Animaciones suaves para actualizar el progreso visual
+        switch (pasoActual)
+        {
+            case 2:
+                // Cambiar Paso 1 a completado (gris) y activar Paso 2 (verde)
+                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50"); // Verde completado
+                ((Label)Paso1Icon.Content).TextColor = Colors.White;
+
+                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32"); // Verde activo
+                ((Label)Paso2Icon.Content).TextColor = Colors.White;
+
+                // Actualizar las líneas de conexión
+                var line1 = ((Grid)Paso1Icon.Parent).Children.OfType<BoxView>().First();
+                line1.BackgroundColor = Color.FromArgb("#4CAF50");
+
+                // Animación de escala para dar feedback visual
+                await Task.WhenAll(
+                    Paso1Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso1Icon.ScaleTo(1.0, 150)),
+                    Paso2Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso2Icon.ScaleTo(1.0, 150))
+                );
+                break;
+
+            case 3:
+                // Cambiar Paso 2 a completado y activar Paso 3
+                Paso2Icon.BackgroundColor = Color.FromArgb("#4CAF50"); // Verde completado
+                ((Label)Paso2Icon.Content).TextColor = Colors.White;
+
+                Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32"); // Verde activo
+                ((Label)Paso3Icon.Content).TextColor = Colors.White;
+
+                // Actualizar la segunda línea de conexión
+                var line2 = ((Grid)Paso1Icon.Parent).Children.OfType<BoxView>().Last();
+                line2.BackgroundColor = Color.FromArgb("#4CAF50");
+
+                // Animación de escala
+                await Task.WhenAll(
+                    Paso2Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso2Icon.ScaleTo(1.0, 150)),
+                    Paso3Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso3Icon.ScaleTo(1.0, 150))
+                );
+                break;
+        }
+    }
+
     private async Task MostrarPaso2Async()
     {
         try
         {
             var payload = new { OrderId = _orderId.ToString() };
             var json = JsonSerializer.Serialize(payload);
+
             using var client = new HttpClient();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var token = Preferences.Get("SessionId", null);
             if (!string.IsNullOrEmpty(token))
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.PostAsync("http://34.39.128.125/api/customerPurchaseInstructions/post", content);
+            var response = await client.PostAsync($"{BASE_URL}/customerPurchaseInstructions/post", content);
 
             if (response.IsSuccessStatusCode)
             {
-                var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-                var info = doc.RootElement.GetProperty("PurchaseInstructions");
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var doc = JsonDocument.Parse(responseJson);
 
-                PagoTelefonoLabel.Text = info.GetProperty("PhoneNumberBusiness").GetString();
-                PagoMontoLabel.Text = $"₡{_bolsa.Price:N0}";
-                SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {_restaurante.nombreRestaurante}-{_orderCode} {_restaurante.telefono}";
+                if (doc.RootElement.TryGetProperty("Success", out var success) && success.GetBoolean())
+                {
+                    var info = doc.RootElement.GetProperty("PurchaseInstructions");
 
-                await Paso1.FadeTo(0, 200);
-                Paso1.IsVisible = false;
-                InstruccionesStep.Opacity = 0;
-                InstruccionesStep.IsVisible = true;
-                await InstruccionesStep.FadeTo(1, 200);
+                    // Actualizar información de pago
+                    PagoTelefonoLabel.Text = info.GetProperty("PhoneNumberBusiness").GetString();
+                    PagoMontoLabel.Text = $"₡{_bolsa.Price:N0}";
+                    var businessName = info.GetProperty("NameBusiness").GetString();
+                    var orderCode = info.GetProperty("OrderCode").GetString();
+                    SinpeDetalleLabel.Text = $"Pago bolsa sorpresa {businessName}-{orderCode}";
+
+                    // Transición animada entre pasos
+                    await Paso1.FadeTo(0, 300);
+                    Paso1.IsVisible = false;
+                    HeaderPaso1.IsVisible = false;
+
+                    InstruccionesStep.Opacity = 0;
+                    InstruccionesStep.IsVisible = true;
+                    await InstruccionesStep.FadeTo(1, 300);
+                }
+                else
+                {
+                    // Manejar errores
+                    if (doc.RootElement.TryGetProperty("Errors", out var errors))
+                    {
+                        var errorMessages = errors.EnumerateArray()
+                            .Select(e => e.GetProperty("Description").GetString())
+                            .ToList();
+                        await DisplayAlert("Error", string.Join(", ", errorMessages), "OK");
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -177,31 +304,52 @@ public partial class BuySupriseBagPage : ContentPage
     {
         try
         {
-            Paso2Icon.BackgroundColor = Colors.LightGray;
-            Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32");
+            await ActualizarProgresoPasos(3);
 
             var json = JsonSerializer.Serialize(new { OrderId = _orderId });
             using var client = new HttpClient();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var token = Preferences.Get("SessionId", null);
             if (!string.IsNullOrEmpty(token))
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            var response = await client.PostAsync("http://34.39.128.125/api/customerFinalPaymentData/post", content);
+            var response = await client.PostAsync($"{BASE_URL}/customerFinalPaymentData/post", content);
 
             if (response.IsSuccessStatusCode)
             {
-                var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
-                var data = doc.RootElement.GetProperty("FinalPaymentData");
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var doc = JsonDocument.Parse(responseJson);
 
-                OrdenFinalLabel.Text = $"Código: {data.GetProperty("OrderCode").GetString()}";
-                TelefonoFinalLabel.Text = $"Teléfono: {data.GetProperty("PhoneNumberBusiness").GetString()}";
+                if (doc.RootElement.TryGetProperty("Success", out var success) && success.GetBoolean())
+                {
+                    var data = doc.RootElement.GetProperty("FinalPaymentData");
 
-                await InstruccionesStep.FadeTo(0, 200);
-                InstruccionesStep.IsVisible = false;
-                ConfirmacionStep.Opacity = 0;
-                ConfirmacionStep.IsVisible = true;
-                await ConfirmacionStep.FadeTo(1, 200);
+                    // Actualizar información final
+                    OrdenFinalLabel.Text = $"Código: {data.GetProperty("OrderCode").GetString()}";
+                    TelefonoFinalLabel.Text = $"Negocio: {data.GetProperty("NameBusiness").GetString()}";
+                    EstadoFinalLabel.Text = $"Estado: {data.GetProperty("State").GetString()}";
+
+                    // Transición animada al paso final
+                    HeaderPaso1.IsVisible = false;
+                    await InstruccionesStep.FadeTo(0, 300);
+                    InstruccionesStep.IsVisible = false;
+
+                    ConfirmacionStep.Opacity = 0;
+                    ConfirmacionStep.IsVisible = true;
+                    await ConfirmacionStep.FadeTo(1, 300);
+                }
+                else
+                {
+                    // Manejar errores
+                    if (doc.RootElement.TryGetProperty("Errors", out var errors))
+                    {
+                        var errorMessages = errors.EnumerateArray()
+                            .Select(e => e.GetProperty("Description").GetString())
+                            .ToList();
+                        await DisplayAlert("Error", string.Join(", ", errorMessages), "OK");
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -215,7 +363,17 @@ public partial class BuySupriseBagPage : ContentPage
         try
         {
             await Clipboard.Default.SetTextAsync(SinpeDetalleLabel.Text);
-            await DisplayAlert("Copiado", "Detalle de SINPE copiado al portapapeles", "OK");
+
+            // Toast personalizado
+            var button = sender as Button;
+            var originalText = button.Text;
+            button.Text = "✓";
+            button.BackgroundColor = Color.FromArgb("#4CAF50");
+
+            await Task.Delay(1000);
+
+            button.Text = originalText;
+            button.BackgroundColor = Color.FromArgb("#2E7D32");
         }
         catch
         {
@@ -229,4 +387,12 @@ public partial class BuySupriseBagPage : ContentPage
     }
 
     protected override bool OnBackButtonPressed() => true;
+
+    private async void OnBackButtonClicked(object sender, EventArgs e)
+    {
+        var confirm = await DisplayAlert("¿Deseas salir?", "Volver cancelará esta compra", "Sí", "No");
+        if (confirm)
+            await Navigation.PopAsync();
+    }
+
 }

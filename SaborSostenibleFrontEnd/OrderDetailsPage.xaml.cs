@@ -18,6 +18,8 @@ namespace SaborSostenibleFrontEnd
         {
             InitializeComponent();
             _orderId = orderId;
+            NavigationPage.SetHasNavigationBar(this, false);
+            Padding = new Thickness(0);
         }
 
         protected override void OnAppearing()

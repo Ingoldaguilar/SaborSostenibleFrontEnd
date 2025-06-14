@@ -98,32 +98,94 @@
                     <Label Text="Mis pedidos" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </Grid>
             </Frame>
-            <CollectionView x:Name="PedidosCollectionView" Grid.Row="1" ItemsSource="{Binding Pedidos}" VerticalOptions="FillAndExpand" SelectionMode="None">
+
+            <CollectionView Grid.Row="1" x:Name="PedidosCollectionView" ItemsSource="{Binding Pedidos}" SelectionMode="None" Margin="20,15">
                 <CollectionView.EmptyView>
-                    <Grid Padding="30" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                        <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                            <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
-                                <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Frame>
-                            <Label Text="Por el momento no tienes pedidos registrados." FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
-                            <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
-                        </VerticalStackLayout>
-                    </Grid>
+                    <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="30">
+                        <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
+                            <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Frame>
+                        <Label Text="Por el momento no tienes pedidos registrados." FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
+                        <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
+                    </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="20" Margin="0,10" BackgroundColor="White" CornerRadius="15" HasShadow="True" BorderColor="#E0E0E0">
-                            <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding RestaurantName}" FontSize="18" FontAttributes="Bold" TextColor="#2E7D32"/>
-                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="15">
-                                    <Label Grid.Row="0" Grid.Column="0" Text="Fecha:" FontSize="14" TextColor="#666"/>
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Date}" FontSize="14" TextColor="#444"/>
-                                    <Label Grid.Row="1" Grid.Column="0" Text="Estado:" FontSize="14" TextColor="#666"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Status}" FontSize="14" TextColor="#444"/>
+                        <Frame Padding="0" Margin="0,0,0,15" BackgroundColor="Transparent" HasShadow="False" BorderColor="Transparent">
+                            <Frame BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True" BorderColor="Transparent">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
+
+                                    <!-- Header con nombre del restaurante y estado -->
+                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                        <Label Grid.Column="0" 
+                                           Text="{Binding RestaurantName}" 
+                                           FontSize="18" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#2E7D32"
+                                           VerticalOptions="Center"
+                                           LineBreakMode="TailTruncation"/>
+                                        <Frame Grid.Column="1" 
+                                           BackgroundColor="{Binding StatusColor}" 
+                                           CornerRadius="12" 
+                                           Padding="8,4" 
+                                           HasShadow="False">
+                                            <Label Text="{Binding Status}" 
+                                               FontSize="12" 
+                                               FontAttributes="Bold"
+                                               TextColor="White"
+                                               HorizontalOptions="Center"/>
+                                        </Frame>
+                                    </Grid>
+
+                                    <!-- Fecha y hora -->
+                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Label Grid.Column="0" 
+                                           Text="📅" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" 
+                                           Text="{Binding DateFormatted}" 
+                                           FontSize="14" 
+                                           TextColor="#666"
+                                           VerticalOptions="Center"/>
+                                    </Grid>
+
+                                    <!-- Número de bolsas -->
+                                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Label Grid.Column="0" 
+                                           Text="🛍️" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"/>
+                                        <Label Grid.Column="1" 
+                                           Text="{Binding Bags, StringFormat='{0} bolsa(s)'}" 
+                                           FontSize="14" 
+                                           TextColor="#666"
+                                           VerticalOptions="Center"/>
+                                    </Grid>
+
+                                    <!-- Total destacado -->
+                                    <Frame Grid.Row="3" 
+                                       BackgroundColor="#F1F8E9" 
+                                       CornerRadius="10" 
+                                       Padding="12,8" 
+                                       HasShadow="False"
+                                       BorderColor="Transparent">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                            <Label Grid.Column="0" 
+                                               Text="💰" 
+                                               FontSize="16" 
+                                               VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" 
+                                               Text="{Binding Total, StringFormat='Total: ₡{0:N2}'}" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold"
+                                               TextColor="#2E7D32"
+                                               VerticalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+
                                 </Grid>
-                                <Label Text="{Binding Bags, StringFormat='Bolsas: {0}'}" FontSize="14" TextColor="#444"/>
-                                <Label Text="{Binding Total, StringFormat='Total: ₡{0:N2}'}" FontSize="14" TextColor="#2E7D32" FontAttributes="Bold"/>
-                            </VerticalStackLayout>
+                            </Frame>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -159,19 +221,50 @@
                                 <Label Text="📍" FontSize="18"/>
                                 <Label x:Name="UsuarioDireccionLabel" FontSize="16" TextColor="#555"/>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="🎭" FontSize="18"/>
-                                <Label x:Name="UsuarioRolLabel" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32"/>
-                            </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
-                    <Button Text="Solicitar ser voluntario" Clicked="OnSolicitarVoluntariadoClicked" BackgroundColor="#2E7D32" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
-                    <Button Text="Ver donaciones pendientes" Clicked="OnDonacionesPendientesClicked" BackgroundColor="#2E7D32" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
-                    <Button Text="Cerrar Sesión" Clicked="OnCerrarSesionClicked" BackgroundColor="#E53935" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
-                    <Label Text="Versión de la App: 1.0.0" FontSize="12" HorizontalOptions="Center" TextColor="#AAA" Margin="0,30,0,0"/>
+
+                    <!-- Botón para solicitar ser voluntario - Solo visible para Customer -->
+                    <Button x:Name="SolicitarVoluntarioButton" 
+                        Text="Solicitar ser voluntario" 
+                        Clicked="OnSolicitarVoluntariadoClicked" 
+                        BackgroundColor="#2E7D32" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="12" 
+                        HeightRequest="50" 
+                        FontSize="16"
+                        IsVisible="False"/>
+
+                    <!-- Botón para ver donaciones pendientes - Solo visible para Volunteer -->
+                    <Button x:Name="DonacionesPendientesButton" 
+                        Text="Ver donaciones pendientes" 
+                        Clicked="OnDonacionesPendientesClicked" 
+                        BackgroundColor="#2E7D32" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="12" 
+                        HeightRequest="50" 
+                        FontSize="16"
+                        IsVisible="False"/>
+
+                    <Button Text="Cerrar Sesión" 
+                        Clicked="OnCerrarSesionClicked" 
+                        BackgroundColor="#E53935" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="12" 
+                        HeightRequest="50" 
+                        FontSize="16"/>
+
+                    <Label Text="Versión de la App: 1.0.0" 
+                       FontSize="12" 
+                       HorizontalOptions="Center" 
+                       TextColor="#AAA" 
+                       Margin="0,30,0,0"/>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
     </ContentPage>
-
+    
 </TabbedPage>

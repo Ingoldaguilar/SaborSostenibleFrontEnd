@@ -13,6 +13,8 @@ public partial class ElegirUbicacionPage : ContentPage
         InitializeComponent();
         this.onUbicacionConfirmada = onUbicacionConfirmada;
         LoadMapAsync();
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
     }
 
     private async void LoadMapAsync()

@@ -19,6 +19,9 @@ public partial class RegisterPage : ContentPage
     public RegisterPage()
     {
         InitializeComponent();
+
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
     }
 
     private async void OnRegisterClicked(object sender, EventArgs e)

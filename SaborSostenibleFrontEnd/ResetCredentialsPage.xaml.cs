@@ -12,7 +12,8 @@ public partial class ResetCredentialsPage : ContentPage
     public ResetCredentialsPage(string correo)
 	{
 		InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this,false);
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
         _email = correo;
     }
 

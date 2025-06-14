@@ -13,6 +13,9 @@ public partial class CodeVerificationPage : ContentPage
     {
         InitializeComponent();
         _email = email;
+
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
     }
 
     private async void VerifyCode_Clicked(object sender, EventArgs e)

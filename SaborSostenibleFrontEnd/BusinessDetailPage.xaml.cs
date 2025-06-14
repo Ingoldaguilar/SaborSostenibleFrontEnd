@@ -19,6 +19,9 @@ public partial class BusinessDetailPage : ContentPage
 
         MostrarInformacion();
         _ = CargarBolsasDisponiblesAsync();
+
+        NavigationPage.SetHasNavigationBar(this, false);
+        Padding = new Thickness(0);
     }
 
     private void MostrarInformacion()
