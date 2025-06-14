@@ -4,7 +4,6 @@
              x:Class="SaborSostenibleFrontEnd.BusinessPages.BusinessMainPage"
             xmlns:fb="clr-namespace:SaborSostenibleFrontEnd.BusinessPages"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-             Title="Panel de negocio"
              android:TabbedPage.ToolbarPlacement="Bottom"
              NavigationPage.HasNavigationBar="False"
              BarBackgroundColor="#2E7D32"

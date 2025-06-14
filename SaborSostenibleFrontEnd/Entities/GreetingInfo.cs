@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaborSostenibleFrontEnd.Entities
 {
-    public class UserByCustomerRole
+    public class GreetingInfo
     {
-        public int UserId { get; set; }
+        public string Email { get; set; }
         public string FirstName1 { get; set; }
         public string FirstName2 { get; set; }
         public string LastName1 { get; set; }

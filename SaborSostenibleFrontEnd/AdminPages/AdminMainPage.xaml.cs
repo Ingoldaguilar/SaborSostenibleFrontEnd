@@ -1,4 +1,5 @@
 using SaborSostenibleFrontEnd.Security;
+using SaborSostenibleFrontEnd.Response;
 
 namespace SaborSostenibleFrontEnd.AdminPages;
 
@@ -10,35 +11,39 @@ public partial class AdminMainPage : TabbedPage
 		InitializeComponent();
 	}
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        var email = Preferences.Get("UserEmail", "sin-correo@sabor.com");
-        LabelEmail.Text = email;
+        var resp = await _apiService.GetAsync<ResGreetingInfo>("userGreetingInfo/get");
+        if (resp?.Success == true && resp.GreetingInfo != null)
+        {
+            LabelFullName.Text = resp.GreetingInfo.FullName.Trim();
+            LabelEmail.Text = resp.GreetingInfo.Email;
+        }
     }
 
-    private async void OnUsuariosTapped(object sender, EventArgs e)
+    private async void OnAgregarRestauranteTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new InsertBusinessPage());
     }
-
-    private async void OnRestaurantesTapped(object sender, EventArgs e)
+    
+    private async void OnAgregarBancoTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new InsertFoodBankPage());
     }
 
-    private async void OnReportesTapped(object sender, EventArgs e)
+    private async void OnSolicitudesTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ListVolunteerRequestsPage());
     }
 
-    private async void OnEstadisticasTapped(object sender, EventArgs e)
+    private async void OnEstadosBancosTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ListFoodBanksPage());
     }
 
-    private async void OnConfiguracionTapped(object sender, EventArgs e)
+    private async void OnEstadosRestaurantesTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ListBusinessesPage());
     }

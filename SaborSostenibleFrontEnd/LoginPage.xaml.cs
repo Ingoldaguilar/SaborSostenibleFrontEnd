@@ -14,6 +14,7 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     private async void OnRegister_Tapped(object sender, TappedEventArgs e)

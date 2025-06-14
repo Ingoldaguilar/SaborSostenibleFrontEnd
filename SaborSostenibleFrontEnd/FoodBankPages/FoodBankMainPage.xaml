@@ -4,7 +4,6 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:fb="clr-namespace:SaborSostenibleFrontEnd.FoodBankPages"
              x:Class="SaborSostenibleFrontEnd.FoodBankPages.FoodBankMainPage"
-             Title="Panel de banco alimentos"
              android:TabbedPage.ToolbarPlacement="Bottom"
              NavigationPage.HasNavigationBar="False"
              BarBackgroundColor="#2E7D32"

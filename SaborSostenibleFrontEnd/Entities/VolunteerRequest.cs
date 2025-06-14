@@ -16,6 +16,15 @@ namespace SaborSostenibleFrontEnd.Entities
         public string LastName2 { get; set; }
 
         public string FullName =>
-            $"{FirstName1} {FirstName2} {LastName1} {LastName2}";
+        string.Join(" ",
+            new[]
+            {
+                FirstName1,
+                FirstName2,
+                LastName1,
+                LastName2
+            }
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+        );
     }
 }

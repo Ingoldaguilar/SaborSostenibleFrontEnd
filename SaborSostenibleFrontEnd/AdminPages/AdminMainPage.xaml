@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     x:Class="SaborSostenibleFrontEnd.AdminPages.AdminMainPage"
-    Title="Panel de Administración"
+    Title="Panel de administración"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F9FA"
     BarBackgroundColor="#2E7D32"
@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
                 <Label
                     Grid.Row="0"
-                    Text="Panel de Administración"
+                    Text="Panel de administración"
                     FontSize="16"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -51,149 +51,226 @@
                         RowDefinitions="Auto,Auto,Auto"
                         ColumnSpacing="15"
                         RowSpacing="15">
-                        <!-- Cuadro 1 -->
+
+                        <!-- Card 1: Agregar restaurante -->
                         <Frame
-                            Grid.Column="0"
-                            Grid.Row="0"
+                            Grid.Row="0" Grid.Column="0"
                             BackgroundColor="White"
                             CornerRadius="15"
                             Padding="20"
-                            HasShadow="True">
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
+                            HasShadow="True"
+                            BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame
+                                    WidthRequest="40" HeightRequest="40"
+                                    CornerRadius="24"
+                                    BackgroundColor="#E8F5E9"
+                                    HasShadow="False"
+                                    Padding="0"
+                                    BorderColor="Transparent">
+                                    <Label
+                                        Text="&#xf2e7;"
+                                        FontFamily="FontAwesome"
+                                        FontSize="20"
+                                        TextColor="#2E7D32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                </Frame>
                                 <Label
-                                    Text="&#xf2bb;"
-                                    FontFamily="FontAwesome"
-                                    FontSize="30"
-                                    TextColor="#2E7D32"
-                                    HorizontalOptions="Center"/>
+                                    Text="Agregar restaurante"
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                                 <Label
-                                    Text="Agregar negocio"
-                                    FontSize="14"
-                                    TextColor="#333"
-                                    HorizontalOptions="Center"/>
+                                    Text="Registrar nuevo restaurante"
+                                    FontSize="10"
+                                    TextColor="Gray"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnUsuariosTapped"/>
+                                <TapGestureRecognizer Tapped="OnAgregarRestauranteTapped"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
-                        <!-- Cuadro 2 -->
+                        <!-- Card 2: Agregar banco de alimentos -->
                         <Frame
-                            Grid.Column="1"
-                            Grid.Row="0"
+                            Grid.Row="0" Grid.Column="1"
                             BackgroundColor="White"
                             CornerRadius="15"
                             Padding="20"
-                            HasShadow="True">
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                                <Label
-                                    Text="&#xf4c0;"
-                                    FontFamily="FontAwesome"
-                                    FontSize="30"
-                                    TextColor="#2E7D32"
-                                    HorizontalOptions="Center"/>
+                            HasShadow="True"
+                            BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame
+                                    WidthRequest="40" HeightRequest="40"
+                                    CornerRadius="20"
+                                    BackgroundColor="#E8F5E9"
+                                    HasShadow="False"
+                                    Padding="0"
+                                    BorderColor="Transparent">
+                                    <Label
+                                        Text="&#xf1ad;"
+                                        FontFamily="FontAwesome"
+                                        FontSize="20"
+                                        TextColor="#2E7D32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                </Frame>
                                 <Label
                                     Text="Agregar banco de alimentos"
-                                    FontSize="14"
-                                    TextColor="#333"
-                                    HorizontalOptions="Center"/>
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label
+                                    Text="Registrar nuevo banco de alimentos"
+                                    FontSize="10"
+                                    TextColor="Gray"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnRestaurantesTapped"/>
+                                <TapGestureRecognizer Tapped="OnAgregarBancoTapped"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
-                        <!-- Cuadro 3 -->
+                        <!-- Card 3: Solicitudes voluntarios -->
                         <Frame
-                            Grid.Column="0"
-                            Grid.Row="1"
+                            Grid.Row="1" Grid.Column="0"
                             BackgroundColor="White"
                             CornerRadius="15"
                             Padding="20"
-                            HasShadow="True">
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                                <Label
-                                    Text="&#xf0ae;"
-                                    FontFamily="FontAwesome"
-                                    FontSize="30"
-                                    TextColor="#2E7D32"
-                                    HorizontalOptions="Center"/>
+                            HasShadow="True"
+                            BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame
+                                    WidthRequest="40" HeightRequest="40"
+                                    CornerRadius="20"
+                                    BackgroundColor="#E8F5E9"
+                                    HasShadow="False"
+                                    Padding="0"
+                                    BorderColor="Transparent">
+                                    <Label
+                                        Text="&#xf0c0;"
+                                        FontFamily="FontAwesome"
+                                        FontSize="20"
+                                        TextColor="#2E7D32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                </Frame>
                                 <Label
                                     Text="Solicitudes voluntarios"
-                                    FontSize="14"
-                                    TextColor="#333"
-                                    HorizontalOptions="Center"/>
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label
+                                    Text="Gestionar solicitudes"
+                                    FontSize="10"
+                                    TextColor="Gray"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnReportesTapped"/>
+                                <TapGestureRecognizer Tapped="OnSolicitudesTapped"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
-                        <!-- Cuadro 4 -->
+                        <!-- Card 4: Estados bancos de alimentos -->
                         <Frame
-                            Grid.Column="1"
-                            Grid.Row="1"
+                            Grid.Row="1" Grid.Column="1"
                             BackgroundColor="White"
                             CornerRadius="15"
                             Padding="20"
-                            HasShadow="True">
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                                <Label
-                                    Text="&#xf4b0;"
-                                    FontFamily="FontAwesome"
-                                    FontSize="30"
-                                    TextColor="#2E7D32"
-                                    HorizontalOptions="Center"/>
+                            HasShadow="True"
+                            BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame
+                                    WidthRequest="40" HeightRequest="40"
+                                    CornerRadius="20"
+                                    BackgroundColor="#E8F5E9"
+                                    HasShadow="False"
+                                    Padding="0"
+                                    BorderColor="Transparent">
+                                    <Label
+                                        Text="&#xf013;"
+                                        FontFamily="FontAwesome"
+                                        FontSize="20"
+                                        TextColor="#2E7D32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                </Frame>
                                 <Label
                                     Text="Estados bancos de alimentos"
-                                    FontSize="14"
-                                    TextColor="#333"
-                                    HorizontalOptions="Center"/>
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label
+                                    Text="Activar/desactivar bancos"
+                                    FontSize="10"
+                                    TextColor="Gray"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnEstadisticasTapped"/>
+                                <TapGestureRecognizer Tapped="OnEstadosBancosTapped"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
-                        <!-- Cuadro 5 -->
+                        <!-- Card 5: Estados restaurantes -->
                         <Frame
-                            Grid.ColumnSpan="2"
-                            Grid.Row="2"
+                            Grid.Row="2" Grid.Column="0"
                             BackgroundColor="White"
                             CornerRadius="15"
                             Padding="20"
-                            HasShadow="True">
-                            <VerticalStackLayout
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
+                            HasShadow="True"
+                            BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Frame
+                                    WidthRequest="40" HeightRequest="40"
+                                    CornerRadius="20"
+                                    BackgroundColor="#E8F5E9"
+                                    HasShadow="False"
+                                    Padding="0"
+                                    BorderColor="Transparent">
+                                    <Label
+                                        Text="&#xf013;"
+                                        FontFamily="FontAwesome"
+                                        FontSize="20"
+                                        TextColor="#2E7D32"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                                </Frame>
                                 <Label
-                                    Text="&#xf4fc;"
-                                    FontFamily="FontAwesome"
-                                    FontSize="30"
-                                    TextColor="#2E7D32"
-                                    HorizontalOptions="Center"/>
+                                    Text="Estados restaurantes"
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                                 <Label
-                                    Text="Estados negocios"
-                                    FontSize="14"
-                                    TextColor="#333"
-                                    HorizontalOptions="Center"/>
+                                    Text="Activar/desactivar restaurantes"
+                                    FontSize="10"
+                                    TextColor="Gray"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnConfiguracionTapped"/>
+                                <TapGestureRecognizer Tapped="OnEstadosRestaurantesTapped"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
                     </Grid>
                 </VerticalStackLayout>
             </ScrollView>
+            
         </Grid>
     </ContentPage>
 
@@ -213,7 +290,7 @@
                 </Grid.RowDefinitions>
                 <Label
                     Grid.Row="0"
-                    Text="Panel de Administración"
+                    Text="Mi Perfil"
                     FontSize="16"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -229,39 +306,87 @@
 
             <!-- BODY -->
             <ScrollView Grid.Row="1">
-                <VerticalStackLayout
-                    Padding="30"
-                    Spacing="25"
-                    HorizontalOptions="Center">
+                <!-- Card blanco con sombra -->
+                <Frame
+                    Margin="30,31"
+                    Padding="0"
+                    CornerRadius="12"
+                    HasShadow="True"
+                    BackgroundColor="White"
+                    BorderColor="Transparent"
+                    HorizontalOptions="Fill">
 
-                    <!-- Nombre -->
-                    <Label
-                        x:Name="LabelName"
-                        Text="Administrador"
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"/>
+                    <VerticalStackLayout
+                        Padding="25"
+                        Spacing="20"
+                        HorizontalOptions="Center">
 
-                    <!-- Email -->
-                    <Label
-                        x:Name="LabelEmail"
-                        Text="email@example.com"
-                        FontSize="14"
-                        TextColor="Gray"
-                        HorizontalOptions="Center"/>
+                        <!-- Ícono circular -->
+                        <Frame
+                            WidthRequest="72"
+                            HeightRequest="72"
+                            CornerRadius="36"
+                            BackgroundColor="#E8F5E9"
+                            HasShadow="False"
+                            Padding="0"
+                            HorizontalOptions="Center"
+                            BorderColor="Transparent">
+                            <Label
+                                Text="&#xf007;"
+                                FontFamily="FontAwesome"
+                                FontSize="36"
+                                TextColor="#2E7D32"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Frame>
 
-                    <!-- Botón Cerrar Sesión -->
-                    <Button
-                        Text="⎋ Cerrar Sesión"
-                        Clicked="OnLogoutClicked"
-                        BackgroundColor="#2E7D32"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="8"
-                        HeightRequest="50"
-                        WidthRequest="250"/>
-                </VerticalStackLayout>
+                        <!-- Rol -->
+                        <Label
+                            x:Name="LabelName"
+                            Text="Administrador"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="Black"
+                            HorizontalOptions="Center"/>
+
+                        <!-- Name -->
+                        <Label
+                            x:Name="LabelFullName"
+                            Text="FullName"
+                            FontSize="14"
+                            TextColor="Black"
+                            HorizontalOptions="Center"
+                            WidthRequest="210"
+                            LineBreakMode="WordWrap"
+                            HorizontalTextAlignment="Center"/>
+
+                            <!-- Email -->
+                        <Label
+                            x:Name="LabelEmail"
+                            Text="example@gmail.com"
+                            FontSize="14"
+                            TextColor="Gray"
+                            HorizontalOptions="Center"
+                            WidthRequest="210"
+                            LineBreakMode="WordWrap"
+                            HorizontalTextAlignment="Center"/>
+
+                        <!-- Botón Cerrar Sesión -->
+                        <Button
+                            Text="⎋  Cerrar sesión"
+                            Clicked="OnLogoutClicked"
+                            BackgroundColor="Transparent"
+                            TextColor="#E53935"
+                            BorderColor="#E53935"
+                            BorderWidth="1"
+                            FontAttributes="Bold"
+                            CornerRadius="8"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+                </Frame>
             </ScrollView>
+
         </Grid>
     </ContentPage>
 </TabbedPage>

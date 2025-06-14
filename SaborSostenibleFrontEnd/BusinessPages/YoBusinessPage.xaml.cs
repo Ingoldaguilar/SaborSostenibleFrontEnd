@@ -1,3 +1,4 @@
+using SaborSostenibleFrontEnd.Response;
 using SaborSostenibleFrontEnd.Security;
 
 namespace SaborSostenibleFrontEnd.BusinessPages;
@@ -8,7 +9,19 @@ public partial class YoBusinessPage : ContentPage
     public YoBusinessPage()
 	{
 		InitializeComponent();
-	}
+        NavigationPage.SetHasNavigationBar(this, false);
+    }
+
+    protected override async void OnAppearing()
+    {
+        var response = await _apiService.GetAsync<ResBusinessNameAndEmail>("businessNameAndEmail/get");
+
+        if (response != null && response.Success)
+        {
+            LabelName.Text = response.BusinessName;
+            LabelEmail.Text = response.Email;
+        }
+    }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {

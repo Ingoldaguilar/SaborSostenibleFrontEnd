@@ -24,7 +24,7 @@
                 TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Padding="0,14"/>
+                Padding="0,15"/>
 
             <!-- Línea inferior -->
             <BoxView
