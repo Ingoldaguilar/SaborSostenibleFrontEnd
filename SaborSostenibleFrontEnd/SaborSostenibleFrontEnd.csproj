@@ -116,6 +116,9 @@
 	  <Compile Update="BusinessPages\SurpriseBagsForBusinessPage.xaml.cs">
 	    <DependentUpon>SurpriseBagsForBusinessPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="PendingDonationsPage.xaml.cs">
+	    <DependentUpon>PendingDonationsPage.xaml</DependentUpon>
+	  </Compile>
 
 	</ItemGroup>
 
@@ -193,6 +196,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="AdminPages\InsertBusinessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="PendingDonationsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="RegisterPage.xaml">

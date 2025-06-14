@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaborSostenibleFrontEnd.VolunteerPages.PendingDonationsPage"
+             BackgroundColor="#F5F5F5"
+             Title="Donaciones pendientes">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- HEADER -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="#2E7D32"
+            Padding="12,1"
+            ColumnDefinitions="Auto,*,Auto">
+
+            <!-- Back button -->
+            <Button
+                Text="↩"
+                FontAttributes="Bold"
+                FontSize="22"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                Clicked="OnBackButtonClicked" />
+
+            <!-- Title -->
+            <Label
+                Grid.Column="1"
+                Text="Donaciones pendientes"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="0,14" />
+
+            <!-- Spacer derecho -->
+            <BoxView
+                Grid.Column="2"
+                WidthRequest="24"
+                Color="#2E7D32" />
+        </Grid>
+
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout x:Name="DonationsContainer"
+                                 Padding="20"
+                                 Spacing="15" />
+        </ScrollView>
+    </Grid>
+</ContentPage>

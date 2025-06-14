@@ -7,6 +7,7 @@
     x:Class="SaborSostenibleFrontEnd.MainPage"
     Title="Sabor Sostenible"
     shell:TabbedPage.ToolbarPlacement="Bottom"
+    NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F9FA"
     BarBackgroundColor="#2E7D32"
     BarTextColor="White"
@@ -20,7 +21,7 @@
     </TabbedPage.Resources>
 
     <!-- Tab 1: Descubrir -->
-    <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+    <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
             <!-- Encabezado estilo navegación -->
             <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
@@ -90,7 +91,7 @@
     </ContentPage>
 
     <!-- Tab 2: Pedidos -->
-    <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+    <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*" Padding="0">
             <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
@@ -131,7 +132,7 @@
     </ContentPage>
 
     <!-- Tab 3: Perfil -->
-    <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA">
+    <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
             <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
@@ -165,6 +166,7 @@
                         </VerticalStackLayout>
                     </Frame>
                     <Button Text="Solicitar ser voluntario" Clicked="OnSolicitarVoluntariadoClicked" BackgroundColor="#2E7D32" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
+                    <Button Text="Ver donaciones pendientes" Clicked="OnDonacionesPendientesClicked" BackgroundColor="#2E7D32" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
                     <Button Text="Cerrar Sesión" Clicked="OnCerrarSesionClicked" BackgroundColor="#E53935" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="50" FontSize="16"/>
                     <Label Text="Versión de la App: 1.0.0" FontSize="12" HorizontalOptions="Center" TextColor="#AAA" Margin="0,30,0,0"/>
                 </VerticalStackLayout>

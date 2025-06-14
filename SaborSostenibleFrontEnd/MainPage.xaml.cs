@@ -259,5 +259,11 @@ namespace SaborSostenibleFrontEnd
                 await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
             }
         }
+
+        private async void OnDonacionesPendientesClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SaborSostenibleFrontEnd.VolunteerPages.PendingDonationsPage());
+        }
+
     }
 }
