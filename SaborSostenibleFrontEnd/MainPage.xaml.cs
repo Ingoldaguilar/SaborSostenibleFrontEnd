@@ -313,7 +313,14 @@ namespace SaborSostenibleFrontEnd
         {
             base.OnAppearing();
             ConfigurarBotonesPorRol();
-            // ... resto de tu código de OnAppearing
+        }
+
+        private async void OnPedidoCardTapped(object sender, TappedEventArgs e)
+        {
+            if (e.Parameter is Pedido pedido)
+            {
+                await Navigation.PushAsync(new OrderDetailsPage(pedido.OrderId));
+            }
         }
     }
 }
