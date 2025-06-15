@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="12,1"
             ColumnDefinitions="Auto,*,Auto">
 
@@ -39,7 +39,7 @@
             <BoxView
                 Grid.Column="2"
                 WidthRequest="24"
-                Color="#2E7D32" />
+                Color="#789262" />
         </Grid>
 
         <!-- CONTENT -->
@@ -59,7 +59,7 @@
                             Text="Nombre"
                             FontSize="12"
                             FontAttributes="Bold"
-                            TextColor="Black" />
+                            TextColor="#789262" />
                         <Entry
                             x:Name="NameEntry"
                             Placeholder="Ingrese el nombre del restaurante"
@@ -74,7 +74,7 @@
                             Text="Descripción"
                             FontSize="12"
                             FontAttributes="Bold"
-                            TextColor="Black" />
+                            TextColor="#789262" />
                         <Editor
                             x:Name="DescriptionEntry"
                             Placeholder="Ingrese la descripción del restaurante"
@@ -89,7 +89,7 @@
                             Text="Número de teléfono"
                             FontSize="12"
                             FontAttributes="Bold"
-                            TextColor="Black" />
+                            TextColor="#789262" />
                         <Entry
                             x:Name="PhoneEntry"
                             Placeholder="Ingrese el número de teléfono"
@@ -105,7 +105,7 @@
                             Text="Dirección"
                             FontSize="12"
                             FontAttributes="Bold"
-                            TextColor="Black" />
+                            TextColor="#789262" />
                         <Entry
                             x:Name="AddressEntry"
                             Placeholder="Ingrese la dirección"
@@ -120,10 +120,10 @@
                         FontSize="12"
                         HeightRequest="40"
                         CornerRadius="8"
-                        BorderColor="#2E7D32"
+                        BorderColor="#789262"
                         BorderWidth="1"
                         BackgroundColor="Transparent"
-                        TextColor="#2E7D32"
+                        TextColor="#789262"
                         Clicked="OnElegirUbicacionClicked"
                         HorizontalOptions="FillAndExpand" />
 
@@ -132,7 +132,7 @@
                         x:Name="UbicacionLabel"
                         Text="Ubicación no detectada aún."
                         FontSize="11"
-                        TextColor="Black"
+                        TextColor="#666"
                         HorizontalOptions="Center" />
 
                     <!-- Botón actualizar -->
@@ -142,7 +142,7 @@
                         FontAttributes="Bold"
                         HeightRequest="40"
                         CornerRadius="8"
-                        BackgroundColor="#2E7D32"
+                        BackgroundColor="#789262"
                         TextColor="White"
                         Clicked="OnUpdateClicked"
                         HorizontalOptions="FillAndExpand" />

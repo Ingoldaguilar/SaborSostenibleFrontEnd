@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="20,1"
             ColumnDefinitions="Auto,*">
             <Button
@@ -22,7 +22,7 @@
                 Clicked="OnBackButtonClicked" />
             <Label
                 Grid.Column="1"
-                Text="Activar/desactivar restaurantes"
+                Text="Estado de restaurantes"
                 FontSize="16"
                 FontAttributes="Bold"
                 TextColor="White"

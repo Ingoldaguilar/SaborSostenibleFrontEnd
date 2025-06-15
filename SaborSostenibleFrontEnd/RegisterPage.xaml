@@ -34,8 +34,13 @@
                 <Entry x:Name="AddressEntry" Placeholder="Ingresa tu direccion" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
                 <Button Text="📍 Elegir ubicación en el mapa"
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    CornerRadius="8"
+                    HeightRequest="40"
+                    BorderColor="#789262"
+                    BorderWidth="1"
+                    TextColor="#789262"
+                    
                     Clicked="OnElegirUbicacionClicked" />
 
                             <Label x:Name="UbicacionLabel"

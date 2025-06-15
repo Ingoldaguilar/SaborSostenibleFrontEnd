@@ -133,13 +133,13 @@
                                 <!-- PRECIO -->
                                 <Label Text="{Binding Price, StringFormat='₡{0:N2}'}"
                            FontSize="14"
-                           TextColor="#2E7D32"
+                           TextColor="#789262"
                            FontAttributes="Bold"
                            FontFamily="OpenSansSemibold" />
 
                                 <!-- BOTÓN COMPRAR -->
                                 <Button Text="Comprar"
-                            BackgroundColor="#2E7D32"
+                            BackgroundColor="#789262"
                             TextColor="White"
                             CornerRadius="8"
                             FontSize="13"

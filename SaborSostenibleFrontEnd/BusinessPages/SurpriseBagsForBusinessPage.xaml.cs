@@ -119,7 +119,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     Text = $"\u20A1{bag.Price:N0}",
                     FontAttributes = FontAttributes.Bold,
                     FontSize = 11,
-                    TextColor = Color.FromArgb("#2E7D32")
+                    TextColor = Color.FromArgb("#789262")
                 });
 
                 // Fecha con icono
@@ -155,7 +155,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 var badgeFrame = new Frame
                 {
                     Padding = new Thickness(12, 6),
-                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    BackgroundColor = Color.FromArgb("#789262"),
                     CornerRadius = 16,
                     HeightRequest = 26,
                     HasShadow = false,

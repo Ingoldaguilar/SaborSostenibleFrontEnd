@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="20,1"
             ColumnDefinitions="Auto,*,Auto">
             <Button
@@ -31,7 +31,7 @@
             <BoxView
                 Grid.Column="2"
                 WidthRequest="24"
-                Color="#2E7D32"/>
+                Color="#789262"/>
         </Grid>
 
         <!-- LISTA DE BOLSAS -->

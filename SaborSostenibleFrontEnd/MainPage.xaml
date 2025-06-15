@@ -243,7 +243,7 @@
                     <Button x:Name="DonacionesPendientesButton" 
                         Text="Ver donaciones pendientes" 
                         Clicked="OnDonacionesPendientesClicked" 
-                        BackgroundColor="#2E7D32" 
+                        BackgroundColor="#789262" 
                         TextColor="White" 
                         FontAttributes="Bold" 
                         CornerRadius="12" 
@@ -251,13 +251,15 @@
                         FontSize="16"
                         IsVisible="False"/>
 
-                    <Button Text="Cerrar Sesión" 
+                    <Button Text="⎋  Cerrar Sesión" 
                         Clicked="OnCerrarSesionClicked" 
-                        BackgroundColor="#C24333" 
-                        TextColor="White" 
+                        BorderWidth="2"
+                        BorderColor="#E53935"
+                        BackgroundColor="Transparent" 
+                        TextColor="#E53935" 
                         FontAttributes="Bold" 
                         CornerRadius="12" 
-                        HeightRequest="50" 
+                        HeightRequest="45" 
                         FontSize="16"/>
 
                     <Label Text="Versión de la App: 1.0.0" 

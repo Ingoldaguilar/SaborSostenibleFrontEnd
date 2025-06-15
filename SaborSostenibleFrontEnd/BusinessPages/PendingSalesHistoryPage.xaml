@@ -9,7 +9,7 @@
 
     <Grid RowDefinitions="Auto,*">
         <!-- HEADER -->
-        <Grid Grid.Row="0" BackgroundColor="#2E7D32" Padding="20,15" ColumnDefinitions="Auto,*">
+        <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,15" ColumnDefinitions="Auto,*">
             <Label
                 Grid.Column="1"
                 Text="Ventas en proceso"

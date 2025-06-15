@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="20,1"
             ColumnDefinitions="Auto,*">
 
@@ -24,7 +24,7 @@
 
             <Label
                 Grid.Column="1"
-                Text="Activar/desactivar bancos de alimentos"
+                Text="Estado de bancos de alimentos"
                 FontSize="16"
                 FontAttributes="Bold"
                 TextColor="White"

@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="20,1"
             ColumnDefinitions="Auto,*">
 

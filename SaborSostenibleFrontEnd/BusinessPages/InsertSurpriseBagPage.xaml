@@ -11,7 +11,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="0,0,0,4"
             HeightRequest="54">
             <Label
@@ -45,10 +45,10 @@
                                 Text="Descripción"
                                 FontSize="12"
                                 FontAttributes="Bold"
-                                TextColor="Black" />
+                                TextColor="#789262" />
                             <Entry
                                 x:Name="DescriptionEntry"
-                                Placeholder="Descripción bolsa sorpresa"
+                                Placeholder="Ingresa la descripción de la bolsa sorpresa"
                                 FontSize="11"
                                 HeightRequest="40" />
                         </VerticalStackLayout>
@@ -60,7 +60,7 @@
                                     Text="Donación"
                                     FontSize="12"
                                     FontAttributes="Bold"
-                                    TextColor="Black"
+                                    TextColor="#789262"
                                     VerticalOptions="Center" />
                                 <Switch
                                     x:Name="DonationSwitch"
@@ -80,10 +80,10 @@
                                         Text="Precio"
                                         FontSize="12"
                                         FontAttributes="Bold"
-                                        TextColor="Black" />
+                                        TextColor="#789262" />
                                     <Entry
                                         x:Name="PriceEntry"
-                                        Placeholder="0.00"
+                                        Placeholder="Ingresa el precio de la bolsa sorpresa"
                                         Keyboard="Numeric"
                                         FontSize="12"
                                         HeightRequest="40"
@@ -99,12 +99,12 @@
                                         Text="Seleccione el banco de alimentos a donar"
                                         FontSize="12"
                                         FontAttributes="Bold"
-                                        TextColor="Black" />
+                                        TextColor="#789262" />
                                     <Picker
                                         x:Name="FoodBankPicker"
-                                        Title="Seleccione un banco de alimentos"
+                                        Title="Seleccionar un banco de alimentos"
                                         FontSize="11"
-                                        HeightRequest="40"
+                                        HeightRequest="50"
                                         HorizontalOptions="FillAndExpand" />
                                 </StackLayout>
                             </VerticalStackLayout>
@@ -117,7 +117,7 @@
                             FontAttributes="Bold"
                             HeightRequest="40"
                             CornerRadius="8"
-                            BackgroundColor="#2E7D32"
+                            BackgroundColor="#789262"
                             TextColor="White"
                             Clicked="OnRegisterClicked"
                             HorizontalOptions="FillAndExpand" />
