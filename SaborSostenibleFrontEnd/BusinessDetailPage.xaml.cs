@@ -82,4 +82,10 @@ public partial class BusinessDetailPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    private async void OnBackButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
 }

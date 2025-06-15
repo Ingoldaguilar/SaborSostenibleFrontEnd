@@ -197,44 +197,50 @@ public partial class BuySupriseBagPage : ContentPage
 
     private async Task ActualizarProgresoPasos(int pasoActual)
     {
-        // Animaciones suaves para actualizar el progreso visual
         switch (pasoActual)
         {
             case 2:
-                // Cambiar Paso 1 a completado (gris) y activar Paso 2 (verde)
-                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50"); // Verde completado
-                ((Label)Paso1Icon.Content).TextColor = Colors.White;
+                // Paso 1 completado
+                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50");
+                Paso1Label.TextColor = Colors.White;
 
-                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32"); // Verde activo
-                ((Label)Paso2Icon.Content).TextColor = Colors.White;
+                // Paso 2 activo
+                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32");
+                Paso2Label.TextColor = Colors.White;
 
-                // Actualizar las líneas de conexión
-                var line1 = ((Grid)Paso1Icon.Parent).Children.OfType<BoxView>().First();
-                line1.BackgroundColor = Color.FromArgb("#4CAF50");
+                // Línea 1 completada
+                LineaPaso1.BackgroundColor = Color.FromArgb("#4CAF50");
 
-                // Animación de escala para dar feedback visual
+                // Animaciones
                 await Task.WhenAll(
-                    Paso1Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso1Icon.ScaleTo(1.0, 150)),
-                    Paso2Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso2Icon.ScaleTo(1.0, 150))
+                    Paso2Icon.ScaleTo(1.1, 150),
+                    Paso1Icon.ScaleTo(1.05, 150)
+                );
+                await Task.WhenAll(
+                    Paso2Icon.ScaleTo(1.0, 150),
+                    Paso1Icon.ScaleTo(1.0, 150)
                 );
                 break;
 
             case 3:
-                // Cambiar Paso 2 a completado y activar Paso 3
-                Paso2Icon.BackgroundColor = Color.FromArgb("#4CAF50"); // Verde completado
-                ((Label)Paso2Icon.Content).TextColor = Colors.White;
+                // Paso 2 completado
+                Paso2Icon.BackgroundColor = Color.FromArgb("#4CAF50");
+                Paso2Label.TextColor = Colors.White;
 
-                Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32"); // Verde activo
-                ((Label)Paso3Icon.Content).TextColor = Colors.White;
+                // Paso 3 activo
+                Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32");
+                Paso3Label.TextColor = Colors.White;
 
-                // Actualizar la segunda línea de conexión
-                var line2 = ((Grid)Paso1Icon.Parent).Children.OfType<BoxView>().Last();
-                line2.BackgroundColor = Color.FromArgb("#4CAF50");
+                // Línea 2 completada
+                LineaPaso2.BackgroundColor = Color.FromArgb("#4CAF50");
 
-                // Animación de escala
                 await Task.WhenAll(
-                    Paso2Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso2Icon.ScaleTo(1.0, 150)),
-                    Paso3Icon.ScaleTo(1.1, 150).ContinueWith(t => Paso3Icon.ScaleTo(1.0, 150))
+                    Paso3Icon.ScaleTo(1.1, 150),
+                    Paso2Icon.ScaleTo(1.05, 150)
+                );
+                await Task.WhenAll(
+                    Paso3Icon.ScaleTo(1.0, 150),
+                    Paso2Icon.ScaleTo(1.0, 150)
                 );
                 break;
         }

@@ -5,391 +5,407 @@
              BackgroundColor="#F8F9FA"
              Title="Comprar Bolsa Sorpresa">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="25">
+    <Grid RowDefinitions="Auto,*"
+      Padding="0"
+      Margin="0">
 
-            <!-- ENCABEZADO -->
-            <Grid x:Name="HeaderPaso1" IsVisible="True">
-                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                    <ImageButton Source="back_icon.png"
-                                 BackgroundColor="Transparent"
-                                 HeightRequest="32"
-                                 WidthRequest="32"
-                                 Padding="4"
-                                 Clicked="OnBackButtonClicked"/>
-                    <Label Text="Volver"
-                           FontSize="17"
-                           FontAttributes="Bold"
-                           TextColor="#2E7D32"
-                           VerticalOptions="Center"/>
-                </HorizontalStackLayout>
-            </Grid>
-
-            <!-- BARRA DE PASOS MODERNIZADA -->
-            <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
-                  RowDefinitions="Auto,Auto"
-                  Padding="15,10">
-
-                <Frame x:Name="Paso1Icon" 
-                       BackgroundColor="#2E7D32" 
-                       CornerRadius="18" 
-                       HeightRequest="36" 
-                       WidthRequest="36" 
+        <!-- HEADER UNIFICADO SIN MÁRGENES -->
+        <Frame x:Name="HeaderPaso1"
+           Grid.Row="0"
+           BackgroundColor="#789262"
+           Padding="0"
+           HasShadow="False"
+           CornerRadius="0"
+           IsVisible="True">
+            <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Text="←"
+                       FontSize="20"
+                       TextColor="White"
+                       VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Confirmación de Bolsa"
+                       Grid.Column="1"
                        HorizontalOptions="Center"
-                       HasShadow="True"
-                       Padding="0">
-                    <Label Text="1" 
-                           HorizontalOptions="Center" 
-                           VerticalOptions="Center" 
-                           TextColor="White" 
-                           FontAttributes="Bold"
-                           FontSize="16"/>
-                </Frame>
-
-                <BoxView Grid.Column="1" 
-                         HeightRequest="3" 
-                         BackgroundColor="#E0E0E0" 
-                         VerticalOptions="Center"
-                         CornerRadius="1.5"
-                         Margin="8,0"/>
-
-                <Frame x:Name="Paso2Icon" 
-                       BackgroundColor="#E0E0E0" 
-                       CornerRadius="18" 
-                       HeightRequest="36" 
-                       WidthRequest="36" 
-                       HorizontalOptions="Center"
-                       HasShadow="False"
-                       Padding="0">
-                    <Label Text="2" 
-                           HorizontalOptions="Center" 
-                           VerticalOptions="Center" 
-                           TextColor="#757575" 
-                           FontAttributes="Bold"
-                           FontSize="16"/>
-                </Frame>
-
-                <BoxView Grid.Column="3" 
-                         HeightRequest="3" 
-                         BackgroundColor="#E0E0E0" 
-                         VerticalOptions="Center"
-                         CornerRadius="1.5"
-                         Margin="8,0"/>
-
-                <Frame x:Name="Paso3Icon" 
-                       BackgroundColor="#E0E0E0" 
-                       CornerRadius="18" 
-                       HeightRequest="36" 
-                       WidthRequest="36" 
-                       HorizontalOptions="Center"
-                       HasShadow="False"
-                       Padding="0">
-                    <Label Text="3" 
-                           HorizontalOptions="Center" 
-                           VerticalOptions="Center" 
-                           TextColor="#757575" 
-                           FontAttributes="Bold"
-                           FontSize="16"/>
-                </Frame>
-
-                <Label Grid.Row="1" 
-                       Text="Confirmar" 
-                       Grid.Column="0" 
-                       HorizontalOptions="Center" 
-                       FontSize="13" 
-                       TextColor="#2E7D32"
+                       FontSize="20"
                        FontAttributes="Bold"
-                       Margin="0,8,0,0"/>
-                <Label Grid.Row="1" 
-                       Text="Pago" 
-                       Grid.Column="2" 
-                       HorizontalOptions="Center" 
-                       FontSize="13" 
-                       TextColor="#757575"
-                       Margin="0,8,0,0"/>
-                <Label Grid.Row="1" 
-                       Text="Final" 
-                       Grid.Column="4" 
-                       HorizontalOptions="Center" 
-                       FontSize="13" 
-                       TextColor="#757575"
-                       Margin="0,8,0,0"/>
+                       TextColor="White"
+                       FontFamily="OpenSansSemibold"/>
+                </Grid>
             </Grid>
+        </Frame>
 
-            <!-- PASO 1 -->
-            <StackLayout x:Name="Paso1" IsVisible="True" Spacing="20">
+        <!-- CONTENIDO -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="25">
+                <!-- BARRA DE PASOS -->
+                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
+      RowDefinitions="Auto,Auto"
+      Padding="15,10">
 
-                <Label Text="Confirmación de Bolsa" 
-                       FontSize="28" 
+                    <!-- Paso 1 -->
+                    <Frame x:Name="Paso1Icon"
+           BackgroundColor="#2E7D32"
+           CornerRadius="18"
+           HeightRequest="36"
+           WidthRequest="36"
+           HorizontalOptions="Center"
+           HasShadow="True"
+           Padding="0">
+                        <Label Text="1"
+               x:Name="Paso1Label"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="White"
+               FontAttributes="Bold"
+               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Línea 1 -->
+                    <BoxView x:Name="LineaPaso1"
+             Grid.Column="1"
+             HeightRequest="3"
+             BackgroundColor="#E0E0E0"
+             VerticalOptions="Center"
+             CornerRadius="1.5"
+             Margin="8,0"/>
+
+                    <!-- Paso 2 -->
+                    <Frame x:Name="Paso2Icon"
+           BackgroundColor="#E0E0E0"
+           CornerRadius="18"
+           HeightRequest="36"
+           WidthRequest="36"
+           HorizontalOptions="Center"
+           HasShadow="False"
+           Padding="0">
+                        <Label Text="2"
+               x:Name="Paso2Label"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="#757575"
+               FontAttributes="Bold"
+               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Línea 2 -->
+                    <BoxView x:Name="LineaPaso2"
+             Grid.Column="3"
+             HeightRequest="3"
+             BackgroundColor="#E0E0E0"
+             VerticalOptions="Center"
+             CornerRadius="1.5"
+             Margin="8,0"/>
+
+                    <!-- Paso 3 -->
+                    <Frame x:Name="Paso3Icon"
+           BackgroundColor="#E0E0E0"
+           CornerRadius="18"
+           HeightRequest="36"
+           WidthRequest="36"
+           HorizontalOptions="Center"
+           HasShadow="False"
+           Padding="0">
+                        <Label Text="3"
+               x:Name="Paso3Label"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="#757575"
+               FontAttributes="Bold"
+               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Etiquetas -->
+                    <Label Grid.Row="1" Text="Confirmar" Grid.Column="0"
+           HorizontalOptions="Center" FontSize="13"
+           TextColor="#2E7D32" FontAttributes="Bold" Margin="0,8,0,0"/>
+                    <Label Grid.Row="1" Text="Pago" Grid.Column="2"
+           HorizontalOptions="Center" FontSize="13"
+           TextColor="#757575" Margin="0,8,0,0"/>
+                    <Label Grid.Row="1" Text="Final" Grid.Column="4"
+           HorizontalOptions="Center" FontSize="13"
+           TextColor="#757575" Margin="0,8,0,0"/>
+                </Grid>
+
+                <!-- PASO 1 -->
+                <StackLayout x:Name="Paso1" IsVisible="True" Spacing="20">
+
+                    <Label Text="Confirmación de Bolsa" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               TextColor="#1A1A1A"
+               HorizontalOptions="Center"/>
+
+                    <!-- INFO DEL RESTAURANTE -->
+                    <Frame BackgroundColor="White" 
+               CornerRadius="16" 
+               Padding="20" 
+               HasShadow="True" 
+               BorderColor="Transparent"
+               Margin="0,10">
+                        <VerticalStackLayout Spacing="8">
+                            <Label x:Name="RestauranteNombreLabel" 
+                       FontSize="22" 
                        FontAttributes="Bold" 
-                       TextColor="#1A1A1A"
-                       HorizontalOptions="Center"/>
-
-                <!-- INFO DEL RESTAURANTE -->
-                <Frame BackgroundColor="White" 
-                       CornerRadius="16" 
-                       Padding="20" 
-                       HasShadow="True" 
-                       BorderColor="Transparent"
-                       Margin="0,10">
-                    <VerticalStackLayout Spacing="8">
-                        <Label x:Name="RestauranteNombreLabel" 
-                               FontSize="22" 
-                               FontAttributes="Bold" 
-                               TextColor="#2E7D32"/>
-                        <Label x:Name="RestauranteDescripcionLabel" 
-                               FontSize="15" 
-                               TextColor="#666666"
-                               LineBreakMode="WordWrap"/>
-                        <HorizontalStackLayout Spacing="6" Margin="0,4,0,0">
-                            <Label Text="📞" FontSize="14"/>
-                            <Label x:Name="RestauranteTelefonoLabel" 
-                                   FontSize="14" 
-                                   TextColor="#888888"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- INFO DE LA BOLSA -->
-                <Frame BackgroundColor="#F1F8E9" 
-                       CornerRadius="16" 
-                       Padding="20" 
-                       HasShadow="True" 
-                       BorderColor="Transparent">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="🎒 Bolsa Sorpresa" 
-                               FontSize="16" 
-                               FontAttributes="Bold" 
-                               TextColor="#2E7D32"/>
-                        <Label x:Name="DescripcionBolsaLabel" 
-                               FontSize="16" 
-                               TextColor="#444444"
-                               LineBreakMode="WordWrap"/>
-                        <Label x:Name="PrecioBolsaLabel" 
-                               FontSize="24" 
-                               FontAttributes="Bold" 
-                               TextColor="#2E7D32"
-                               HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- SECCIÓN DE DONACIÓN -->
-                <Frame BackgroundColor="White" 
-                       CornerRadius="16" 
-                       Padding="20" 
-                       HasShadow="True" 
-                       BorderColor="#FFE0B2">
-                    <VerticalStackLayout Spacing="15">
-                        <Grid ColumnDefinitions="Auto,*,Auto">
-                            <Label Text="💝" 
-                                   FontSize="20" 
-                                   VerticalOptions="Center"/>
-                            <VerticalStackLayout Grid.Column="1" Padding="12,0,0,0">
-                                <Label Text="¿Deseas donar esta bolsa?" 
-                                       FontSize="16" 
-                                       FontAttributes="Bold"
-                                       TextColor="#E65100"/>
-                                <Label Text="Ayuda a una familia necesitada" 
-                                       FontSize="13" 
-                                       TextColor="#FF8F00"/>
-                            </VerticalStackLayout>
-                            <Switch x:Name="DonacionSwitch"
-                                    Grid.Column="2"
-                                    Toggled="OnDonacionToggled"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center"
-                                    OnColor="#2E7D32"
-                                    ThumbColor="White"/>
-                        </Grid>
-
-                        <!-- PICKER DE BANCO DE COMIDA -->
-                        <Frame x:Name="FoodBankFrame"
-                               IsVisible="False"
-                               BackgroundColor="#FFF3E0"
-                               CornerRadius="12"
-                               Padding="15"
-                               HasShadow="False"
-                               BorderColor="#FFE0B2">
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="Selecciona el banco de comida:" 
-                                       FontSize="14" 
-                                       FontAttributes="Bold"
-                                       TextColor="#E65100"/>
-                                <Picker x:Name="FoodBankPicker"
-                                        Title="Elige un banco de comida"
-                                        BackgroundColor="White"
-                                        TextColor="#2E7D32"
-                                        TitleColor="#999999"
-                                        FontSize="15"
-                                        HeightRequest="45"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- BOTÓN DE PROCEDER -->
-                <Button Text="Proceder con Compra"
-                        Clicked="OnProcederCompraClicked"
-                        BackgroundColor="#2E7D32"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="16"
-                        HeightRequest="56"
-                        FontSize="18"
-                        Margin="0,20,0,0"/>
-            </StackLayout>
-
-            <!-- PASO 2 - INSTRUCCIONES DE PAGO -->
-            <Frame x:Name="InstruccionesStep"
-                   IsVisible="False"
-                   BackgroundColor="White"
-                   CornerRadius="20"
-                   Padding="25"
-                   HasShadow="True"
-                   BorderColor="Transparent">
-                <VerticalStackLayout Spacing="20">
-                    <Label Text="💳 Instrucciones de Pago" 
-                           FontSize="24" 
-                           FontAttributes="Bold" 
-                           TextColor="#1A1A1A"
-                           HorizontalOptions="Center"/>
-
-                    <!-- MONTO -->
-                    <Frame BackgroundColor="#E8F5E9" 
-                           CornerRadius="12" 
-                           Padding="15" 
-                           HasShadow="False"
-                           BorderColor="Transparent">
-                        <VerticalStackLayout Spacing="5">
-                            <Label Text="Monto a pagar:" 
-                                   FontSize="14" 
-                                   TextColor="#666666"/>
-                            <Label x:Name="PagoMontoLabel" 
-                                   FontSize="28" 
-                                   FontAttributes="Bold" 
-                                   TextColor="#2E7D32"
-                                   HorizontalOptions="Center"/>
+                       TextColor="#2E7D32"/>
+                            <Label x:Name="RestauranteDescripcionLabel" 
+                       FontSize="15" 
+                       TextColor="#666666"
+                       LineBreakMode="WordWrap"/>
+                            <HorizontalStackLayout Spacing="6" Margin="0,4,0,0">
+                                <Label Text="📞" FontSize="14"/>
+                                <Label x:Name="RestauranteTelefonoLabel" 
+                           FontSize="14" 
+                           TextColor="#888888"/>
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- NÚMERO SINPE -->
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Número SINPE:" 
-                               FontSize="16" 
-                               FontAttributes="Bold"
-                               TextColor="#333333"/>
-                        <Frame BackgroundColor="#F5F5F5" 
-                               CornerRadius="10" 
-                               Padding="15" 
-                               HasShadow="False"
-                               BorderColor="Transparent">
-                            <Label x:Name="PagoTelefonoLabel" 
-                                   FontSize="20" 
-                                   FontAttributes="Bold"
-                                   TextColor="#2E7D32"
-                                   HorizontalOptions="Center"/>
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <!-- DETALLE DEL PAGO -->
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Detalle del pago:" 
-                               FontSize="16" 
-                               FontAttributes="Bold"
-                               TextColor="#333333"/>
-                        <Frame BackgroundColor="#F8F9FA" 
-                               BorderColor="#E0E0E0" 
-                               CornerRadius="12" 
-                               Padding="15" 
-                               HasShadow="False">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label x:Name="SinpeDetalleLabel" 
-                                       TextColor="#444444" 
-                                       VerticalOptions="Center"
-                                       FontSize="14"
-                                       LineBreakMode="WordWrap"/>
-                                <Button Grid.Column="1"
-                                        Text="📋"
-                                        Clicked="OnCopiarDetalleClicked"
-                                        BackgroundColor="#2E7D32"
-                                        TextColor="White"
-                                        CornerRadius="8"
-                                        WidthRequest="40"
-                                        HeightRequest="40"
-                                        FontSize="16"
-                                        Margin="8,0,0,0"/>
-                            </Grid>
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <!-- BOTÓN CONTINUAR -->
-                    <Button Text="He realizado el pago"
-                            Clicked="OnFinalizarClicked"
-                            BackgroundColor="#2E7D32"
-                            TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="16"
-                            HeightRequest="52"
-                            FontSize="16"
-                            Margin="0,15,0,0"/>
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- PASO 3 - CONFIRMACIÓN FINAL -->
-            <StackLayout x:Name="ConfirmacionStep" IsVisible="False" Spacing="25">
-                <Label Text="🎉 ¡Compra Finalizada!" 
-                       FontSize="26" 
+                    <!-- INFO DE LA BOLSA -->
+                    <Frame BackgroundColor="#F1F8E9" 
+               CornerRadius="16" 
+               Padding="20" 
+               HasShadow="True" 
+               BorderColor="Transparent">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="🎒 Bolsa Sorpresa" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="#2E7D32"/>
+                            <Label x:Name="DescripcionBolsaLabel" 
+                       FontSize="16" 
+                       TextColor="#444444"
+                       LineBreakMode="WordWrap"/>
+                            <Label x:Name="PrecioBolsaLabel" 
+                       FontSize="24" 
                        FontAttributes="Bold" 
                        TextColor="#2E7D32"
                        HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <Frame BackgroundColor="White" 
-                       CornerRadius="16" 
-                       Padding="25" 
-                       HasShadow="True"
-                       BorderColor="Transparent">
-                    <VerticalStackLayout Spacing="15">
-                        <Label Text="Resumen de tu compra:" 
+                    <!-- SECCIÓN DE DONACIÓN -->
+                    <Frame BackgroundColor="White" 
+               CornerRadius="16" 
+               Padding="20" 
+               HasShadow="True" 
+               BorderColor="#FFE0B2">
+                        <VerticalStackLayout Spacing="15">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Text="💝" 
+                           FontSize="20" 
+                           VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1" Padding="12,0,0,0">
+                                    <Label Text="¿Deseas donar esta bolsa?" 
                                FontSize="16" 
                                FontAttributes="Bold"
-                               TextColor="#333333"
-                               HorizontalOptions="Center"/>
+                               TextColor="#E65100"/>
+                                    <Label Text="Ayuda a una familia necesitada" 
+                               FontSize="13" 
+                               TextColor="#FF8F00"/>
+                                </VerticalStackLayout>
+                                <Switch x:Name="DonacionSwitch"
+                            Grid.Column="2"
+                            Toggled="OnDonacionToggled"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            OnColor="#2E7D32"
+                            ThumbColor="White"/>
+                            </Grid>
 
-                        <BoxView HeightRequest="1" 
-                                 BackgroundColor="#E0E0E0" 
-                                 Margin="0,5"/>
+                            <!-- PICKER DE BANCO DE COMIDA -->
+                            <Frame x:Name="FoodBankFrame"
+                       IsVisible="False"
+                       BackgroundColor="#FFF3E0"
+                       CornerRadius="12"
+                       Padding="15"
+                       HasShadow="False"
+                       BorderColor="#FFE0B2">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="Selecciona el banco de comida:" 
+                               FontSize="14" 
+                               FontAttributes="Bold"
+                               TextColor="#E65100"/>
+                                    <Picker x:Name="FoodBankPicker"
+                                Title="Elige un banco de comida"
+                                BackgroundColor="White"
+                                TextColor="#2E7D32"
+                                TitleColor="#999999"
+                                FontSize="15"
+                                HeightRequest="45"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                        <Label x:Name="OrdenFinalLabel" 
-                               FontSize="16" 
-                               TextColor="#666666"
-                               HorizontalOptions="Center"/>
-                        <Label x:Name="TelefonoFinalLabel" 
-                               FontSize="16" 
-                               TextColor="#666666"
-                               HorizontalOptions="Center"/>
-                        <Label x:Name="EstadoFinalLabel"
-                               FontSize="16"
-                               TextColor="#666666"
-                               HorizontalOptions="Center"/>
+                    <!-- BOTÓN DE PROCEDER -->
+                    <Button Text="Proceder con Compra"
+                Clicked="OnProcederCompraClicked"
+                BackgroundColor="#2E7D32"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="16"
+                HeightRequest="56"
+                FontSize="18"
+                Margin="0,20,0,0"/>
+                </StackLayout>
 
-                        <Label Text="Gracias por tu compra y por ayudar a reducir el desperdicio de alimentos 🌱" 
-                               FontSize="16" 
-                               TextColor="#2E7D32"
-                               HorizontalOptions="Center"
-                               LineBreakMode="WordWrap"
-                               Margin="0,10,0,0"/>
+                <!-- PASO 2 - INSTRUCCIONES DE PAGO -->
+                <Frame x:Name="InstruccionesStep"
+           IsVisible="False"
+           BackgroundColor="White"
+           CornerRadius="20"
+           Padding="25"
+           HasShadow="True"
+           BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="💳 Instrucciones de Pago" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="#1A1A1A"
+                   HorizontalOptions="Center"/>
+
+                        <!-- MONTO -->
+                        <Frame BackgroundColor="#E8F5E9" 
+                   CornerRadius="12" 
+                   Padding="15" 
+                   HasShadow="False"
+                   BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Monto a pagar:" 
+                           FontSize="14" 
+                           TextColor="#666666"/>
+                                <Label x:Name="PagoMontoLabel" 
+                           FontSize="28" 
+                           FontAttributes="Bold" 
+                           TextColor="#2E7D32"
+                           HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- NÚMERO SINPE -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Número SINPE:" 
+                       FontSize="16" 
+                       FontAttributes="Bold"
+                       TextColor="#333333"/>
+                            <Frame BackgroundColor="#F5F5F5" 
+                       CornerRadius="10" 
+                       Padding="15" 
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                                <Label x:Name="PagoTelefonoLabel" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="#2E7D32"
+                           HorizontalOptions="Center"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- DETALLE DEL PAGO -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Detalle del pago:" 
+                       FontSize="16" 
+                       FontAttributes="Bold"
+                       TextColor="#333333"/>
+                            <Frame BackgroundColor="#F8F9FA" 
+                       BorderColor="#E0E0E0" 
+                       CornerRadius="12" 
+                       Padding="15" 
+                       HasShadow="False">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label x:Name="SinpeDetalleLabel" 
+                               TextColor="#444444" 
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               LineBreakMode="WordWrap"/>
+                                    <Button Grid.Column="1"
+                                Text="📋"
+                                Clicked="OnCopiarDetalleClicked"
+                                BackgroundColor="#2E7D32"
+                                TextColor="White"
+                                CornerRadius="8"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                FontSize="16"
+                                Margin="8,0,0,0"/>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- BOTÓN CONTINUAR -->
+                        <Button Text="He realizado el pago"
+                    Clicked="OnFinalizarClicked"
+                    BackgroundColor="#2E7D32"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    HeightRequest="52"
+                    FontSize="16"
+                    Margin="0,15,0,0"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <Button Text="Volver al Inicio"
-                        Clicked="OnVolverInicioClicked"
-                        BackgroundColor="#607D8B"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="16"
-                        HeightRequest="52"
-                        FontSize="16"/>
-            </StackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+                <!-- PASO 3 - CONFIRMACIÓN FINAL -->
+                <StackLayout x:Name="ConfirmacionStep" IsVisible="False" Spacing="25">
+                    <Label Text="🎉 ¡Compra Finalizada!" 
+               FontSize="26" 
+               FontAttributes="Bold" 
+               TextColor="#2E7D32"
+               HorizontalOptions="Center"/>
+
+                    <Frame BackgroundColor="White" 
+               CornerRadius="16" 
+               Padding="25" 
+               HasShadow="True"
+               BorderColor="Transparent">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="Resumen de tu compra:" 
+                       FontSize="16" 
+                       FontAttributes="Bold"
+                       TextColor="#333333"
+                       HorizontalOptions="Center"/>
+
+                            <BoxView HeightRequest="1" 
+                         BackgroundColor="#E0E0E0" 
+                         Margin="0,5"/>
+
+                            <Label x:Name="OrdenFinalLabel" 
+                       FontSize="16" 
+                       TextColor="#666666"
+                       HorizontalOptions="Center"/>
+                            <Label x:Name="TelefonoFinalLabel" 
+                       FontSize="16" 
+                       TextColor="#666666"
+                       HorizontalOptions="Center"/>
+                            <Label x:Name="EstadoFinalLabel"
+                       FontSize="16"
+                       TextColor="#666666"
+                       HorizontalOptions="Center"/>
+
+                            <Label Text="Gracias por tu compra y por ayudar a reducir el desperdicio de alimentos 🌱" 
+                       FontSize="16" 
+                       TextColor="#2E7D32"
+                       HorizontalOptions="Center"
+                       LineBreakMode="WordWrap"
+                       Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Button Text="Volver al Inicio"
+                Clicked="OnVolverInicioClicked"
+                BackgroundColor="#607D8B"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="16"
+                HeightRequest="52"
+                FontSize="16"/>
+                </StackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
 </ContentPage>

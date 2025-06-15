@@ -2,113 +2,147 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SaborSostenibleFrontEnd.BusinessDetailPage"
-             Title="Detalle del Restaurante"
-             BackgroundColor="#F8F9FA">
+             BackgroundColor="#F8F9FA"
+             NavigationPage.HasNavigationBar="False">
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
 
-        <!-- Encabezado con botón de volver -->
-        <Grid Padding="20,40,20,10" Grid.Row="0">
-            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                <Label Text="←" FontSize="20" TextColor="#789262" />
-                <Label Text="Volver" FontSize="16" TextColor="#789262" FontAttributes="Bold">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnVolverClicked" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </HorizontalStackLayout>
-        </Grid>
-
-        <!-- Imagen destacada -->
-        <Frame Padding="0" CornerRadius="0" HasShadow="False" Margin="0" Grid.Row="1">
-            <Image x:Name="RestauranteImagen"
-                   Aspect="AspectFill"
-                   HeightRequest="200"
-                   HorizontalOptions="FillAndExpand" />
+        <!-- Header -->
+        <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0">
+            <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Text="←"
+                           FontSize="20"
+                           TextColor="White"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Detalle del Restaurante"
+                           Grid.Column="1"
+                           HorizontalOptions="Center"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           FontFamily="OpenSansSemibold"/>
+                </Grid>
+            </Grid>
         </Frame>
 
-        <!-- Nombre y descripción -->
-        <VerticalStackLayout Padding="20,10" Grid.Row="2">
+        <!-- Imagen destacada -->
+        <Image x:Name="RestauranteImagen"
+               Grid.Row="1"
+               Aspect="AspectFill"
+               HeightRequest="200"
+               HorizontalOptions="FillAndExpand"
+               Margin="0"/>
+
+        <!-- Datos del restaurante -->
+        <VerticalStackLayout Grid.Row="2" Padding="20,15,20,10" Spacing="8">
             <Label x:Name="RestauranteNombreLabel"
-                   FontSize="26"
+                   FontSize="24"
                    FontAttributes="Bold"
-                   FontFamily="OpenSansSemibold"
-                   TextColor="#789262" />
+                   TextColor="#789262"
+                   FontFamily="OpenSansSemibold"/>
 
             <Label x:Name="RestauranteDescripcionLabel"
                    FontSize="14"
                    TextColor="#555"
                    LineBreakMode="WordWrap"
-                   FontFamily="OpenSansRegular" 
-                   Margin="0,2,0,4"/>
+                   FontFamily="OpenSansRegular"/>
 
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                <Label Text="📞" FontSize="13" />
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="📞" FontSize="14"/>
                 <Label x:Name="RestauranteTelefonoLabel"
-                       FontSize="16"
+                       FontSize="14"
                        TextColor="#789262"
-                       FontFamily="OpenSansRegular" />
+                       FontFamily="OpenSansRegular"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
-        <!-- Título sección de bolsas -->
+        <!-- Título -->
         <Label Text="Bolsas Sorpresa Disponibles"
-               FontSize="20"
+               Grid.Row="3"
+               FontSize="18"
                FontAttributes="Bold"
-               FontFamily="OpenSansSemibold"
                TextColor="#789262"
-               Margin="20,0,20,0"
-               Grid.Row="3" />
+               Margin="20,0"
+               FontFamily="OpenSansSemibold"/>
 
-        <!-- Lista de bolsas -->
+        <!-- Lista -->
         <CollectionView x:Name="BolsasCollectionView"
                         Grid.Row="4"
                         ItemsSource="{Binding BolsasDisponibles}"
                         SelectionMode="None"
-                        VerticalOptions="FillAndExpand"
                         Margin="20,0,20,20">
             <CollectionView.EmptyView>
-                <Grid Padding="30" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                    <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                        <Frame BackgroundColor="White" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
-                            <Label Text="🛍️" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Frame>
-                        <Label Text="Actualmente no hay bolsas disponibles" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" WidthRequest="260" />
-                        <Label Text="Este restaurante pronto tendrá más sorpresas para ti" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
-                    </VerticalStackLayout>
-                </Grid>
+                <VerticalStackLayout Padding="30" Spacing="10" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                    <Frame BackgroundColor="White" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True">
+                        <Label Text="🛍️" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Frame>
+                    <Label Text="Actualmente no hay bolsas disponibles"
+                           FontSize="15"
+                           TextColor="#555"
+                           HorizontalTextAlignment="Center"
+                           FontFamily="OpenSansRegular"/>
+                    <Label Text="Este restaurante pronto tendrá más sorpresas para ti"
+                           FontSize="13"
+                           FontAttributes="Italic"
+                           TextColor="#789262"
+                           HorizontalTextAlignment="Center"
+                           FontFamily="OpenSansRegular"/>
+                </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="20"
+                    <Frame Padding="15"
                            Margin="0,10"
                            BackgroundColor="White"
                            CornerRadius="15"
                            HasShadow="True"
                            BorderColor="#E0E0E0">
-                        <VerticalStackLayout Spacing="10">
-                            <Label Text="{Binding Description}"
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <!-- Icono -->
+                            <Label Grid.RowSpan="3"
+                                   Text="🛍️"
+                                   FontSize="26"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   TextColor="#2E7D32"/>
+
+                            <!-- Descripción -->
+                            <Label Grid.Column="1"
+                                   Grid.Row="0"
+                                   Text="{Binding Description}"
                                    FontSize="16"
-                                   FontFamily="OpenSansRegular"
                                    TextColor="#2C3E50"
-                                   LineBreakMode="WordWrap" />
-                            <Label Text="{Binding Price, StringFormat='₡{0:N2}'}"
-                                   FontSize="18"
+                                   FontFamily="OpenSansRegular"/>
+
+                            <!-- Precio -->
+                            <Label Grid.Column="1"
+                                   Grid.Row="1"
+                                   Text="{Binding Price, StringFormat='₡{0:N2}'}"
+                                   FontSize="16"
                                    FontAttributes="Bold"
-                                   FontFamily="OpenSansSemibold"
-                                   TextColor="#2E7D32" />
-                            <Button Text="Comprar"
-                                    Clicked="OnComprarClicked"
-                                    CommandParameter="{Binding}"
+                                   TextColor="#2E7D32"
+                                   FontFamily="OpenSansSemibold"/>
+
+                            <!-- Botón -->
+                            <Button Grid.Column="1"
+                                    Grid.Row="2"
+                                    Text="Comprar"
                                     BackgroundColor="#2E7D32"
                                     TextColor="White"
-                                    CornerRadius="12"
-                                    FontAttributes="Bold"
+                                    CornerRadius="10"
                                     FontSize="14"
+                                    FontAttributes="Bold"
                                     HeightRequest="42"
-                                    HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
+                                    HorizontalOptions="FillAndExpand"
+                                    CommandParameter="{Binding}"
+                                    Clicked="OnComprarClicked"/>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
