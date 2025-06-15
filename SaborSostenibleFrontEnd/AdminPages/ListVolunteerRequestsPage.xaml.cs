@@ -97,7 +97,7 @@ namespace SaborSostenibleFrontEnd.AdminPages
                     var approve = new Button
                     {
                         Text = "Aprobar",
-                        BackgroundColor = Color.FromArgb("#2E7D32"),
+                        BackgroundColor = Color.FromArgb("#789262"),
                         TextColor = Colors.White,
                         CornerRadius = 6,
                         FontSize = 12,
