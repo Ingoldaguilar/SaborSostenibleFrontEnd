@@ -35,19 +35,21 @@
 
                         <Label 
                             Text="Inicio de sesión" 
-                            FontSize="24" 
+                            FontSize="30" 
                             FontAttributes="Bold"
                             TextColor="#789262"
                             HorizontalOptions="Center"
-                            Grid.Row="0"/>
+                            Grid.Row="0" 
+                            Margin="20,15"/>
 
-                        <Label Text="Correo" FontSize="14" TextColor="#789262" Grid.Row="1"/>
-                        <Entry x:Name="EmailEntry" Placeholder="Correo" Keyboard="Email" TextColor="Black" BackgroundColor="White" Grid.Row="2"/>
 
-                        <Label Text="Contraseña" FontSize="14" TextColor="#789262" Grid.Row="3"/>
-                        <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="White" Grid.Row="4"/>
+                        <Label Text="Correo *" FontSize="14" TextColor="#789262" Grid.Row="1"/>
+                        <Entry x:Name="EmailEntry" Placeholder="Correo" Keyboard="Email" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="2"/>
 
-                        <Label FontSize="12" Text="¿Olvidó su contraseña? Reestablezcala" TextColor="{StaticResource Primary}" FontAttributes="Bold" Grid.Row="5" HorizontalOptions="Center">
+                        <Label Text="Contraseña *" FontSize="14" TextColor="#789262" Grid.Row="3"/>
+                        <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="4"/>
+
+                        <Label FontSize="12" Text="¿Olvidaste tu contraseña? Restablécela" TextColor="{StaticResource Primary}" FontAttributes="Bold" Grid.Row="5" HorizontalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
                             </Label.GestureRecognizers>
@@ -70,7 +72,7 @@
 
                         <StackLayout Grid.Row="8" Orientation="Vertical" HorizontalOptions="Center">
                             <Label Text="¿Aún no tienes cuenta?" FontSize="12" TextColor="#789262" HorizontalOptions="Center"/>
-                            <Label Text="Regístrate" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalTextAlignment="Center">
+                            <Label Text="Regístrate" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalTextAlignment="Center" TextDecorations="Underline">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnRegister_Tapped" />
                                 </Label.GestureRecognizers>

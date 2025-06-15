@@ -12,26 +12,26 @@
             <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
                 <Label Text="Registrarse" FontAttributes="Bold" FontSize="28" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
 
-                <Label Text="Nombre" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="NameEntry" Placeholder="Nombre" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Nombre *" TextColor="#789262" />
+                <Entry x:Name="NameEntry" Placeholder="Ingresa tu nombre" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Segundo nombre (opcional)" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="SecondNameEntry" Placeholder="Segundo nombre" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Segundo nombre" TextColor="#789262" />
+                <Entry x:Name="SecondNameEntry" Placeholder="Ingresa tu nombre" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Primer apellido" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="LastNameEntry" Placeholder="Primer apellido" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Primer apellido *" TextColor="#789262" />
+                <Entry x:Name="LastNameEntry" Placeholder="Ingresa tu apellido" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Segundo apellido (opcional)" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="SecondLastNameEntry" Placeholder="Segundo apellido" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Segundo apellido" TextColor="#789262" />
+                <Entry x:Name="SecondLastNameEntry" Placeholder="Ingresa tu segundo apellido" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Teléfono (opcional)" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PhoneEntry" Placeholder="Teléfono" Keyboard="Telephone" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Teléfono" TextColor="#789262" />
+                <Entry x:Name="PhoneEntry" Placeholder="Ingresa tu eléfono" Keyboard="Telephone" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Correo" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="EmailEntry" Placeholder="ejemplo@correo.com" Keyboard="Email" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Correo *" TextColor="#789262" />
+                <Entry x:Name="EmailEntry" Placeholder="Ingresa tu correo" Keyboard="Email" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Dirección (opcional)" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="AddressEntry" Placeholder="Dirección" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Dirección" TextColor="#789262" />
+                <Entry x:Name="AddressEntry" Placeholder="Ingresa tu direccion" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
                 <Button Text="📍 Elegir ubicación en el mapa"
                     BackgroundColor="{StaticResource Primary}"
@@ -39,7 +39,7 @@
                     Clicked="OnElegirUbicacionClicked" />
 
                             <Label x:Name="UbicacionLabel"
-                   Text="Ubicación no detectada aún."
+                   Text="Ubicación no detectada aún"
                    FontSize="12"
                    TextColor="{StaticResource PrimaryDarkText}"
                    HorizontalOptions="Center" />
@@ -48,17 +48,17 @@
 
                 <Label x:Name="UbicacionLabel" Text="Ubicación no detectada aún." FontSize="12" TextColor="{StaticResource PrimaryDarkText}" HorizontalOptions="Center" />-->
 
-                <Label Text="Contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Contraseña *" TextColor="#789262" />
+                <Entry x:Name="PasswordEntry" Placeholder="Ingresa tu contraseña" IsPassword="True" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
-                <Label Text="Repita la contraseña" TextColor="{StaticResource PrimaryDark}" />
-                <Entry x:Name="RepeatPasswordEntry" Placeholder="Repetir contraseña" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource Black}" />
+                <Label Text="Repita la contraseña *" TextColor="#789262" />
+                <Entry x:Name="RepeatPasswordEntry" Placeholder="Repite tu contraseña" IsPassword="True" BackgroundColor="#F9F9F3" TextColor="{StaticResource Black}" />
 
                 <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="¿Ya tienes cuenta? " TextColor="{StaticResource PrimaryDarkText}" />
-                    <Label Text="Inicia sesión" TextColor="{StaticResource Primary}" FontAttributes="Bold">
+                    <Label Text="¿Ya tienes cuenta? " TextColor="#789262" />
+                    <Label Text="Inicia sesión" TextColor="{StaticResource Primary}" FontAttributes="Bold" TextDecorations="Underline">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnLoginTapped" />
                         </Label.GestureRecognizers>

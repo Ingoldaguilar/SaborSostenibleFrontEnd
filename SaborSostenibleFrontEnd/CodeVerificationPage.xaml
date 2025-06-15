@@ -50,12 +50,14 @@
                         <Label Text="Se ha enviado un código a tu correo electrónico. Por favor, ingresa el código de 6 dígitos." 
                                FontSize="14"
                                TextColor="#789262"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
                                Grid.Row="1"/>
-                        <Entry Placeholder="Código"
+                        <Entry Placeholder="Ingresa el código"
                                x:Name="CodeEntry"
                                TextColor="Black"
-                               BackgroundColor="White"
-                               Grid.Row="2"
+                               BackgroundColor="#F9F9F3"
+                               Grid.Row="4"
                                Keyboard="Default"/>
 
                         <!-- Botón de ingresar -->
