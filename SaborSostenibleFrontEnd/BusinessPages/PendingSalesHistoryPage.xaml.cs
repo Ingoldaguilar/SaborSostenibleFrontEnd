@@ -109,7 +109,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     Text = $"\u20A1{order.TotalAmount:N0}",
                     FontAttributes = FontAttributes.Bold,
                     FontSize = 10,
-                    TextColor = Color.FromArgb("#2E7D32")
+                    TextColor = Color.FromArgb("#789262")
                 });
 
                 var dateLayout = new HorizontalStackLayout
@@ -141,11 +141,11 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 var btn = new Button
                 {
                     Text = order.StateText,
-                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    BackgroundColor = Color.FromArgb("#789262"),
                     TextColor = Colors.White,
                     FontAttributes = FontAttributes.Bold,
                     CornerRadius = 16,
-                    FontSize = 9,
+                    FontSize = 10,
                     HeightRequest = 26,
                     Padding = new Thickness(12, 6),
                     Visual = VisualMarker.Default,

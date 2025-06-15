@@ -118,7 +118,7 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
                 {
                     Text = item.BagDescription,
                     FontSize = 10,
-                    TextColor = Color.FromArgb("#2E7D32"),
+                    TextColor = Color.FromArgb("#789262"),
                     LineBreakMode = LineBreakMode.WordWrap
                 };
                 Grid.SetRow(bagLabel, 1);
@@ -154,7 +154,7 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
                 var badgeFrame = new Frame
                 {
                     Padding = new Thickness(12, 6),
-                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    BackgroundColor = Color.FromArgb("#789262"),
                     CornerRadius = 16,
                     HeightRequest = 26,
                     HasShadow = false,

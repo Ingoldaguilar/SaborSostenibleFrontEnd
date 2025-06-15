@@ -108,7 +108,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     Text = $"\u20A1{order.TotalAmount:N0}",
                     FontAttributes = FontAttributes.Bold,
                     FontSize = 10,
-                    TextColor = Color.FromArgb("#2E7D32")
+                    TextColor = Color.FromArgb("#789262")
                 });
 
                 var dateLayout = new HorizontalStackLayout
@@ -140,7 +140,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 {
                     Text = order.StateText,
                     BackgroundColor = order.StateText == "Completado"
-                        ? Color.FromArgb("#2E7D32")
+                        ? Color.FromArgb("#789262")
                         : Colors.Gray,
                     TextColor = Colors.White,
                     FontAttributes = FontAttributes.Bold,

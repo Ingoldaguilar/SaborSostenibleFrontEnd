@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*">
 
         <!-- HEADER -->
-        <Grid BackgroundColor="#2E7D32" Grid.Row="0">
+        <Grid BackgroundColor="#789262" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
@@ -58,28 +58,46 @@
                             Text="&#xf007;"
                             FontFamily="FontAwesome"
                             FontSize="36"
-                            TextColor="#2E7D32"
+                            TextColor="#789262"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"/>
                     </Frame>
 
                     <!-- Rol -->
-                    <Label
+                    <Frame
+                        BackgroundColor="#789262"
+                        CornerRadius="12"
+                        Margin="12"
+                        Padding="15,6"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Center">
+
+                        <Label
                         x:Name="LabelRol"
                         Text="Banco de alimentos"
                         FontSize="18"
                         FontAttributes="Bold"
-                        TextColor="Black"
+                        TextColor="White"
                         HorizontalOptions="Center"/>
+                    </Frame>
+
+                    <BoxView
+                         HeightRequest="1"
+                         WidthRequest="80"
+                         BackgroundColor="#E0E0E0"
+                         HorizontalOptions="Center"
+                         Margin="0,8"/>
 
                     <!-- Nombre -->
                     <Label
                         x:Name="LabelName"
                         Text="Name"
-                        FontSize="14"
+                        FontSize="18"
+                        FontAttributes="Bold"
                         TextColor="Black"
                         HorizontalOptions="Center"
-                        WidthRequest="210"
+                        WidthRequest="240"
                         LineBreakMode="WordWrap"
                         HorizontalTextAlignment="Center"/>
 
@@ -88,7 +106,7 @@
                         x:Name="LabelEmail"
                         Text="email@example.com"
                         FontSize="14"
-                        TextColor="Gray"
+                        TextColor="#666"
                         HorizontalOptions="Center"
                         WidthRequest="210"
                         LineBreakMode="WordWrap"
@@ -98,10 +116,10 @@
                     <Button
                         Text="🔧  Actualizar banco alimentos"
                         Clicked="OnUpdateClicked"
-                        BackgroundColor="Transparent"
-                        TextColor="#2E7D32"
-                        BorderColor="#2E7D32"
-                        BorderWidth="1"
+                        BackgroundColor="#789262"
+                        TextColor="White"
+                        BorderColor="#789262"
+                        BorderWidth="2"
                         FontAttributes="Bold"
                         CornerRadius="8"
                         HeightRequest="40"
@@ -114,7 +132,7 @@
                         BackgroundColor="Transparent"
                         TextColor="#E53935"
                         BorderColor="#E53935"
-                        BorderWidth="1"
+                        BorderWidth="2"
                         FontAttributes="Bold"
                         CornerRadius="8"
                         HeightRequest="40"

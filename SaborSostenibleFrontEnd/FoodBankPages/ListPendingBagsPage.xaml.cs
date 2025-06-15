@@ -119,7 +119,7 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
                 {
                     Text = bag.BagDescription,
                     FontSize = 10,
-                    TextColor = Color.FromArgb("#2E7D32"),
+                    TextColor = Color.FromArgb("#789262"),
                     LineBreakMode = LineBreakMode.WordWrap
                 };
                 Grid.SetRow(bagLabel, 1);
@@ -159,7 +159,7 @@ namespace SaborSostenibleFrontEnd.FoodBankPages
                 var btn = new Button
                 {
                     Text = bag.State,
-                    BackgroundColor = Color.FromArgb("#2E7D32"),
+                    BackgroundColor = Color.FromArgb("#789262"),
                     TextColor = Colors.White,
                     FontAttributes = FontAttributes.Bold,
                     CornerRadius = 16,

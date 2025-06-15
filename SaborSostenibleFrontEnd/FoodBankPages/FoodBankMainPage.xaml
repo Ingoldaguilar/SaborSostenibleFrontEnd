@@ -6,10 +6,10 @@
              x:Class="SaborSostenibleFrontEnd.FoodBankPages.FoodBankMainPage"
              android:TabbedPage.ToolbarPlacement="Bottom"
              NavigationPage.HasNavigationBar="False"
-             BarBackgroundColor="#2E7D32"
+             BarBackgroundColor="#789262"
              BarTextColor="White"
              SelectedTabColor="White"
-             UnselectedTabColor="#A5D6A7">
+             UnselectedTabColor="#3C4D1D">
 
     <fb:ListPendingBagsPage 
         Title="Pendientes"

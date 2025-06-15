@@ -8,7 +8,7 @@
 
     <Grid RowDefinitions="Auto, *">
         <!-- HEADER -->
-        <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+        <Grid Grid.Row="0" BackgroundColor="#789262">
             <Grid.RowDefinitions>
                 <RowDefinition Height="51" />
                 <RowDefinition Height="1" />
@@ -40,7 +40,7 @@
                 <BoxView
                     Grid.Column="2"
                     WidthRequest="24"
-                    Color="#2E7D32"/>
+                    Color="#789262"/>
                 
             </Grid>
 
@@ -103,8 +103,8 @@
                             x:Name="DescriptionLabel"
                             Grid.Row="1"
                             Grid.Column="1"
-                            FontSize="10"
-                            TextColor="#2E7D32"
+                            FontSize="11"
+                            TextColor="#789262"
                             LineBreakMode="WordWrap" />
 
                         <!-- 4) Fecha con icono -->
@@ -133,11 +133,11 @@
                             x:Name="ConfirmButton"
                             Text="Recibida"
                             FontAttributes="Bold"
-                            FontSize="9"
+                            FontSize="10"
                             HeightRequest="26"
                             Padding="12,6"
                             CornerRadius="16"
-                            BackgroundColor="#2E7D32"
+                            BackgroundColor="#789262"
                             TextColor="White"
                             Clicked="OnConfirmClicked" />
                     </Grid>
