@@ -27,9 +27,6 @@
                     FontFamily="OpenSansSemibold"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
-                <BoxView Grid.Column="2"
-                    WidthRequest="40"
-                    Color="Transparent"/>
             </Grid>
         </Frame>
 
