@@ -174,9 +174,9 @@ namespace SaborSostenibleFrontEnd
                         string[] nombreComponentes = { Safe("FirstName1"), Safe("FirstName2"), Safe("LastName1"), Safe("LastName2") };
                         UsuarioNombreLabel.Text = string.Join(" ", nombreComponentes.Where(s => !string.IsNullOrWhiteSpace(s)));
 
-                        UsuarioEmailLabel.Text = Safe("Email") ?? "N/A";
-                        UsuarioTelefonoLabel.Text = Safe("PhoneNumber") ?? "N/A";
-                        UsuarioDireccionLabel.Text = Safe("Address") ?? "N/A";
+                        UsuarioEmailLabel.Text = Safe("Email") ?? "No disponible";
+                        UsuarioTelefonoLabel.Text = Safe("PhoneNumber") ?? "No disponible";
+                        UsuarioDireccionLabel.Text = Safe("Address") ?? "No disponible";
                     }
                 }
             }

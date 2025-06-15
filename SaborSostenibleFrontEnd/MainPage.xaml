@@ -9,10 +9,10 @@
     shell:TabbedPage.ToolbarPlacement="Bottom"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F9FA"
-    BarBackgroundColor="#2E7D32"
+    BarBackgroundColor="#789262"
     BarTextColor="White"
     SelectedTabColor="White"
-    UnselectedTabColor="#A5D6A7">
+    UnselectedTabColor="#3C4D1D">
 
     <TabbedPage.Resources>
         <Style TargetType="Label">
@@ -24,7 +24,7 @@
     <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
             <!-- Encabezado estilo navegación -->
-            <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
                     <Label x:Name="SaludoLabel"
                            FontSize="20"
@@ -40,14 +40,14 @@
             <!-- Contenido dinámico -->
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
-                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#2E7D32" HorizontalOptions="Center" />
+                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#789262" HorizontalOptions="Center" />
 
                     <VerticalStackLayout Padding="10,5,10,15">
-                        <Label>
+                        <Label HorizontalOptions="Center">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="Ubicación actual: " FontSize="12" TextColor="#666" />
-                                    <Span Text="Alajuela, Costa Rica" FontSize="12" TextColor="#2E7D32" FontAttributes="Bold" />
+                                    <Span Text="Alajuela, Costa Rica" FontSize="12" TextColor="#789262" FontAttributes="Bold"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -74,7 +74,7 @@
                                     <Grid ColumnDefinitions="Auto,*" VerticalOptions="Center">
                                         <Image Grid.Column="0" Source="{Binding imagen}" WidthRequest="80" HeightRequest="80" Aspect="AspectFill" VerticalOptions="Center" Clip="RectangleGeometry RadiusX=10 RadiusY=10 Rect='0,0,80,80'" />
                                         <VerticalStackLayout Grid.Column="1" Padding="10,0" Spacing="4" VerticalOptions="Center">
-                                            <Label Text="{Binding nombreRestaurante}" FontSize="16" FontAttributes="Bold" TextColor="#2E7D32" />
+                                            <Label Text="{Binding nombreRestaurante}" FontSize="16" FontAttributes="Bold" TextColor="#789262" />
                                             <Label Text="{Binding descripcionRestaurante}" FontSize="13" TextColor="#555" LineBreakMode="TailTruncation" MaxLines="2"/>
                                         </VerticalStackLayout>
                                         <Grid.GestureRecognizers>
@@ -93,7 +93,7 @@
     <!-- Tab 2: Pedidos -->
     <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*" Padding="0">
-            <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
                     <Label Text="Mis pedidos" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </Grid>
@@ -105,7 +105,7 @@
                         <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
                             <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Frame>
-                        <Label Text="Por el momento no tienes pedidos registrados." FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
+                        <Label Text="Por el momento no tienes pedidos registrados" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
                         <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
@@ -121,7 +121,7 @@
                                            Text="{Binding RestaurantName}" 
                                            FontSize="18" 
                                            FontAttributes="Bold" 
-                                           TextColor="#2E7D32"
+                                           TextColor="#789262"
                                            VerticalOptions="Center"
                                            LineBreakMode="TailTruncation"/>
                                         <Frame Grid.Column="1" 
@@ -179,7 +179,7 @@
                                            Text="{Binding Total, StringFormat='Total: ₡{0:N2}'}" 
                                            FontSize="16" 
                                            FontAttributes="Bold"
-                                           TextColor="#2E7D32"
+                                           TextColor="#789262"
                                            VerticalOptions="Center"/>
                                         </Grid>
                                     </Frame>
@@ -199,7 +199,7 @@
     <!-- Tab 3: Perfil -->
     <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
-            <Frame Grid.Row="0" BackgroundColor="#2E7D32" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
                     <Label Text="Mi perfil" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </Grid>
@@ -210,7 +210,7 @@
                         <VerticalStackLayout Spacing="20">
                             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                                 <Label Text="👤" FontSize="18"/>
-                                <Label x:Name="UsuarioNombreLabel" FontSize="18" TextColor="#2E7D32" FontAttributes="Bold"/>
+                                <Label x:Name="UsuarioNombreLabel" FontSize="18" TextColor="#789262" FontAttributes="Bold"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                                 <Label Text="📧" FontSize="18"/>
@@ -231,7 +231,7 @@
                     <Button x:Name="SolicitarVoluntarioButton" 
                         Text="Solicitar ser voluntario" 
                         Clicked="OnSolicitarVoluntariadoClicked" 
-                        BackgroundColor="#2E7D32" 
+                        BackgroundColor="#789262" 
                         TextColor="White" 
                         FontAttributes="Bold" 
                         CornerRadius="12" 
@@ -253,7 +253,7 @@
 
                     <Button Text="Cerrar Sesión" 
                         Clicked="OnCerrarSesionClicked" 
-                        BackgroundColor="#E53935" 
+                        BackgroundColor="#C24333" 
                         TextColor="White" 
                         FontAttributes="Bold" 
                         CornerRadius="12" 
