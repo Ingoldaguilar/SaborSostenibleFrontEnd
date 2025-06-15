@@ -12,7 +12,7 @@
         <!-- HEADER -->
         <Grid
             Grid.Row="0"
-            BackgroundColor="#2E7D32"
+            BackgroundColor="#789262"
             Padding="20,1"
             ColumnDefinitions="Auto,*,Auto">
             <Button
@@ -29,7 +29,7 @@
                 TextColor="White"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
-            <BoxView Grid.Column="2" WidthRequest="24" Color="#2E7D32"/>
+            <BoxView Grid.Column="2" WidthRequest="24" Color="#789262"/>
         </Grid>
 
         <!-- CONTENIDO -->
@@ -62,7 +62,7 @@
                         <Frame
                             CornerRadius="8"
                             BackgroundColor="Transparent"
-                            BorderColor="#2E7D32"
+                            BorderColor="#789262"
                             HasShadow="False"
                             HeightRequest="36"
                             Padding="0">
@@ -73,13 +73,14 @@
                             </Frame.GestureRecognizers>
 
                             <HorizontalStackLayout
-                                Padding="55,0"
+                                
+                                HorizontalOptions="Center"
                                 VerticalOptions="Center">
 
                                 <Label
                                     Text="Ver bolsas del pedido"
                                     FontSize="13"
-                                    TextColor="#2E7D32"
+                                    TextColor="#789262"
                                     HorizontalOptions="CenterAndExpand"
                                     VerticalOptions="Center" />
                             </HorizontalStackLayout>
@@ -103,7 +104,7 @@
                                 <Label
                                     x:Name="StateBadgeLabel"
                                     FontSize="12"
-                                    TextColor="#2E7D32"
+                                    TextColor="#789262"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center" />
                             </Frame>
@@ -119,7 +120,7 @@
                                 x:Name="TotalAmountLabel"
                                 FontSize="16"
                                 FontAttributes="Bold"
-                                TextColor="#2E7D32" />
+                                TextColor="#789262" />
                         </VerticalStackLayout>
 
                         <!-- Separador -->
@@ -128,16 +129,16 @@
                         <!-- Botones de acción -->
                         <VerticalStackLayout Spacing="8">
                             <Button
-                                Text="✔ Confirmar pago"
-                                BackgroundColor="#2E7D32"
+                                Text="Confirmar pago"
+                                BackgroundColor="#789262"
                                 TextColor="White"
                                 CornerRadius="8"
                                 HeightRequest="40"
                                 Clicked="OnConfirmPaymentClicked" />
                             <Button
-                                Text="✖ Denegar pago"
+                                Text="Denegar pago"
                                 BackgroundColor="Transparent"
-                                BorderColor="#D1D5DB"
+                                BorderColor="Gray"
                                 BorderWidth="1"
                                 TextColor="Gray"
                                 CornerRadius="8"

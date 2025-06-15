@@ -16,7 +16,7 @@
             HeightRequest="54">
             <Label
                 Grid.Column="1"
-                Text="Subir bolsa sorpresa"
+                Text="Crear bolsa sorpresa"
                 FontSize="16"
                 FontAttributes="Bold"
                 TextColor="White"
@@ -49,7 +49,7 @@
                             <Entry
                                 x:Name="DescriptionEntry"
                                 Placeholder="Ingresa la descripción de la bolsa sorpresa"
-                                FontSize="11"
+                                FontSize="12"
                                 HeightRequest="40" />
                         </VerticalStackLayout>
 
@@ -66,7 +66,7 @@
                                     x:Name="DonationSwitch"
                                     Toggled="OnDonationToggled"
                                     ThumbColor="White"
-                                    OnColor="#2E7D32" />
+                                    OnColor="#789262" />
                             </HorizontalStackLayout>
 
                             <!-- Condicional: Precio vs Banco -->
@@ -112,7 +112,7 @@
 
                         <!-- Botón Registrar -->
                         <Button
-                            Text="Registrar"
+                            Text="Crear bolsa"
                             FontSize="14"
                             FontAttributes="Bold"
                             HeightRequest="40"

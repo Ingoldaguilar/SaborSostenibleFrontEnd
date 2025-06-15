@@ -158,7 +158,7 @@
                     <Label Text="Confirmación de Bolsa" 
                FontSize="28" 
                FontAttributes="Bold" 
-               TextColor="#1A1A1A"
+               TextColor="#789262"
                HorizontalOptions="Center"/>
 
                     <!-- INFO DEL RESTAURANTE -->
@@ -172,7 +172,7 @@
                             <Label x:Name="RestauranteNombreLabel" 
                        FontSize="22" 
                        FontAttributes="Bold" 
-                       TextColor="#2E7D32"/>
+                       TextColor="#789262"/>
                             <Label x:Name="RestauranteDescripcionLabel" 
                        FontSize="15" 
                        TextColor="#666666"
@@ -196,7 +196,7 @@
                             <Label Text="🎒 Bolsa Sorpresa" 
                        FontSize="16" 
                        FontAttributes="Bold" 
-                       TextColor="#2E7D32"/>
+                       TextColor="#789262"/>
                             <Label x:Name="DescripcionBolsaLabel" 
                        FontSize="16" 
                        TextColor="#444444"
@@ -204,7 +204,7 @@
                             <Label x:Name="PrecioBolsaLabel" 
                        FontSize="24" 
                        FontAttributes="Bold" 
-                       TextColor="#2E7D32"
+                       TextColor="#789262"
                        HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
@@ -224,17 +224,17 @@
                                     <Label Text="¿Deseas donar esta bolsa?" 
                                FontSize="16" 
                                FontAttributes="Bold"
-                               TextColor="#E65100"/>
-                                    <Label Text="Ayuda a una familia necesitada" 
+                               TextColor="#789262"/>
+                                    <Label Text="Ayuda a una familia" 
                                FontSize="13" 
-                               TextColor="#FF8F00"/>
+                               TextColor="#666"/>
                                 </VerticalStackLayout>
                                 <Switch x:Name="DonacionSwitch"
                             Grid.Column="2"
                             Toggled="OnDonacionToggled"
                             HorizontalOptions="End"
                             VerticalOptions="Center"
-                            OnColor="#2E7D32"
+                            OnColor="#789262"
                             ThumbColor="White"/>
                             </Grid>
 
@@ -250,11 +250,11 @@
                                     <Label Text="Selecciona el banco de comida:" 
                                FontSize="14" 
                                FontAttributes="Bold"
-                               TextColor="#E65100"/>
+                               TextColor="#789262"/>
                                     <Picker x:Name="FoodBankPicker"
                                 Title="Elige un banco de comida"
                                 BackgroundColor="White"
-                                TextColor="#2E7D32"
+                                TextColor="#789262"
                                 TitleColor="#999999"
                                 FontSize="15"
                                 HeightRequest="45"/>
@@ -266,7 +266,7 @@
                     <!-- BOTÓN DE PROCEDER -->
                     <Button Text="Proceder con Compra"
                 Clicked="OnProcederCompraClicked"
-                BackgroundColor="#2E7D32"
+                BackgroundColor="#789262"
                 TextColor="White"
                 FontAttributes="Bold"
                 CornerRadius="16"
@@ -291,22 +291,24 @@
                    HorizontalOptions="Center"/>
 
                         <!-- MONTO -->
-                        <Frame BackgroundColor="#E8F5E9" 
-                   CornerRadius="12" 
-                   Padding="15" 
-                   HasShadow="False"
-                   BorderColor="Transparent">
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="8">
                                 <Label Text="Monto a pagar:" 
-                           FontSize="14" 
-                           TextColor="#666666"/>
-                                <Label x:Name="PagoMontoLabel" 
-                           FontSize="28" 
-                           FontAttributes="Bold" 
-                           TextColor="#2E7D32"
-                           HorizontalOptions="Center"/>
+                           FontSize="16" 
+                           FontAttributes="Bold"
+                           TextColor="#333333"/>
+                                <Frame BackgroundColor="#F5F5F5" 
+                                    CornerRadius="10" 
+                                    Padding="15" 
+                                    HasShadow="False"
+                                    BorderColor="Transparent">
+                                    <Label x:Name="PagoMontoLabel" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#789262"
+                                       HorizontalOptions="Center"/>
+                                </Frame>
                             </VerticalStackLayout>
-                        </Frame>
+                        
 
                         <!-- NÚMERO SINPE -->
                         <VerticalStackLayout Spacing="8">
@@ -322,7 +324,7 @@
                                 <Label x:Name="PagoTelefonoLabel" 
                            FontSize="20" 
                            FontAttributes="Bold"
-                           TextColor="#2E7D32"
+                           TextColor="#789262"
                            HorizontalOptions="Center"/>
                             </Frame>
                         </VerticalStackLayout>
@@ -347,7 +349,7 @@
                                     <Button Grid.Column="1"
                                 Text="📋"
                                 Clicked="OnCopiarDetalleClicked"
-                                BackgroundColor="#2E7D32"
+                                BackgroundColor="#789262"
                                 TextColor="White"
                                 CornerRadius="8"
                                 WidthRequest="40"
@@ -361,7 +363,7 @@
                         <!-- BOTÓN CONTINUAR -->
                         <Button Text="He realizado el pago"
                     Clicked="OnFinalizarClicked"
-                    BackgroundColor="#2E7D32"
+                    BackgroundColor="#789262"
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="16"
@@ -373,10 +375,10 @@
 
                 <!-- PASO 3 - CONFIRMACIÓN FINAL -->
                 <StackLayout x:Name="ConfirmacionStep" IsVisible="False" Spacing="25">
-                    <Label Text="🎉 ¡Compra Finalizada!" 
+                    <Label Text="¡Compra Finalizada!" 
                FontSize="26" 
                FontAttributes="Bold" 
-               TextColor="#2E7D32"
+               TextColor="#789262"
                HorizontalOptions="Center"/>
 
                     <Frame BackgroundColor="White" 
@@ -388,7 +390,7 @@
                             <Label Text="Resumen de tu compra:" 
                        FontSize="16" 
                        FontAttributes="Bold"
-                       TextColor="#333333"
+                       TextColor="#789262"
                        HorizontalOptions="Center"/>
 
                             <BoxView HeightRequest="1" 
@@ -410,8 +412,9 @@
 
                             <Label Text="Gracias por tu compra y por ayudar a reducir el desperdicio de alimentos 🌱" 
                        FontSize="16" 
-                       TextColor="#2E7D32"
+                       TextColor="#789262"
                        HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
                        LineBreakMode="WordWrap"
                        Margin="0,10,0,0"/>
                         </VerticalStackLayout>
@@ -419,7 +422,7 @@
 
                     <Button Text="Volver al Inicio"
                 Clicked="OnVolverInicioClicked"
-                BackgroundColor="#607D8B"
+                BackgroundColor="#789262"
                 TextColor="White"
                 FontAttributes="Bold"
                 CornerRadius="16"

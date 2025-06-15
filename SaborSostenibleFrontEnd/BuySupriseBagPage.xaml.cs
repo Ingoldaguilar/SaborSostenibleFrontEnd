@@ -408,7 +408,7 @@ public partial class BuySupriseBagPage : ContentPage
             await Task.Delay(1000);
 
             button.Text = originalText;
-            button.BackgroundColor = Color.FromArgb("#2E7D32");
+            button.BackgroundColor = Color.FromArgb("#789262");
         }
         catch
         {

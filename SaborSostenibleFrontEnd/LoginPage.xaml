@@ -49,11 +49,23 @@
                         <Label Text="Contraseña *" FontSize="14" TextColor="#789262" Grid.Row="3"/>
                         <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="4"/>
 
-                        <Label FontSize="12" Text="¿Olvidaste tu contraseña? Restablécela" TextColor="{StaticResource Primary}" FontAttributes="Bold" Grid.Row="5" HorizontalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                        <StackLayout Grid.Row="5" Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="¿Olvidaste tu contraseña? " 
+                               FontSize="12" 
+                               TextColor="#789262" 
+                               HorizontalOptions="Center"/>
+
+                            <Label Text="Restablécela" 
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" 
+                               FontSize="12"
+                               HorizontalTextAlignment="Center"
+                               TextDecorations="Underline">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
 
                         <Button Text="Ingresar"
                                 TextColor="White"

@@ -92,7 +92,7 @@ namespace SaborSostenibleFrontEnd
                     Text = $"\u20A1{bag.Price:N0}",
                     FontSize = 16,
                     FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.FromArgb("#2E7D32"),
+                    TextColor = Color.FromArgb("#789262"),
                     VerticalOptions = LayoutOptions.Center,
                     HorizontalTextAlignment = TextAlignment.End
                 }, 2, 0);

@@ -40,7 +40,7 @@
             <!-- Contenido dinámico -->
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
-                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#789262" HorizontalOptions="Center" />
+                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
                     <VerticalStackLayout Padding="10,5,10,15">
                         <Label HorizontalOptions="Center">
@@ -106,7 +106,7 @@
                             <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Frame>
                         <Label Text="Por el momento no tienes pedidos registrados" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
-                        <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
+                        <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Bold" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>

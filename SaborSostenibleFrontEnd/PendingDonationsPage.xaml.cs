@@ -57,7 +57,7 @@ public partial class PendingDonationsPage : ContentPage
                 Text = $"\U0001F4E6 {d.BagDescription}",
                 FontAttributes = FontAttributes.Bold,
                 FontSize = 16,
-                TextColor = Color.FromArgb("#2E7D32")
+                TextColor = Color.FromArgb("#789262")
             });
 
             // Restaurante
