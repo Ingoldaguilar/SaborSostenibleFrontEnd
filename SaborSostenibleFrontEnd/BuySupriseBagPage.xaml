@@ -42,92 +42,114 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20" Spacing="25">
                 <!-- BARRA DE PASOS -->
-                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
-      RowDefinitions="Auto,Auto"
-      Padding="15,10">
+                <Grid x:Name="PasosGrid" 
+                      ColumnDefinitions="Auto,*,Auto,*,Auto"
+                      RowDefinitions="Auto,Auto"
+                      Padding="15,10">
 
                     <!-- Paso 1 -->
                     <Frame x:Name="Paso1Icon"
-           BackgroundColor="#2E7D32"
-           CornerRadius="18"
-           HeightRequest="36"
-           WidthRequest="36"
-           HorizontalOptions="Center"
-           HasShadow="True"
-           Padding="0">
+                           Grid.Column="0"
+                           BackgroundColor="White"
+                           BorderColor="#E0E0E0"
+                           CornerRadius="18"
+                           HeightRequest="36"
+                           WidthRequest="36"
+                           HorizontalOptions="Center"
+                           HasShadow="True"
+                           Padding="0">
                         <Label Text="1"
-               x:Name="Paso1Label"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               TextColor="White"
-               FontAttributes="Bold"
-               FontSize="16"/>
+                               x:Name="Paso1Label"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               FontSize="16"/>
                     </Frame>
 
                     <!-- Línea 1 -->
                     <BoxView x:Name="LineaPaso1"
-             Grid.Column="1"
-             HeightRequest="3"
-             BackgroundColor="#E0E0E0"
-             VerticalOptions="Center"
-             CornerRadius="1.5"
-             Margin="8,0"/>
+                             Grid.Column="1"
+                             HeightRequest="3"
+                             BackgroundColor="#E0E0E0"
+                             VerticalOptions="Center"
+                             CornerRadius="1.5"
+                             Margin="8,0"/>
 
                     <!-- Paso 2 -->
                     <Frame x:Name="Paso2Icon"
-           BackgroundColor="#E0E0E0"
-           CornerRadius="18"
-           HeightRequest="36"
-           WidthRequest="36"
-           HorizontalOptions="Center"
-           HasShadow="False"
-           Padding="0">
+                           Grid.Column="2"
+                           BackgroundColor="White"
+                           BorderColor="#E0E0E0"
+                           CornerRadius="18"
+                           HeightRequest="36"
+                           WidthRequest="36"
+                           HorizontalOptions="Center"
+                           HasShadow="True"
+                           Padding="0">
                         <Label Text="2"
-               x:Name="Paso2Label"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               TextColor="#757575"
-               FontAttributes="Bold"
-               FontSize="16"/>
+                               x:Name="Paso2Label"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               FontSize="16"/>
                     </Frame>
 
                     <!-- Línea 2 -->
                     <BoxView x:Name="LineaPaso2"
-             Grid.Column="3"
-             HeightRequest="3"
-             BackgroundColor="#E0E0E0"
-             VerticalOptions="Center"
-             CornerRadius="1.5"
-             Margin="8,0"/>
+                             Grid.Column="3"
+                             HeightRequest="3"
+                             BackgroundColor="#E0E0E0"
+                             VerticalOptions="Center"
+                             CornerRadius="1.5"
+                             Margin="8,0"/>
 
                     <!-- Paso 3 -->
                     <Frame x:Name="Paso3Icon"
-           BackgroundColor="#E0E0E0"
-           CornerRadius="18"
-           HeightRequest="36"
-           WidthRequest="36"
-           HorizontalOptions="Center"
-           HasShadow="False"
-           Padding="0">
+                           Grid.Column="4"
+                           BackgroundColor="White"
+                           BorderColor="#E0E0E0"
+                           CornerRadius="18"
+                           HeightRequest="36"
+                           WidthRequest="36"
+                           HorizontalOptions="Center"
+                           HasShadow="True"
+                           Padding="0">
                         <Label Text="3"
-               x:Name="Paso3Label"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               TextColor="#757575"
-               FontAttributes="Bold"
-               FontSize="16"/>
+                               x:Name="Paso3Label"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               FontSize="16"/>
                     </Frame>
 
                     <!-- Etiquetas -->
-                    <Label Grid.Row="1" Text="Confirmar" Grid.Column="0"
-           HorizontalOptions="Center" FontSize="13"
-           TextColor="#2E7D32" FontAttributes="Bold" Margin="0,8,0,0"/>
-                    <Label Grid.Row="1" Text="Pago" Grid.Column="2"
-           HorizontalOptions="Center" FontSize="13"
-           TextColor="#757575" Margin="0,8,0,0"/>
-                    <Label Grid.Row="1" Text="Final" Grid.Column="4"
-           HorizontalOptions="Center" FontSize="13"
-           TextColor="#757575" Margin="0,8,0,0"/>
+                    <Label x:Name="EtiquetaPaso1"
+                           Grid.Row="1" 
+                           Grid.Column="0"
+                           Text="Confirmar" 
+                           HorizontalOptions="Center" 
+                           FontSize="13"
+                           TextColor="#757575" 
+                           Margin="0,8,0,0"/>
+                    <Label x:Name="EtiquetaPaso2"
+                           Grid.Row="1" 
+                           Grid.Column="2"
+                           Text="Pago" 
+                           HorizontalOptions="Center" 
+                           FontSize="13"
+                           TextColor="#757575" 
+                           Margin="0,8,0,0"/>
+                    <Label x:Name="EtiquetaPaso3"
+                           Grid.Row="1" 
+                           Grid.Column="4"
+                           Text="Final" 
+                           HorizontalOptions="Center" 
+                           FontSize="13"
+                           TextColor="#757575" 
+                           Margin="0,8,0,0"/>
                 </Grid>
 
                 <!-- PASO 1 -->

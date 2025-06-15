@@ -13,6 +13,7 @@ public partial class BuySupriseBagPage : ContentPage
     private List<(int Id, string Name)> _foodBanks = new();
     private string _orderCode = "";
     private const string BASE_URL = "http://34.39.128.125/api";
+    private int _pasoActual = 1; // Variable para controlar el paso actual
 
     public BuySupriseBagPage(Restaurante restaurante, SurpriseBag bolsa)
     {
@@ -27,6 +28,9 @@ public partial class BuySupriseBagPage : ContentPage
 
         NavigationPage.SetHasNavigationBar(this, false);
         Padding = new Thickness(0);
+
+        // Inicializar la visualización de pasos
+        ActualizarVisualizacionPasos();
     }
 
     private void InicializarInterfaz()
@@ -46,6 +50,82 @@ public partial class BuySupriseBagPage : ContentPage
         PagoTelefonoLabel.Text = _restaurante.telefono;
 
         HeaderPaso1.IsVisible = true;
+    }
+
+    private void ActualizarVisualizacionPasos()
+    {
+        // Reset todos los pasos a estado inactivo
+        ResetearPasos();
+
+        switch (_pasoActual)
+        {
+            case 1:
+                // Paso 1 activo (verde)
+                Paso1Icon.BackgroundColor = Color.FromArgb("#789262");
+                Paso1Label.TextColor = Colors.White;
+                EtiquetaPaso1.TextColor = Color.FromArgb("#789262");
+                EtiquetaPaso1.FontAttributes = FontAttributes.Bold;
+                break;
+
+            case 2:
+                // Paso 1 completado (verde más claro)
+                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50");
+                Paso1Label.TextColor = Colors.White;
+                LineaPaso1.BackgroundColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso1.TextColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso1.FontAttributes = FontAttributes.Bold;
+
+                // Paso 2 activo (verde del header)
+                Paso2Icon.BackgroundColor = Color.FromArgb("#789262");
+                Paso2Label.TextColor = Colors.White;
+                EtiquetaPaso2.TextColor = Color.FromArgb("#789262");
+                EtiquetaPaso2.FontAttributes = FontAttributes.Bold;
+                break;
+
+            case 3:
+                // Pasos 1 y 2 completados
+                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50");
+                Paso1Label.TextColor = Colors.White;
+                LineaPaso1.BackgroundColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso1.TextColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso1.FontAttributes = FontAttributes.Bold;
+
+                Paso2Icon.BackgroundColor = Color.FromArgb("#4CAF50");
+                Paso2Label.TextColor = Colors.White;
+                LineaPaso2.BackgroundColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso2.TextColor = Color.FromArgb("#4CAF50");
+                EtiquetaPaso2.FontAttributes = FontAttributes.Bold;
+
+                // Paso 3 activo
+                Paso3Icon.BackgroundColor = Color.FromArgb("#789262");
+                Paso3Label.TextColor = Colors.White;
+                EtiquetaPaso3.TextColor = Color.FromArgb("#789262");
+                EtiquetaPaso3.FontAttributes = FontAttributes.Bold;
+                break;
+        }
+    }
+
+    private void ResetearPasos()
+    {
+        // Pasos inactivos: fondo blanco, número negro
+        Paso1Icon.BackgroundColor = Colors.White;
+        Paso1Label.TextColor = Colors.Black;
+        Paso2Icon.BackgroundColor = Colors.White;
+        Paso2Label.TextColor = Colors.Black;
+        Paso3Icon.BackgroundColor = Colors.White;
+        Paso3Label.TextColor = Colors.Black;
+
+        // Líneas grises
+        LineaPaso1.BackgroundColor = Color.FromArgb("#E0E0E0");
+        LineaPaso2.BackgroundColor = Color.FromArgb("#E0E0E0");
+
+        // Etiquetas grises
+        EtiquetaPaso1.TextColor = Color.FromArgb("#757575");
+        EtiquetaPaso1.FontAttributes = FontAttributes.None;
+        EtiquetaPaso2.TextColor = Color.FromArgb("#757575");
+        EtiquetaPaso2.FontAttributes = FontAttributes.None;
+        EtiquetaPaso3.TextColor = Color.FromArgb("#757575");
+        EtiquetaPaso3.FontAttributes = FontAttributes.None;
     }
 
     private void OnDonacionToggled(object sender, ToggledEventArgs e)
@@ -70,7 +150,6 @@ public partial class BuySupriseBagPage : ContentPage
                 client.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            // Usar la API correcta que especificaste
             var response = await client.GetAsync($"{BASE_URL}/allFoodBanksDetails/get");
 
             if (response.IsSuccessStatusCode)
@@ -100,7 +179,6 @@ public partial class BuySupriseBagPage : ContentPage
                 }
                 else
                 {
-                    // Manejar errores de la API
                     if (doc.RootElement.TryGetProperty("Errors", out var errors))
                     {
                         var errorMessages = errors.EnumerateArray()
@@ -169,12 +247,14 @@ public partial class BuySupriseBagPage : ContentPage
                 if (doc.RootElement.TryGetProperty("Success", out var success) && success.GetBoolean())
                 {
                     _orderId = doc.RootElement.GetProperty("OrderId").GetInt32();
-                    await ActualizarProgresoPasos(2);
+
+                    // Actualizar al paso 2
+                    _pasoActual = 2;
+                    ActualizarVisualizacionPasos();
                     await MostrarPaso2Async();
                 }
                 else
                 {
-                    // Manejar errores
                     if (doc.RootElement.TryGetProperty("Errors", out var errors))
                     {
                         var errorMessages = errors.EnumerateArray()
@@ -192,57 +272,6 @@ public partial class BuySupriseBagPage : ContentPage
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
-        }
-    }
-
-    private async Task ActualizarProgresoPasos(int pasoActual)
-    {
-        switch (pasoActual)
-        {
-            case 2:
-                // Paso 1 completado
-                Paso1Icon.BackgroundColor = Color.FromArgb("#4CAF50");
-                Paso1Label.TextColor = Colors.White;
-
-                // Paso 2 activo
-                Paso2Icon.BackgroundColor = Color.FromArgb("#2E7D32");
-                Paso2Label.TextColor = Colors.White;
-
-                // Línea 1 completada
-                LineaPaso1.BackgroundColor = Color.FromArgb("#4CAF50");
-
-                // Animaciones
-                await Task.WhenAll(
-                    Paso2Icon.ScaleTo(1.1, 150),
-                    Paso1Icon.ScaleTo(1.05, 150)
-                );
-                await Task.WhenAll(
-                    Paso2Icon.ScaleTo(1.0, 150),
-                    Paso1Icon.ScaleTo(1.0, 150)
-                );
-                break;
-
-            case 3:
-                // Paso 2 completado
-                Paso2Icon.BackgroundColor = Color.FromArgb("#4CAF50");
-                Paso2Label.TextColor = Colors.White;
-
-                // Paso 3 activo
-                Paso3Icon.BackgroundColor = Color.FromArgb("#2E7D32");
-                Paso3Label.TextColor = Colors.White;
-
-                // Línea 2 completada
-                LineaPaso2.BackgroundColor = Color.FromArgb("#4CAF50");
-
-                await Task.WhenAll(
-                    Paso3Icon.ScaleTo(1.1, 150),
-                    Paso2Icon.ScaleTo(1.05, 150)
-                );
-                await Task.WhenAll(
-                    Paso3Icon.ScaleTo(1.0, 150),
-                    Paso2Icon.ScaleTo(1.0, 150)
-                );
-                break;
         }
     }
 
@@ -289,7 +318,6 @@ public partial class BuySupriseBagPage : ContentPage
                 }
                 else
                 {
-                    // Manejar errores
                     if (doc.RootElement.TryGetProperty("Errors", out var errors))
                     {
                         var errorMessages = errors.EnumerateArray()
@@ -310,7 +338,9 @@ public partial class BuySupriseBagPage : ContentPage
     {
         try
         {
-            await ActualizarProgresoPasos(3);
+            // Actualizar al paso 3
+            _pasoActual = 3;
+            ActualizarVisualizacionPasos();
 
             var json = JsonSerializer.Serialize(new { OrderId = _orderId });
             using var client = new HttpClient();
@@ -347,7 +377,6 @@ public partial class BuySupriseBagPage : ContentPage
                 }
                 else
                 {
-                    // Manejar errores
                     if (doc.RootElement.TryGetProperty("Errors", out var errors))
                     {
                         var errorMessages = errors.EnumerateArray()
@@ -400,5 +429,4 @@ public partial class BuySupriseBagPage : ContentPage
         if (confirm)
             await Navigation.PopAsync();
     }
-
 }
