@@ -132,6 +132,8 @@ namespace SaborSostenibleFrontEnd.AdminPages
             var loader = new LoadingPage();
             await Navigation.PushModalAsync(loader);
 
+            bool isSuccess = false;
+
             try
             {
                 var req = new ReqInsertBusiness
@@ -155,7 +157,7 @@ namespace SaborSostenibleFrontEnd.AdminPages
                 if (res != null && res.Success)
                 {
                     await DisplayAlert("Éxito", "Negocio insertado correctamente", "OK");
-                    await Navigation.PopAsync();
+                    isSuccess = true;
                 }
                 else
                 {
@@ -169,7 +171,11 @@ namespace SaborSostenibleFrontEnd.AdminPages
             }
             finally
             {
-                await Navigation.PopModalAsync();
+                await Navigation.PopModalAsync(); // Cierra el loader
+                if (isSuccess)
+                {
+                    await Navigation.PopAsync(); // Cierra la pantalla de inserción si todo salió bien
+                }
             }
         }
 

@@ -122,6 +122,8 @@ namespace SaborSostenibleFrontEnd.AdminPages
             var loader = new LoadingPage();
             await Navigation.PushModalAsync(loader);
 
+            bool isSuccess = false;
+
             try
             {
                 var req = new ReqInsertFoodBank
@@ -145,7 +147,7 @@ namespace SaborSostenibleFrontEnd.AdminPages
                 if (res?.Success == true)
                 {
                     await DisplayAlert("Éxito", "Banco de alimentos insertado correctamente", "OK");
-                    await Navigation.PopAsync();
+                    isSuccess = true;
                 }
                 else
                 {
@@ -159,7 +161,11 @@ namespace SaborSostenibleFrontEnd.AdminPages
             }
             finally
             {
-                await Navigation.PopModalAsync();
+                await Navigation.PopModalAsync(); // Cierra el loader
+                if (isSuccess)
+                {
+                    await Navigation.PopAsync(); // Cierra la pantalla de inserción si todo salió bien
+                }
             }
         }
 
