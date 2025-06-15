@@ -10,8 +10,8 @@
         <!-- Encabezado con botón de volver -->
         <Grid Padding="20,40,20,10" Grid.Row="0">
             <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                <Label Text="←" FontSize="20" TextColor="#2E7D32" />
-                <Label Text="Volver" FontSize="16" TextColor="#2E7D32" FontAttributes="Bold">
+                <Label Text="←" FontSize="20" TextColor="#789262" />
+                <Label Text="Volver" FontSize="16" TextColor="#789262" FontAttributes="Bold">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnVolverClicked" />
                     </Label.GestureRecognizers>
@@ -33,19 +33,20 @@
                    FontSize="26"
                    FontAttributes="Bold"
                    FontFamily="OpenSansSemibold"
-                   TextColor="#2E7D32" />
+                   TextColor="#789262" />
 
             <Label x:Name="RestauranteDescripcionLabel"
                    FontSize="14"
                    TextColor="#555"
                    LineBreakMode="WordWrap"
-                   FontFamily="OpenSansRegular" />
+                   FontFamily="OpenSansRegular" 
+                   Margin="0,2,0,4"/>
 
             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                 <Label Text="📞" FontSize="13" />
                 <Label x:Name="RestauranteTelefonoLabel"
                        FontSize="16"
-                       TextColor="#2E7D32"
+                       TextColor="#789262"
                        FontFamily="OpenSansRegular" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
@@ -55,7 +56,7 @@
                FontSize="20"
                FontAttributes="Bold"
                FontFamily="OpenSansSemibold"
-               TextColor="#2E7D32"
+               TextColor="#789262"
                Margin="20,0,20,0"
                Grid.Row="3" />
 
@@ -72,8 +73,8 @@
                         <Frame BackgroundColor="White" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
                             <Label Text="🛍️" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Frame>
-                        <Label Text="Actualmente no hay bolsas disponibles." FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" WidthRequest="260" />
-                        <Label Text="Este restaurante pronto tendrá más sorpresas para ti." FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
+                        <Label Text="Actualmente no hay bolsas disponibles" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" WidthRequest="260" />
+                        <Label Text="Este restaurante pronto tendrá más sorpresas para ti" FontSize="14" FontAttributes="Italic" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
                     </VerticalStackLayout>
                 </Grid>
             </CollectionView.EmptyView>

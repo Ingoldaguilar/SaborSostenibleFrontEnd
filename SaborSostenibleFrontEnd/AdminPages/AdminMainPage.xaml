@@ -7,10 +7,10 @@
     Title="Panel de administración"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F9FA"
-    BarBackgroundColor="#2E7D32"
+    BarBackgroundColor="#789262"
     BarTextColor="White"
     SelectedTabColor="White"
-    UnselectedTabColor="#A5D6A7"
+    UnselectedTabColor="#3C4D1D"
     android:TabbedPage.ToolbarPlacement="Bottom">
 
     <!-- Tab 1: Administrar -->
@@ -22,7 +22,7 @@
 
         <Grid RowDefinitions="Auto,*">
             <!-- HEADER -->
-            <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+            <Grid Grid.Row="0" BackgroundColor="#789262">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1"/>
@@ -283,7 +283,7 @@
 
         <Grid RowDefinitions="Auto,*">
             <!-- HEADER -->
-            <Grid Grid.Row="0" BackgroundColor="#2E7D32">
+            <Grid Grid.Row="0" BackgroundColor="#789262">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1"/>
@@ -335,28 +335,45 @@
                                 Text="&#xf007;"
                                 FontFamily="FontAwesome"
                                 FontSize="36"
-                                TextColor="#2E7D32"
+                                TextColor="#789262"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"/>
                         </Frame>
 
                         <!-- Rol -->
-                        <Label
+                        <Frame
+                            BackgroundColor="#789262"
+                            CornerRadius="12"
+                            Padding="12,6"
+                            HasShadow="False"
+                            BorderColor="Transparent"
+                            HorizontalOptions="Center">
+                            
+                            <Label
                             x:Name="LabelName"
                             Text="Administrador"
-                            FontSize="20"
+                            FontSize="18"
                             FontAttributes="Bold"
-                            TextColor="Black"
+                            TextColor="White"
                             HorizontalOptions="Center"/>
+                        </Frame>
+
+                        <BoxView
+                            HeightRequest="1"
+                            WidthRequest="80"
+                            BackgroundColor="#E0E0E0"
+                            HorizontalOptions="Center"
+                            Margin="0,8"/>
 
                         <!-- Name -->
                         <Label
                             x:Name="LabelFullName"
                             Text="FullName"
-                            FontSize="14"
+                            FontSize="18"
+                            FontAttributes="Bold"
                             TextColor="Black"
                             HorizontalOptions="Center"
-                            WidthRequest="210"
+                            WidthRequest="240"
                             LineBreakMode="WordWrap"
                             HorizontalTextAlignment="Center"/>
 
@@ -365,7 +382,7 @@
                             x:Name="LabelEmail"
                             Text="example@gmail.com"
                             FontSize="14"
-                            TextColor="Gray"
+                            TextColor="#666666"
                             HorizontalOptions="Center"
                             WidthRequest="210"
                             LineBreakMode="WordWrap"
@@ -376,9 +393,10 @@
                             Text="⎋  Cerrar sesión"
                             Clicked="OnLogoutClicked"
                             BackgroundColor="Transparent"
+                            Margin="0,15"
                             TextColor="#E53935"
                             BorderColor="#E53935"
-                            BorderWidth="1"
+                            BorderWidth="2"
                             FontAttributes="Bold"
                             CornerRadius="8"
                             HeightRequest="40"
