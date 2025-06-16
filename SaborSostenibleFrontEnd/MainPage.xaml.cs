@@ -192,15 +192,6 @@ namespace SaborSostenibleFrontEnd
         {
             await CargarPedidosAsync();
         }
-        private async void OnSearchCompleted(object sender, EventArgs e)
-        {
-            if (sender is Entry entry)
-            {
-                var texto = entry.Text?.Trim();
-                await CargarRestaurantesDesdeApiAsync(string.IsNullOrEmpty(texto) ? null : texto);
-            }
-        }
-
         private async Task MostrarDatosUsuarioAsync()
         {
             try
@@ -235,39 +226,6 @@ namespace SaborSostenibleFrontEnd
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"Error al obtener datos del usuario.\n\n{ex.Message}", "OK");
-            }
-        }
-
-        private async Task CargarSaludoPersonalizadoAsync()
-        {
-            try
-            {
-                var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    SaludoLabel.Text = "¡Hola! 👋";
-                    return;
-                }
-
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var doc = JsonDocument.Parse(json);
-
-                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
-                    {
-                        var nombre = info.GetProperty("FirstName1").GetString();
-                        SaludoLabel.Text = $"¡Hola, {nombre}! 👋";
-                    }
-                }
-            }
-            catch
-            {
-                SaludoLabel.Text = "¡Hola! 👋";
             }
         }
 
@@ -401,6 +359,113 @@ namespace SaborSostenibleFrontEnd
             if (e.Parameter is Pedido pedido)
             {
                 await Navigation.PushAsync(new OrderDetailsPage(pedido.OrderId));
+            }
+        }
+
+        // AÑADIR estos nuevos métodos a la clase MainPage:
+
+        private async Task CargarSaludoPersonalizadoAsync()
+        {
+            try
+            {
+                var token = Preferences.Get("SessionId", null);
+                if (string.IsNullOrEmpty(token))
+                {
+                    SaludoLabel.Text = "¡Bienvenido(a) de vuelta!";
+                    await AnimarSaludoAsync();
+                    return;
+                }
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var doc = JsonDocument.Parse(json);
+
+                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
+                    {
+                        var nombre = info.GetProperty("FirstName1").GetString();
+                        SaludoLabel.Text = $"¡Bienvenido(a) de vuelta, {nombre}!";
+                    }
+                }
+
+                await AnimarSaludoAsync();
+            }
+            catch
+            {
+                SaludoLabel.Text = "¡Bienvenido(a) de vuelta!";
+                await AnimarSaludoAsync();
+            }
+        }
+
+        private async Task AnimarSaludoAsync()
+        {
+            // Animación de entrada del saludo
+            await Task.WhenAll(
+                SaludoLabel.FadeTo(1, 800, Easing.CubicOut),
+                SaludoLabel.ScaleTo(1, 800, Easing.BounceOut)
+            );
+
+            // Pequeña pausa
+            await Task.Delay(200);
+
+            // Animación del efecto de brillo - expandir
+            BrilloEffect.WidthRequest = 0;
+            await Task.WhenAll(
+                BrilloEffect.FadeTo(0.7, 300, Easing.Linear),
+                AnimateWidthAsync(BrilloEffect, SaludoLabel.Width * 0.6, 300)
+            );
+
+            await Task.Delay(100);
+
+            // Animación del efecto de brillo - contraer
+            await Task.WhenAll(
+                BrilloEffect.FadeTo(0, 400, Easing.Linear),
+                AnimateWidthAsync(BrilloEffect, 0, 400)
+            );
+        }
+
+        // Método helper para animar el ancho
+        private async Task AnimateWidthAsync(View view, double toWidth, uint duration)
+        {
+            var animation = new Animation(v => view.WidthRequest = v, view.WidthRequest, toWidth);
+            await Task.Run(() => animation.Commit(view, "WidthAnimation", 16, duration, Easing.Linear));
+        }
+
+        // AÑADIR este nuevo método para manejar cambios en el texto de búsqueda:
+        private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                // Mostrar/ocultar el botón de limpiar según si hay texto
+                ClearSearchButton.IsVisible = !string.IsNullOrEmpty(entry.Text);
+            }
+        }
+
+        // AÑADIR este nuevo método para limpiar la búsqueda:
+        private async void OnClearSearchClicked(object sender, EventArgs e)
+        {
+            SearchEntry.Text = string.Empty;
+            ClearSearchButton.IsVisible = false;
+
+            // Pequeña animación del botón al hacer clic
+            await ClearSearchButton.ScaleTo(0.8, 100);
+            await ClearSearchButton.ScaleTo(1, 100);
+
+            // Recargar todos los restaurantes
+            await CargarRestaurantesDesdeApiAsync();
+        }
+
+        // MODIFICAR el método OnSearchCompleted existente para usar SearchEntry:
+        private async void OnSearchCompleted(object sender, EventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                var texto = entry.Text?.Trim();
+                await CargarRestaurantesDesdeApiAsync(string.IsNullOrEmpty(texto) ? null : texto);
             }
         }
     }

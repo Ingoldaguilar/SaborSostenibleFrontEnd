@@ -53,14 +53,27 @@
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
 
-                    <Label x:Name="SaludoLabel"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   TextColor="#789262"
-                   FontFamily="Roboto"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center" />
+                    <StackLayout x:Name="SaludoContainer" HorizontalOptions="Center" VerticalOptions="Center" Padding="10,25">
+                        <Label x:Name="SaludoLabel"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#789262"
+                            FontFamily="Roboto"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Opacity="0"
+                            Scale="0.8"/>
+
+                        <!-- Efecto de brillo/destello -->
+                        <BoxView x:Name="BrilloEffect"
+                            HeightRequest="2"
+                            BackgroundColor="#FFA726"
+                            CornerRadius="1"
+                            HorizontalOptions="Center"
+                            WidthRequest="0"
+                            Opacity="0"/>
+                    </StackLayout>
 
                     <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
@@ -69,11 +82,41 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="&#xf002;" FontFamily="FontAwesome" TextColor="#999" FontSize="18" VerticalOptions="Center" Margin="0,0,10,0" />
-                        <Entry Grid.Column="1" Placeholder="Buscar por nombre de restaurante..." PlaceholderColor="#AAA" FontSize="14" TextColor="Black" Completed="OnSearchCompleted" />
-                    </Grid>
 
+                        <Label Grid.Column="0" 
+                           Text="&#xf002;" 
+                           FontFamily="FontAwesome" 
+                           TextColor="#999" 
+                           FontSize="18" 
+                           VerticalOptions="Center" 
+                           Margin="10,0,10,0" />
+
+                        <Entry x:Name="SearchEntry"
+                           Grid.Column="1" 
+                           Placeholder="Buscar por nombre de restaurante..." 
+                           PlaceholderColor="#AAA" 
+                           FontSize="14" 
+                           TextColor="Black" 
+                           Completed="OnSearchCompleted"
+                           TextChanged="OnSearchTextChanged" />
+
+                        <Button x:Name="ClearSearchButton"
+                            Grid.Column="2"
+                            Text="&#xf00d;"
+                            FontFamily="FontAwesome"
+                            FontSize="16"
+                            TextColor="#999"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            CornerRadius="15"
+                            Padding="0"
+                            IsVisible="False"
+                            Clicked="OnClearSearchClicked"/>
+                    </Grid>
                     <!-- Lista de restaurantes -->
                     <CollectionView x:Name="RestaurantesCollectionView" ItemsSource="{Binding Restaurantes}" SelectionMode="None">
                         <CollectionView.EmptyView>
