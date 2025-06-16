@@ -24,34 +24,44 @@
     <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
             <!-- Encabezado estilo navegación -->
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label x:Name="SaludoLabel"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           FontFamily="OpenSansSemibold"
-                           HorizontalTextAlignment="Center"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center" />
+            <Grid RowDefinitions="Auto,*">
+                <!-- Encabezado estilo navegación -->
+                <Grid Grid.Row="0" BackgroundColor="#789262" Padding="10,10" HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Frame BackgroundColor="White"
+                   Padding="0"
+                   CornerRadius="50"
+                   HasShadow="False"
+                   BorderColor="Transparent"
+                   IsClippedToBounds="True"
+                   WidthRequest="75"
+                   HeightRequest="75"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                            <Image Source="logonobg.png"
+                       Aspect="AspectFit"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+                        </Frame>
+                    </VerticalStackLayout>
                 </Grid>
-            </Frame>
+            </Grid>
+
 
             <!-- Contenido dinámico -->
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
-                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
-                    <VerticalStackLayout Padding="10,5,10,15">
-                        <Label HorizontalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Ubicación actual: " FontSize="12" TextColor="#666" />
-                                    <Span Text="Alajuela, Costa Rica" FontSize="12" TextColor="#789262" FontAttributes="Bold"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </VerticalStackLayout>
+                    <Label x:Name="SaludoLabel"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#789262"
+                   FontFamily="Roboto"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+
+                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
                     <!-- Barra de búsqueda -->
                     <Grid Padding="10" BackgroundColor="White">
