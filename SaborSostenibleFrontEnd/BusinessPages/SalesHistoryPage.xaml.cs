@@ -63,11 +63,17 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                // Contenido horizontal
-                var content = new HorizontalStackLayout
+                // grid
+                var grid = new Grid
                 {
                     Padding = new Thickness(12),
-                    Spacing = 20,
+                    ColumnSpacing = 12,
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(56) },              // Logo
+                        new ColumnDefinition { Width = GridLength.Star },                 // Info
+                        new ColumnDefinition { Width = GridLength.Auto }                  // Botón
+                    },
                     VerticalOptions = LayoutOptions.Center
                 };
 
@@ -85,7 +91,8 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                         RadiusY = 28
                     }
                 };
-                content.Children.Add(logo);
+                Grid.SetColumn(logo, 0);
+                grid.Children.Add(logo);
 
                 // Detalles (código, monto, fecha)
                 var details = new VerticalStackLayout
@@ -133,7 +140,8 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 });
                 details.Children.Add(dateLayout);
 
-                content.Children.Add(details);
+                Grid.SetColumn(details, 1);
+                grid.Children.Add(details);
 
                 // Botón estado con color dinámico
                 var btn = new Button
@@ -154,9 +162,10 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 btn.Clicked += (_, __) =>
                     Navigation.PushAsync(new BusinessOrderDetailsPage(order.OrderId));
 
-                content.Children.Add(btn);
+                Grid.SetColumn(btn, 2);
+                grid.Children.Add(btn);
 
-                frame.Content = content;
+                frame.Content = grid;
                 HistoryContainer.Children.Add(frame);
             }
         }

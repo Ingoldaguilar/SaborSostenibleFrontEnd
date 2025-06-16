@@ -64,11 +64,17 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                     BorderColor = Color.FromRgba(0, 0, 0, 0.02)
                 };
 
-                // Contenido horizontal
-                var content = new HorizontalStackLayout
+                // Contenedor visual tipo Grid
+                var content = new Grid
                 {
                     Padding = new Thickness(12),
-                    Spacing = 20,
+                    ColumnSpacing = 12,
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(56) },              // Logo
+                        new ColumnDefinition { Width = GridLength.Star },                 // Info
+                        new ColumnDefinition { Width = GridLength.Auto }                  // Botón
+                    },
                     VerticalOptions = LayoutOptions.Center
                 };
 
@@ -86,6 +92,8 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                         RadiusY = 28
                     }
                 };
+
+                Grid.SetColumn(logo, 0);
                 content.Children.Add(logo);
 
                 // Detalles (código, monto, fecha)
@@ -135,6 +143,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 });
                 details.Children.Add(dateLayout);
 
+                Grid.SetColumn(details, 1);
                 content.Children.Add(details);
 
                 // Botón “Pendiente”
@@ -154,6 +163,7 @@ namespace SaborSostenibleFrontEnd.BusinessPages
                 btn.Clicked += (_, __) =>
                     Navigation.PushAsync(new BusinessPendingSaleDetailsPage(order.OrderId));
 
+                Grid.SetColumn(btn, 2);
                 content.Children.Add(btn);
 
                 frame.Content = content;

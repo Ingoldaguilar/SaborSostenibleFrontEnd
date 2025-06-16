@@ -4,7 +4,7 @@
              BackgroundColor="{StaticResource backgroundColor}">
 
     <ScrollView>
-        <Grid Padding="50, 0"
+        <Grid Padding="130, 0"
               VerticalOptions="Center"
               HorizontalOptions="Center"
               RowSpacing="20">
