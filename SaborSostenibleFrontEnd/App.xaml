@@ -9,6 +9,32 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Estilos globales para fuente Roboto -->
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+
+            <Style TargetType="Editor">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+
+            <Style TargetType="SearchBar">
+                <Setter Property="FontFamily" Value="Roboto" />
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

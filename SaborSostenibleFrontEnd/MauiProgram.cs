@@ -14,6 +14,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("Poppins-Regular.ttf", "Poppins");
                 fonts.AddFont("fa-solid-900.ttf", "FontAwesome");
+                fonts.AddFont("Roboto.ttf", "Roboto");
             });
 
         builder.Services.AddSingleton<MainPage>();
