@@ -61,9 +61,9 @@
 
                 <Button Text="Registrarse" BackgroundColor="{StaticResource Primary}" TextColor="White" Clicked="OnRegisterClicked" />
 
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout  Margin="0,0,0,30" Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="¿Ya tienes cuenta? " TextColor="#789262" />
-                    <Label Text="Inicia sesión" TextColor="{StaticResource Primary}" FontAttributes="Bold" TextDecorations="Underline">
+                    <Label  Text="Inicia sesión" TextColor="{StaticResource Primary}" FontAttributes="Bold" TextDecorations="Underline">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnLoginTapped" />
                         </Label.GestureRecognizers>

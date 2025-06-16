@@ -17,6 +17,7 @@
     <TabbedPage.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Roboto" />
         </Style>
     </TabbedPage.Resources>
 
@@ -24,45 +25,98 @@
     <ContentPage Title="Descubrir" IconImageSource="{FontImage Glyph=&#xf002;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
             <!-- Encabezado estilo navegación -->
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label x:Name="SaludoLabel"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           FontFamily="OpenSansSemibold"
-                           HorizontalTextAlignment="Center"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center" />
+            <Grid RowDefinitions="Auto,*">
+                <!-- Encabezado estilo navegación -->
+                <Grid Grid.Row="0" BackgroundColor="#789262" Padding="10,10" HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Frame BackgroundColor="White"
+                   Padding="0"
+                   CornerRadius="50"
+                   HasShadow="False"
+                   BorderColor="Transparent"
+                   IsClippedToBounds="True"
+                   WidthRequest="65"
+                   HeightRequest="65"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                            <Image Source="logonobg.png"
+                       Aspect="AspectFit"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+                        </Frame>
+                    </VerticalStackLayout>
                 </Grid>
-            </Frame>
+            </Grid>
+
 
             <!-- Contenido dinámico -->
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Spacing="15" Padding="20,20,20,30">
-                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
-                    <VerticalStackLayout Padding="10,5,10,15">
-                        <Label HorizontalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Ubicación actual: " FontSize="12" TextColor="#666" />
-                                    <Span Text="Alajuela, Costa Rica" FontSize="12" TextColor="#789262" FontAttributes="Bold"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </VerticalStackLayout>
+                    <StackLayout x:Name="SaludoContainer" HorizontalOptions="Center" VerticalOptions="Center" Padding="10,25">
+                        <Label x:Name="SaludoLabel"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="#789262"
+                            FontFamily="Roboto"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Opacity="0"
+                            Scale="0.8"/>
+
+                        <!-- Efecto de brillo/destello -->
+                        <BoxView x:Name="BrilloEffect"
+                            HeightRequest="2"
+                            BackgroundColor="#FFA726"
+                            CornerRadius="1"
+                            HorizontalOptions="Center"
+                            WidthRequest="0"
+                            Opacity="0"/>
+                    </StackLayout>
+
+                    <Label Text="Descubre opciones sostenibles cerca de ti" FontSize="14" TextColor="#666" HorizontalOptions="Center" />
 
                     <!-- Barra de búsqueda -->
                     <Grid Padding="10" BackgroundColor="White">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="&#xf002;" FontFamily="FontAwesome" TextColor="#999" FontSize="18" VerticalOptions="Center" Margin="0,0,10,0" />
-                        <Entry Grid.Column="1" Placeholder="Buscar por nombre de restaurante..." PlaceholderColor="#AAA" FontSize="14" TextColor="Black" Completed="OnSearchCompleted" />
-                    </Grid>
 
+                        <Label Grid.Column="0" 
+                           Text="&#xf002;" 
+                           FontFamily="FontAwesome" 
+                           TextColor="#999" 
+                           FontSize="18" 
+                           VerticalOptions="Center" 
+                           Margin="10,0,10,0" />
+
+                        <Entry x:Name="SearchEntry"
+                           Grid.Column="1" 
+                           Placeholder="Buscar por nombre de restaurante..." 
+                           PlaceholderColor="#AAA" 
+                           FontSize="14" 
+                           TextColor="Black" 
+                           Completed="OnSearchCompleted"
+                           TextChanged="OnSearchTextChanged" />
+
+                        <Button x:Name="ClearSearchButton"
+                            Grid.Column="2"
+                            Text="&#xf00d;"
+                            FontFamily="FontAwesome"
+                            FontSize="16"
+                            TextColor="#999"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            CornerRadius="15"
+                            Padding="0"
+                            IsVisible="False"
+                            Clicked="OnClearSearchClicked"/>
+                    </Grid>
                     <!-- Lista de restaurantes -->
                     <CollectionView x:Name="RestaurantesCollectionView" ItemsSource="{Binding Restaurantes}" SelectionMode="None">
                         <CollectionView.EmptyView>
@@ -85,6 +139,27 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
+                   
+                    <!-- Loader de restaurantes -->
+                    <VerticalStackLayout x:Name="RestaurantesLoader" 
+                     Spacing="20" 
+                     HorizontalOptions="Center" 
+                     VerticalOptions="Center"
+                     IsVisible="False"
+                     BackgroundColor="#F8F9FA"
+                     Margin="0,40,0,0">
+                        <ActivityIndicator IsRunning="True" 
+                       Color="#789262" 
+                       WidthRequest="40" 
+                       HeightRequest="40"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                        <Label Text="Cargando restaurantes..." 
+           FontSize="14" 
+           TextColor="#789262" 
+           HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
@@ -93,183 +168,270 @@
     <!-- Tab 2: Pedidos -->
     <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*" Padding="0">
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label Text="Mis pedidos" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
-                </Grid>
-            </Frame>
+            <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Label Text="Mis pedidos"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   FontFamily="Roboto"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            </Grid>
 
-            <CollectionView Grid.Row="1" x:Name="PedidosCollectionView" ItemsSource="{Binding Pedidos}" SelectionMode="None" Margin="20,15">
-                <CollectionView.EmptyView>
-                    <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="30">
-                        <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
-                            <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Frame>
-                        <Label Text="Por el momento no tienes pedidos registrados" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
-                        <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Bold" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
-                    </VerticalStackLayout>
-                </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="0" Margin="0,0,0,15" BackgroundColor="Transparent" HasShadow="False" BorderColor="Transparent">
-                            <Frame BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True" BorderColor="Transparent">
-                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
-
-                                    <!-- Header con nombre del restaurante y estado -->
-                                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                                        <Label Grid.Column="0" 
-                                           Text="{Binding RestaurantName}" 
-                                           FontSize="18" 
-                                           FontAttributes="Bold" 
-                                           TextColor="#789262"
-                                           VerticalOptions="Center"
-                                           LineBreakMode="TailTruncation"/>
-                                        <Frame Grid.Column="1" 
-                                           BackgroundColor="{Binding StatusColor}" 
-                                           CornerRadius="12" 
-                                           Padding="8,4" 
-                                           HasShadow="False">
-                                            <Label Text="{Binding Status}" 
-                                               FontSize="12" 
-                                               FontAttributes="Bold"
-                                               TextColor="White"
-                                               HorizontalOptions="Center"/>
-                                        </Frame>
-                                    </Grid>
-
-                                    <!-- Fecha y hora -->
-                                    <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                        <Label Grid.Column="0" 
-                                           Text="📅" 
-                                           FontSize="16" 
-                                           VerticalOptions="Center"/>
-                                        <Label Grid.Column="1" 
-                                           Text="{Binding DateFormatted}" 
-                                           FontSize="14" 
-                                           TextColor="#666"
-                                           VerticalOptions="Center"/>
-                                    </Grid>
-
-                                    <!-- Número de bolsas -->
-                                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                        <Label Grid.Column="0" 
-                                           Text="🛍️" 
-                                           FontSize="16" 
-                                           VerticalOptions="Center"/>
-                                        <Label Grid.Column="1" 
-                                           Text="{Binding Bags, StringFormat='{0} bolsa(s)'}" 
-                                           FontSize="14" 
-                                           TextColor="#666"
-                                           VerticalOptions="Center"/>
-                                    </Grid>
-
-                                    <!-- Total destacado -->
-                                    <Frame Grid.Row="3" 
-                                       BackgroundColor="#F1F8E9" 
-                                       CornerRadius="10" 
-                                       Padding="12,8" 
-                                       HasShadow="False"
-                                       BorderColor="Transparent">
-                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                            <Label Grid.Column="0" 
-                                               Text="💰" 
-                                               FontSize="16" 
-                                               VerticalOptions="Center"/>
-                                            <Label Grid.Column="1" 
-                                           Text="{Binding Total, StringFormat='Total: ₡{0:N2}'}" 
-                                           FontSize="16" 
-                                           FontAttributes="Bold"
-                                           TextColor="#789262"
-                                           VerticalOptions="Center"/>
-                                        </Grid>
-                                    </Frame>
-
-                                </Grid>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer CommandParameter="{Binding}" Tapped="OnPedidoCardTapped" />
-                                </Frame.GestureRecognizers>
+            <!-- Contenedor principal -->
+            <Grid Grid.Row="1">
+                <!-- CollectionView de pedidos -->
+                <CollectionView x:Name="PedidosCollectionView" ItemsSource="{Binding Pedidos}" SelectionMode="None" Margin="15,20,15,15" IsVisible="True">
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout x:Name="EmptyViewContainer" Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="30">
+                            <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center" BorderColor="Transparent" IsClippedToBounds="True">
+                                <Image Source="surprisebag.png" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Center" />
                             </Frame>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            <Label Text="Por el momento no tienes pedidos registrados" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
+                            <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Bold" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" Margin="0,0,0,15" BackgroundColor="Transparent" HasShadow="False" BorderColor="Transparent">
+                                <Frame BackgroundColor="White" CornerRadius="15" Padding="15" HasShadow="True" BorderColor="Transparent">
+                                    <Grid RowDefinitions="Auto" ColumnDefinitions="70,*,Auto" ColumnSpacing="15" VerticalOptions="Center">
+
+                                        <!-- Imagen del pedido -->
+                                        <Frame Grid.Column="0" 
+                                           BackgroundColor="#F5F5F5" 
+                                           CornerRadius="10" 
+                                           Padding="8" 
+                                           HasShadow="False" 
+                                           BorderColor="Transparent"
+                                           WidthRequest="70"
+                                           HeightRequest="70"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center">
+                                            <Image Source="surprisebag.png"
+                                               Aspect="AspectFit"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center" />
+                                        </Frame>
+
+                                        <!-- Información del pedido -->
+                                        <VerticalStackLayout Grid.Column="1" 
+                                                       Spacing="5" 
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding RestaurantName}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#789262"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1" />
+
+                                            <Label Text="{Binding DateFormatted}"
+                                               FontSize="13"
+                                               TextColor="#666"
+                                               LineBreakMode="TailTruncation" />
+
+                                            <Label Text="{Binding Bags, StringFormat='Bolsas: {0}'}"
+                                               FontSize="13"
+                                               TextColor="#666" />
+                                        </VerticalStackLayout>
+
+                                        <!-- Precio y estado -->
+                                        <VerticalStackLayout Grid.Column="2" 
+                                                       Spacing="5" 
+                                                       VerticalOptions="Center"
+                                                       HorizontalOptions="End">
+                                            <Label Text="{Binding Total, StringFormat='₡{0:N0}'}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#2E7D32"
+                                               HorizontalTextAlignment="End" />
+
+                                            <!-- Badge de estado (opcional) -->
+                                            <Frame BackgroundColor="#E8F5E8" 
+                                               CornerRadius="8" 
+                                               Padding="8,4" 
+                                               HasShadow="False" 
+                                               BorderColor="Transparent"
+                                               HorizontalOptions="End">
+                                                <Label Text="{Binding Status}"
+                                                   FontSize="11"
+                                                   TextColor="#2E7D32"
+                                                   FontAttributes="Bold" />
+                                            </Frame>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="OnPedidoCardTapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Loader discreto -->
+                <VerticalStackLayout x:Name="PedidosLoader" 
+                           Spacing="20" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           IsVisible="False"
+                           BackgroundColor="#F8F9FA">
+                    <ActivityIndicator IsRunning="True" 
+                             Color="#789262" 
+                             WidthRequest="40" 
+                             HeightRequest="40"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"/>
+                    <Label Text="Cargando pedidos..." 
+                       FontSize="14" 
+                       TextColor="#789262" 
+                       HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Grid>
         </Grid>
     </ContentPage>
-
+    
     <!-- Tab 3: Perfil -->
     <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label Text="Mi perfil" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
-                </Grid>
-            </Frame>
+            <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Label Text="Mi perfil"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   FontFamily="OpenSansSemibold"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            </Grid>
+
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Padding="20" Spacing="25">
-                    <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True" BorderColor="#E0E0E0">
+
+                    <!-- Información del usuario -->
+                    <Frame BackgroundColor="White" CornerRadius="15" Padding="25" HasShadow="True" BorderColor="Transparent">
                         <VerticalStackLayout Spacing="20">
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="👤" FontSize="18"/>
-                                <Label x:Name="UsuarioNombreLabel" FontSize="18" TextColor="#789262" FontAttributes="Bold"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📧" FontSize="18"/>
-                                <Label x:Name="UsuarioEmailLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📱" FontSize="18"/>
-                                <Label x:Name="UsuarioTelefonoLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📍" FontSize="18"/>
-                                <Label x:Name="UsuarioDireccionLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
+
+                            <!-- Avatar con ícono de usuario y nombre -->
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                                <Frame BackgroundColor="#789262" 
+                                   CornerRadius="40" 
+                                   Padding="0" 
+                                   WidthRequest="80" 
+                                   HeightRequest="80" 
+                                   HasShadow="False" 
+                                   BorderColor="Transparent"
+                                   HorizontalOptions="Center">
+                                    <Label Text="&#xf007;" 
+                                       FontFamily="FontAwesome"
+                                       FontSize="32" 
+                                       TextColor="White" 
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center" />
+                                </Frame>
+                                <Label x:Name="UsuarioNombreLabel" 
+                                   FontSize="20" 
+                                   TextColor="#789262" 
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+
+                            <!-- Información de contacto -->
+                            <VerticalStackLayout Spacing="15">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Correo electrónico" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioEmailLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Teléfono" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioTelefonoLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Dirección" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioDireccionLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" 
+                                       LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- Botón para solicitar ser voluntario - Solo visible para Customer -->
-                    <Button x:Name="SolicitarVoluntarioButton" 
-                        Text="Solicitar ser voluntario" 
-                        Clicked="OnSolicitarVoluntariadoClicked" 
-                        BackgroundColor="#789262" 
-                        TextColor="White" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="50" 
-                        FontSize="16"
-                        IsVisible="False"/>
+                    <!-- Acciones del usuario -->
+                    <VerticalStackLayout Spacing="15" Padding="0, 20">
 
-                    <!-- Botón para ver donaciones pendientes - Solo visible para Volunteer -->
-                    <Button x:Name="DonacionesPendientesButton" 
-                        Text="Ver donaciones pendientes" 
-                        Clicked="OnDonacionesPendientesClicked" 
-                        BackgroundColor="#789262" 
-                        TextColor="White" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="50" 
-                        FontSize="16"
-                        IsVisible="False"/>
+                        <!-- Botón para solicitar ser voluntario - Solo visible para Customer -->
+                        <Button x:Name="SolicitarVoluntarioButton" 
+                            Text="Solicitar ser voluntario" 
+                            Clicked="OnSolicitarVoluntariadoClicked" 
+                            BackgroundColor="#789262" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="12" 
+                            HeightRequest="50" 
+                            FontSize="16"
+                            IsVisible="False"/>
 
-                    <Button Text="⎋  Cerrar Sesión" 
-                        Clicked="OnCerrarSesionClicked" 
-                        BorderWidth="2"
-                        BorderColor="#E53935"
-                        BackgroundColor="Transparent" 
-                        TextColor="#E53935" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="45" 
-                        FontSize="16"/>
+                        <!-- Botón para ver donaciones pendientes - Solo visible para Volunteer -->
+                        <Button x:Name="DonacionesPendientesButton" 
+                            Text="Ver donaciones pendientes" 
+                            Clicked="OnDonacionesPendientesClicked" 
+                            BackgroundColor="#789262" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="12" 
+                            HeightRequest="50" 
+                            FontSize="16"
+                            IsVisible="False"/>
 
-                    <Label Text="Versión de la App: 1.0.0" 
-                       FontSize="12" 
-                       HorizontalOptions="Center" 
-                       TextColor="#AAA" 
-                       Margin="0,30,0,0"/>
+                        <Button Text="Cerrar Sesión" 
+                            Clicked="OnCerrarSesionClicked" 
+                            BorderWidth="2"
+                            BorderColor="#E53935"
+                            BackgroundColor="Transparent" 
+                            TextColor="#E53935" 
+                            FontAttributes="Bold" 
+                            CornerRadius="8" 
+                            HeightRequest="45" 
+                            FontSize="16"/>
+                    </VerticalStackLayout>
+
+
+                    <!-- Información de la app -->
+                    <VerticalStackLayout Spacing="10" Margin="0,20,0,0">
+                        <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+                        <Label Text="Sabor Sostenible" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           TextColor="#789262" />
+                        <Label Text="Versión 1.0.0" 
+                           FontSize="12" 
+                           HorizontalOptions="Center" 
+                           TextColor="#AAA" />
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
     </ContentPage>
-    
 </TabbedPage>

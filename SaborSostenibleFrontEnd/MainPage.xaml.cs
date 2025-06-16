@@ -12,6 +12,8 @@ namespace SaborSostenibleFrontEnd
     {
         public ObservableCollection<Restaurante> Restaurantes { get; set; } = new();
         public ObservableCollection<Pedido> Pedidos { get; set; } = new();
+        private string _ultimaPestana = string.Empty;
+
 
         public MainPage()
         {
@@ -28,8 +30,11 @@ namespace SaborSostenibleFrontEnd
             _ = CargarRestaurantesDesdeApiAsync();
             _ = CargarPedidosAsync();
             _ = MostrarDatosUsuarioAsync();
+            _ultimaPestana = CurrentPage?.Title ?? "";
+
         }
 
+        // Método modificado para manejar el cambio de tab
         private async void OnCurrentPageChanged(object sender, EventArgs e)
         {
             // Verificar si el tab actual es el de "Pedidos"
@@ -41,6 +46,7 @@ namespace SaborSostenibleFrontEnd
 
         private async Task CargarRestaurantesDesdeApiAsync(string searchText = null)
         {
+            MostrarLoaderRestaurantes(true);
             try
             {
                 using var httpClient = new HttpClient();
@@ -94,24 +100,48 @@ namespace SaborSostenibleFrontEnd
             {
                 Restaurantes.Clear();
             }
+            finally
+            {
+                MostrarLoaderRestaurantes(false);
+            }
         }
+
+        private void MostrarLoaderRestaurantes(bool mostrar)
+        {
+            if (RestaurantesLoader != null && RestaurantesCollectionView != null)
+            {
+                RestaurantesLoader.IsVisible = mostrar;
+                RestaurantesCollectionView.IsVisible = !mostrar;
+            }
+        }
+
 
         private async Task CargarPedidosAsync()
         {
             try
             {
-                Pedidos.Clear();
+                // Mostrar el loader y ocultar la lista
+                MostrarLoaderPedidos(true);
+
                 var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token)) return;
+                if (string.IsNullOrEmpty(token))
+                {
+                    MostrarLoaderPedidos(false);
+                    return;
+                }
 
                 using var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 var response = await client.GetAsync("http://34.39.128.125/api/userOrders/get");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var doc = JsonDocument.Parse(json);
+
+                    // Limpiar pedidos existentes antes de agregar nuevos
+                    Pedidos.Clear();
 
                     if (doc.RootElement.TryGetProperty("OrdersByUserId", out var ordenes))
                     {
@@ -131,24 +161,37 @@ namespace SaborSostenibleFrontEnd
                 }
                 else
                 {
+                    // Limpiar pedidos en caso de error
+                    Pedidos.Clear();
                     await DisplayAlert("Error", "No se pudieron obtener los pedidos.", "OK");
                 }
             }
             catch (Exception ex)
             {
+                // Limpiar pedidos en caso de excepción
+                Pedidos.Clear();
                 await DisplayAlert("Error", $"Ha ocurrido un error al cargar pedidos.\n\n{ex.Message}", "OK");
             }
-        }
-
-        private async void OnSearchCompleted(object sender, EventArgs e)
-        {
-            if (sender is Entry entry)
+            finally
             {
-                var texto = entry.Text?.Trim();
-                await CargarRestaurantesDesdeApiAsync(string.IsNullOrEmpty(texto) ? null : texto);
+                // Ocultar el loader y mostrar la lista siempre
+                MostrarLoaderPedidos(false);
             }
         }
 
+        // Método helper para mostrar/ocultar el loader de pedidos
+        private void MostrarLoaderPedidos(bool mostrar)
+        {
+            if (PedidosLoader != null && PedidosCollectionView != null)
+            {
+                PedidosLoader.IsVisible = mostrar;
+                PedidosCollectionView.IsVisible = !mostrar;
+            }
+        }
+        public async Task RefrescarPedidosAsync()
+        {
+            await CargarPedidosAsync();
+        }
         private async Task MostrarDatosUsuarioAsync()
         {
             try
@@ -183,39 +226,6 @@ namespace SaborSostenibleFrontEnd
             catch (Exception ex)
             {
                 await DisplayAlert("Error", $"Error al obtener datos del usuario.\n\n{ex.Message}", "OK");
-            }
-        }
-
-        private async Task CargarSaludoPersonalizadoAsync()
-        {
-            try
-            {
-                var token = Preferences.Get("SessionId", null);
-                if (string.IsNullOrEmpty(token))
-                {
-                    SaludoLabel.Text = "¡Hola! 👋";
-                    return;
-                }
-
-                using var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var doc = JsonDocument.Parse(json);
-
-                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
-                    {
-                        var nombre = info.GetProperty("FirstName1").GetString();
-                        SaludoLabel.Text = $"¡Hola, {nombre}! 👋";
-                    }
-                }
-            }
-            catch
-            {
-                SaludoLabel.Text = "¡Hola! 👋";
             }
         }
 
@@ -283,7 +293,13 @@ namespace SaborSostenibleFrontEnd
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            this.CurrentPageChanged -= OnCurrentPageChanged;
+
+            if (Application.Current.MainPage is NavigationPage nav &&
+                nav.CurrentPage is MainPage main)
+            {
+                // Esto simula OnAppearing para recargar pedidos al volver
+                main.SendAppearing();
+            }
         }
 
         // Método para configurar la visibilidad de los botones según el rol del usuario
@@ -322,6 +338,19 @@ namespace SaborSostenibleFrontEnd
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            // Forzar recarga si el tab activo es "Pedidos"
+            if (CurrentPage?.Title == "Pedidos")
+            {
+                _ = CargarPedidosAsync();
+            }
+
+            // Idem para "Descubrir"
+            if (CurrentPage?.Title == "Descubrir")
+            {
+                _ = CargarRestaurantesDesdeApiAsync();
+            }
+
             ConfigurarBotonesPorRol();
         }
 
@@ -330,6 +359,113 @@ namespace SaborSostenibleFrontEnd
             if (e.Parameter is Pedido pedido)
             {
                 await Navigation.PushAsync(new OrderDetailsPage(pedido.OrderId));
+            }
+        }
+
+        // AÑADIR estos nuevos métodos a la clase MainPage:
+
+        private async Task CargarSaludoPersonalizadoAsync()
+        {
+            try
+            {
+                var token = Preferences.Get("SessionId", null);
+                if (string.IsNullOrEmpty(token))
+                {
+                    SaludoLabel.Text = "¡Bienvenido(a) de vuelta!";
+                    await AnimarSaludoAsync();
+                    return;
+                }
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync("http://34.39.128.125/api/userGreetingInfo/get");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var doc = JsonDocument.Parse(json);
+
+                    if (doc.RootElement.TryGetProperty("GreetingInfo", out var info))
+                    {
+                        var nombre = info.GetProperty("FirstName1").GetString();
+                        SaludoLabel.Text = $"¡Bienvenido(a) de vuelta, {nombre}!";
+                    }
+                }
+
+                await AnimarSaludoAsync();
+            }
+            catch
+            {
+                SaludoLabel.Text = "¡Bienvenido(a) de vuelta!";
+                await AnimarSaludoAsync();
+            }
+        }
+
+        private async Task AnimarSaludoAsync()
+        {
+            // Animación de entrada del saludo
+            await Task.WhenAll(
+                SaludoLabel.FadeTo(1, 800, Easing.CubicOut),
+                SaludoLabel.ScaleTo(1, 800, Easing.BounceOut)
+            );
+
+            // Pequeña pausa
+            await Task.Delay(200);
+
+            // Animación del efecto de brillo - expandir
+            BrilloEffect.WidthRequest = 0;
+            await Task.WhenAll(
+                BrilloEffect.FadeTo(0.7, 300, Easing.Linear),
+                AnimateWidthAsync(BrilloEffect, SaludoLabel.Width * 0.6, 300)
+            );
+
+            await Task.Delay(100);
+
+            // Animación del efecto de brillo - contraer
+            await Task.WhenAll(
+                BrilloEffect.FadeTo(0, 400, Easing.Linear),
+                AnimateWidthAsync(BrilloEffect, 0, 400)
+            );
+        }
+
+        // Método helper para animar el ancho
+        private async Task AnimateWidthAsync(View view, double toWidth, uint duration)
+        {
+            var animation = new Animation(v => view.WidthRequest = v, view.WidthRequest, toWidth);
+            await Task.Run(() => animation.Commit(view, "WidthAnimation", 16, duration, Easing.Linear));
+        }
+
+        // AÑADIR este nuevo método para manejar cambios en el texto de búsqueda:
+        private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                // Mostrar/ocultar el botón de limpiar según si hay texto
+                ClearSearchButton.IsVisible = !string.IsNullOrEmpty(entry.Text);
+            }
+        }
+
+        // AÑADIR este nuevo método para limpiar la búsqueda:
+        private async void OnClearSearchClicked(object sender, EventArgs e)
+        {
+            SearchEntry.Text = string.Empty;
+            ClearSearchButton.IsVisible = false;
+
+            // Pequeña animación del botón al hacer clic
+            await ClearSearchButton.ScaleTo(0.8, 100);
+            await ClearSearchButton.ScaleTo(1, 100);
+
+            // Recargar todos los restaurantes
+            await CargarRestaurantesDesdeApiAsync();
+        }
+
+        // MODIFICAR el método OnSearchCompleted existente para usar SearchEntry:
+        private async void OnSearchCompleted(object sender, EventArgs e)
+        {
+            if (sender is Entry entry)
+            {
+                var texto = entry.Text?.Trim();
+                await CargarRestaurantesDesdeApiAsync(string.IsNullOrEmpty(texto) ? null : texto);
             }
         }
     }

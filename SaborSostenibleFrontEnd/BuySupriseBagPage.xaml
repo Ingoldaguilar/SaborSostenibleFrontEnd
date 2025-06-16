@@ -10,33 +10,31 @@
       Margin="0">
 
         <!-- HEADER UNIFICADO SIN MÁRGENES -->
-        <Frame x:Name="HeaderPaso1"
-           Grid.Row="0"
-           BackgroundColor="#789262"
-           Padding="0"
-           HasShadow="False"
-           CornerRadius="0"
-           IsVisible="True">
-            <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                <Grid ColumnDefinitions="Auto,*,Auto">
-                    <Label Text="←"
-                       FontSize="20"
-                       TextColor="White"
-                       VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnBackButtonClicked" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Text="Confirmación de Bolsa"
-                       Grid.Column="1"
-                       HorizontalOptions="Center"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       FontFamily="OpenSansSemibold"/>
-                </Grid>
+        <Grid x:Name="HeaderPaso1"
+            Grid.Row="0"
+            BackgroundColor="#789262"
+            Padding="20,25"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="True">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label Text="←"
+               FontSize="20"
+               TextColor="White"
+               VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Confirmación de Bolsa"
+               Grid.Column="1"
+               HorizontalOptions="Center"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="White"
+               FontFamily="OpenSansSemibold"/>
             </Grid>
-        </Frame>
+        </Grid>
+
 
         <!-- CONTENIDO -->
         <ScrollView Grid.Row="1">
@@ -211,41 +209,38 @@
 
                     <!-- SECCIÓN DE DONACIÓN -->
                     <Frame BackgroundColor="White" 
-               CornerRadius="16" 
-               Padding="20" 
-               HasShadow="True" 
-               BorderColor="#FFE0B2">
+                       CornerRadius="16" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BorderColor="Transparent">
                         <VerticalStackLayout Spacing="15">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Text="💝" 
-                           FontSize="20" 
-                           VerticalOptions="Center"/>
-                                <VerticalStackLayout Grid.Column="1" Padding="12,0,0,0">
-                                    <Label Text="¿Deseas donar esta bolsa?" 
-                               FontSize="16" 
-                               FontAttributes="Bold"
-                               TextColor="#789262"/>
-                                    <Label Text="Ayuda a una familia" 
-                               FontSize="13" 
-                               TextColor="#666"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="¿Deseas donar esta bolsa?"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#789262"/>
+                                     <Label Text="Tu donación será entregada a un banco de comida"
+                                       FontSize="13"
+                                       TextColor="#666"/>
                                 </VerticalStackLayout>
                                 <Switch x:Name="DonacionSwitch"
-                            Grid.Column="2"
-                            Toggled="OnDonacionToggled"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center"
-                            OnColor="#789262"
-                            ThumbColor="White"/>
+                                    Grid.Column="1"
+                                    Toggled="OnDonacionToggled"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    OnColor="#789262"
+                                    ThumbColor="White"/>
                             </Grid>
 
                             <!-- PICKER DE BANCO DE COMIDA -->
                             <Frame x:Name="FoodBankFrame"
-                       IsVisible="False"
-                       BackgroundColor="#FFF3E0"
-                       CornerRadius="12"
-                       Padding="15"
-                       HasShadow="False"
-                       BorderColor="#FFE0B2">
+                               IsVisible="False"
+                               BackgroundColor="#FFF3E0"
+                               CornerRadius="12"
+                               Padding="15"
+                               HasShadow="False"
+                               BorderColor="#FFE0B2">
                                 <VerticalStackLayout Spacing="8">
                                     <Label Text="Selecciona el banco de comida:" 
                                FontSize="14" 
