@@ -27,15 +27,15 @@
             <Grid RowDefinitions="Auto,*">
                 <!-- Encabezado estilo navegación -->
                 <Grid Grid.Row="0" BackgroundColor="#789262" Padding="10,10" HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                         <Frame BackgroundColor="White"
                    Padding="0"
                    CornerRadius="50"
                    HasShadow="False"
                    BorderColor="Transparent"
                    IsClippedToBounds="True"
-                   WidthRequest="75"
-                   HeightRequest="75"
+                   WidthRequest="65"
+                   HeightRequest="65"
                    HorizontalOptions="Center"
                    VerticalOptions="Center">
                             <Image Source="logonobg.png"
@@ -103,18 +103,25 @@
     <!-- Tab 2: Pedidos -->
     <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*" Padding="0">
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label Text="Mis pedidos" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
-                </Grid>
-            </Frame>
+            <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Label Text="Mis pedidos"
+           FontSize="20"
+           FontAttributes="Bold"
+           TextColor="White"
+           FontFamily="OpenSansSemibold"
+           HorizontalTextAlignment="Center"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"/>
+            </Grid>
+
 
             <CollectionView Grid.Row="1" x:Name="PedidosCollectionView" ItemsSource="{Binding Pedidos}" SelectionMode="None" Margin="20,15">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="30">
-                        <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center">
-                            <Label Text="📦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Frame BackgroundColor="#FFFFFF" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True" HorizontalOptions="Center" BorderColor="Transparent" IsClippedToBounds="True">
+                            <Image Source="surprisebag.png" Aspect="AspectFit" VerticalOptions="Center" HorizontalOptions="Center" />
                         </Frame>
+
                         <Label Text="Por el momento no tienes pedidos registrados" FontSize="15" TextColor="#555" HorizontalTextAlignment="Center" HorizontalOptions="Center" WidthRequest="260" />
                         <Label Text="¡Explora y haz tu primer pedido sostenible!" FontSize="14" FontAttributes="Bold" TextColor="#789262" HorizontalTextAlignment="Center" WidthRequest="260"/>
                     </VerticalStackLayout>
@@ -209,11 +216,17 @@
     <!-- Tab 3: Perfil -->
     <ContentPage Title="Yo" IconImageSource="{FontImage Glyph=&#xf007;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*">
-            <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                    <Label Text="Mi perfil" FontSize="20" FontAttributes="Bold" TextColor="White" FontFamily="OpenSansSemibold" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center"/>
-                </Grid>
-            </Frame>
+            <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
+                <Label Text="Mi perfil"
+           FontSize="20"
+           FontAttributes="Bold"
+           TextColor="White"
+           FontFamily="OpenSansSemibold"
+           HorizontalTextAlignment="Center"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"/>
+            </Grid>
+
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Padding="20" Spacing="25">
                     <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True" BorderColor="#E0E0E0">

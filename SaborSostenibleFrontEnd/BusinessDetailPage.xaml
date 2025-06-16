@@ -8,27 +8,25 @@
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
 
         <!-- Header -->
-        <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0">
-            <Grid Padding="20,25" HorizontalOptions="FillAndExpand">
-                <Grid ColumnDefinitions="Auto,*,Auto">
-                    <Label Text="←"
-                           FontSize="20"
-                           TextColor="White"
-                           VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnBackButtonClicked" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Text="Detalle del Restaurante"
-                           Grid.Column="1"
-                           HorizontalOptions="Center"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           TextColor="White"
-                           FontFamily="OpenSansSemibold"/>
-                </Grid>
+        <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label Text="←"
+               FontSize="20"
+               TextColor="White"
+               VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Detalle del Restaurante"
+               Grid.Column="1"
+               HorizontalOptions="Center"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="White"
+               FontFamily="OpenSansSemibold"/>
             </Grid>
-        </Frame>
+        </Grid>
 
         <!-- Imagen destacada -->
         <Image x:Name="RestauranteImagen"
@@ -78,9 +76,20 @@
                         Margin="20,0,20,20">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="30" Spacing="10" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                    <Frame BackgroundColor="White" CornerRadius="50" Padding="10" HeightRequest="90" WidthRequest="90" HasShadow="True">
-                        <Label Text="🛍️" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Frame BackgroundColor="White"
+       CornerRadius="50"
+       Padding="10"
+       HeightRequest="90"
+       WidthRequest="90"
+       HasShadow="True"
+       BorderColor="Transparent"
+       IsClippedToBounds="True">
+                        <Image Source="surprisebag.png"
+           Aspect="AspectFit"
+           VerticalOptions="Center"
+           HorizontalOptions="Center" />
                     </Frame>
+
                     <Label Text="Actualmente no hay bolsas disponibles"
                            FontSize="15"
                            TextColor="#555"
