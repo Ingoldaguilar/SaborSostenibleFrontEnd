@@ -123,7 +123,6 @@
     </ContentPage>
 
     <!-- Tab 2: Pedidos -->
-    <!-- Tab 2: Pedidos -->
     <ContentPage Title="Pedidos" IconImageSource="{FontImage Glyph=&#xf0f2;, FontFamily=FontAwesome, Size=20, Color=White}" BackgroundColor="#F8F9FA" NavigationPage.HasNavigationBar="False">
         <Grid RowDefinitions="Auto,*" Padding="0">
             <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
@@ -256,81 +255,140 @@
         <Grid RowDefinitions="Auto,*">
             <Grid Grid.Row="0" BackgroundColor="#789262" Padding="20,25" HorizontalOptions="FillAndExpand">
                 <Label Text="Mi perfil"
-           FontSize="20"
-           FontAttributes="Bold"
-           TextColor="White"
-           FontFamily="OpenSansSemibold"
-           HorizontalTextAlignment="Center"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   FontFamily="OpenSansSemibold"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             </Grid>
 
             <ScrollView Grid.Row="1">
                 <VerticalStackLayout Padding="20" Spacing="25">
-                    <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True" BorderColor="#E0E0E0">
+
+                    <!-- Información del usuario -->
+                    <Frame BackgroundColor="White" CornerRadius="15" Padding="25" HasShadow="True" BorderColor="Transparent">
                         <VerticalStackLayout Spacing="20">
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="👤" FontSize="18"/>
-                                <Label x:Name="UsuarioNombreLabel" FontSize="18" TextColor="#789262" FontAttributes="Bold"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📧" FontSize="18"/>
-                                <Label x:Name="UsuarioEmailLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📱" FontSize="18"/>
-                                <Label x:Name="UsuarioTelefonoLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                                <Label Text="📍" FontSize="18"/>
-                                <Label x:Name="UsuarioDireccionLabel" FontSize="16" TextColor="#555"/>
-                            </HorizontalStackLayout>
+
+                            <!-- Avatar con ícono de usuario y nombre -->
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                                <Frame BackgroundColor="#789262" 
+                                   CornerRadius="40" 
+                                   Padding="0" 
+                                   WidthRequest="80" 
+                                   HeightRequest="80" 
+                                   HasShadow="False" 
+                                   BorderColor="Transparent"
+                                   HorizontalOptions="Center">
+                                    <Label Text="&#xf007;" 
+                                       FontFamily="FontAwesome"
+                                       FontSize="32" 
+                                       TextColor="White" 
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center" />
+                                </Frame>
+                                <Label x:Name="UsuarioNombreLabel" 
+                                   FontSize="20" 
+                                   TextColor="#789262" 
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+
+                            <!-- Información de contacto -->
+                            <VerticalStackLayout Spacing="15">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Correo electrónico" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioEmailLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Teléfono" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioTelefonoLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="Dirección" 
+                                       FontSize="12" 
+                                       TextColor="#999" 
+                                       FontAttributes="Bold" />
+                                    <Label x:Name="UsuarioDireccionLabel" 
+                                       FontSize="16" 
+                                       TextColor="#333" 
+                                       LineBreakMode="WordWrap" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- Botón para solicitar ser voluntario - Solo visible para Customer -->
-                    <Button x:Name="SolicitarVoluntarioButton" 
-                        Text="Solicitar ser voluntario" 
-                        Clicked="OnSolicitarVoluntariadoClicked" 
-                        BackgroundColor="#789262" 
-                        TextColor="White" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="50" 
-                        FontSize="16"
-                        IsVisible="False"/>
+                    <!-- Acciones del usuario -->
+                    <VerticalStackLayout Spacing="15" Padding="0, 20">
 
-                    <!-- Botón para ver donaciones pendientes - Solo visible para Volunteer -->
-                    <Button x:Name="DonacionesPendientesButton" 
-                        Text="Ver donaciones pendientes" 
-                        Clicked="OnDonacionesPendientesClicked" 
-                        BackgroundColor="#789262" 
-                        TextColor="White" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="50" 
-                        FontSize="16"
-                        IsVisible="False"/>
+                        <!-- Botón para solicitar ser voluntario - Solo visible para Customer -->
+                        <Button x:Name="SolicitarVoluntarioButton" 
+                            Text="Solicitar ser voluntario" 
+                            Clicked="OnSolicitarVoluntariadoClicked" 
+                            BackgroundColor="#789262" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="12" 
+                            HeightRequest="50" 
+                            FontSize="16"
+                            IsVisible="False"/>
 
-                    <Button Text="⎋  Cerrar Sesión" 
-                        Clicked="OnCerrarSesionClicked" 
-                        BorderWidth="2"
-                        BorderColor="#E53935"
-                        BackgroundColor="Transparent" 
-                        TextColor="#E53935" 
-                        FontAttributes="Bold" 
-                        CornerRadius="12" 
-                        HeightRequest="45" 
-                        FontSize="16"/>
+                        <!-- Botón para ver donaciones pendientes - Solo visible para Volunteer -->
+                        <Button x:Name="DonacionesPendientesButton" 
+                            Text="Ver donaciones pendientes" 
+                            Clicked="OnDonacionesPendientesClicked" 
+                            BackgroundColor="#789262" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="12" 
+                            HeightRequest="50" 
+                            FontSize="16"
+                            IsVisible="False"/>
 
-                    <Label Text="Versión de la App: 1.0.0" 
-                       FontSize="12" 
-                       HorizontalOptions="Center" 
-                       TextColor="#AAA" 
-                       Margin="0,30,0,0"/>
+                        <Button Text="Cerrar Sesión" 
+                            Clicked="OnCerrarSesionClicked" 
+                            BorderWidth="2"
+                            BorderColor="#E53935"
+                            BackgroundColor="Transparent" 
+                            TextColor="#E53935" 
+                            FontAttributes="Bold" 
+                            CornerRadius="8" 
+                            HeightRequest="45" 
+                            FontSize="16"/>
+                    </VerticalStackLayout>
+
+
+                    <!-- Información de la app -->
+                    <VerticalStackLayout Spacing="10" Margin="0,20,0,0">
+                        <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+                        <Label Text="Sabor Sostenible" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           TextColor="#789262" />
+                        <Label Text="Versión 1.0.0" 
+                           FontSize="12" 
+                           HorizontalOptions="Center" 
+                           TextColor="#AAA" />
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
     </ContentPage>
-    
 </TabbedPage>
