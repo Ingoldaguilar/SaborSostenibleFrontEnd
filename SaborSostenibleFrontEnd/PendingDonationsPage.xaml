@@ -47,5 +47,27 @@
                                  Padding="20"
                                  Spacing="15" />
         </ScrollView>
+
+        <!-- LOADER -->
+        <VerticalStackLayout x:Name="DonationsLoader" 
+                     Grid.Row="1"
+                     Spacing="20" 
+                     HorizontalOptions="Center" 
+                     VerticalOptions="Center"
+                     IsVisible="False"
+                     BackgroundColor="#F5F5F5"
+                     Padding="20">
+            <ActivityIndicator IsRunning="True" 
+                       Color="#789262" 
+                       WidthRequest="40" 
+                       HeightRequest="40"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            <Label Text="Cargando donaciones..." 
+           FontSize="14" 
+           TextColor="#789262" 
+           HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
     </Grid>
 </ContentPage>

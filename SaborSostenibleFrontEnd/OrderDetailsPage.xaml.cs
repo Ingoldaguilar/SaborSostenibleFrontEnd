@@ -106,15 +106,20 @@ namespace SaborSostenibleFrontEnd
                     WidthRequest = 60,
                     HeightRequest = 60,
                     Padding = 0,
-                    BackgroundColor = Colors.LightGray,
+                    BackgroundColor = Colors.White,
+                    BorderColor = Colors.Transparent,
                     IsClippedToBounds = true,
                     HasShadow = false,
                     Content = new Image
                     {
-                        Source = ImageSource.FromUri(new Uri("http://34.39.128.125/Uploads/Logos/bolsaSorpresaEstandar.jpg")),
-                        Aspect = Aspect.AspectFill
+                        Source = "surprisebag.png",
+                        Aspect = Aspect.AspectFit,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center
                     }
                 };
+
+
                 grid.Add(logoFrame, 0, 0);
 
                 // Descripción

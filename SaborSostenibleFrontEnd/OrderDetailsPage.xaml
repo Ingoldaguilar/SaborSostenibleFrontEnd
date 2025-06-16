@@ -6,61 +6,100 @@
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="#F8F9FA"
     Title="Detalles del pedido">
-
     <Grid RowDefinitions="Auto,*">
         <!-- HEADER -->
-        <Frame Grid.Row="0" BackgroundColor="#789262" Padding="0" HasShadow="False" CornerRadius="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-            <Grid Padding="20,25" ColumnDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" BackgroundColor="#789262" Padding="10,10" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Grid ColumnDefinitions="Auto,*,Auto" Padding="10,10">
                 <Button Grid.Column="0"
-                    Text="←"
-                    FontSize="24"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    BorderWidth="0"
-                    Clicked="OnBackButtonClicked"
-                    VerticalOptions="Center" />
+                        Text="←"
+                        FontSize="24"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        BorderWidth="0"
+                        Clicked="OnBackButtonClicked"
+                        VerticalOptions="Center" />
                 <Label Grid.Column="1"
-                    Text="Detalles del pedido"
-                    FontSize="20"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    FontFamily="OpenSansSemibold"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
+                       Text="Detalles del pedido"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       FontFamily="OpenSansSemibold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
             </Grid>
-        </Frame>
+        </Grid>
 
         <!-- CONTENIDO -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="20" Spacing="15">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
                 <!-- Información del pedido -->
                 <Frame BackgroundColor="White" CornerRadius="15" Padding="20" HasShadow="True" BorderColor="Transparent">
-                    <VerticalStackLayout Spacing="12">
-                        <Label x:Name="RestaurantNameLabel" FontSize="18" FontAttributes="Bold" TextColor="#789262" />
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                            <Label Grid.Column="0" Text="📅" FontSize="16" VerticalOptions="Center"/>
-                            <Label Grid.Column="1" x:Name="OrderDateLabel" FontSize="14" TextColor="#666" VerticalOptions="Center"/>
-                        </Grid>
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                            <Label Grid.Column="0" Text="📋" FontSize="16" VerticalOptions="Center"/>
-                            <Label Grid.Column="1" x:Name="OrderStatusLabel" FontSize="14" TextColor="#666" VerticalOptions="Center"/>
+                    <VerticalStackLayout Spacing="15">
+                        <Label x:Name="RestaurantNameLabel" 
+                               FontSize="20" 
+                               FontAttributes="Bold" 
+                               TextColor="#789262" 
+                               HorizontalTextAlignment="Center" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" RowSpacing="10" ColumnSpacing="20">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="3">
+                                <Label Text="Fecha del pedido" FontSize="12" TextColor="#999" FontAttributes="Bold" />
+                                <Label x:Name="OrderDateLabel" FontSize="14" TextColor="#333" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="3">
+                                <Label Text="Estado" FontSize="12" TextColor="#999" FontAttributes="Bold" />
+                                <Frame BackgroundColor="#E8F5E8" 
+                                       CornerRadius="8" 
+                                       Padding="8,4" 
+                                       HasShadow="False" 
+                                       BorderColor="Transparent"
+                                       HorizontalOptions="Start">
+                                    <Label x:Name="OrderStatusLabel" 
+                                           FontSize="12" 
+                                           TextColor="#2E7D32" 
+                                           FontAttributes="Bold" />
+                                </Frame>
+                            </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Título de bolsas -->
-                <Label Text="Contenido del pedido" FontSize="16" FontAttributes="Bold" TextColor="#789262" Margin="0,10,0,5" />
+                <!-- Contenido del pedido -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Contenido del pedido" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#789262" />
 
-                <!-- Lista de bolsas -->
-                <VerticalStackLayout x:Name="DetailsContainer" Spacing="8" />
+                    <VerticalStackLayout x:Name="DetailsContainer" Spacing="10" />
+                </VerticalStackLayout>
 
                 <!-- Total -->
-                <Frame BackgroundColor="#F1F8E9" CornerRadius="15" Padding="20" HasShadow="True" BorderColor="Transparent" Margin="0,10,0,0">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                        <Label Grid.Column="0" Text="💰" FontSize="18" VerticalOptions="Center"/>
-                        <Label Grid.Column="1" x:Name="TotalLabel" FontSize="18" FontAttributes="Bold" TextColor="#789262" VerticalOptions="Center"/>
+                <Frame BackgroundColor="White" 
+                       CornerRadius="15" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BorderColor="#789262">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Grid.Column="0" 
+                               Text="Total del pedido" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               TextColor="#333" 
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="1" 
+                               x:Name="TotalLabel" 
+                               FontSize="20" 
+                               FontAttributes="Bold" 
+                               TextColor="#789262" 
+                               VerticalOptions="Center" />
                     </Grid>
                 </Frame>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
