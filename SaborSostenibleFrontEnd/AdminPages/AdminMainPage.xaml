@@ -72,7 +72,7 @@
                                         Text="&#xf2e7;"
                                         FontFamily="FontAwesome"
                                         FontSize="20"
-                                        TextColor="#2E7D32"
+                                        TextColor="#789262"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
                                 </Frame>
@@ -115,7 +115,7 @@
                                         Text="&#xf1ad;"
                                         FontFamily="FontAwesome"
                                         FontSize="20"
-                                        TextColor="#2E7D32"
+                                        TextColor="#789262"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
                                 </Frame>
@@ -158,7 +158,7 @@
                                         Text="&#xf0c0;"
                                         FontFamily="FontAwesome"
                                         FontSize="20"
-                                        TextColor="#2E7D32"
+                                        TextColor="#789262"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
                                 </Frame>
@@ -201,7 +201,7 @@
                                         Text="&#xf013;"
                                         FontFamily="FontAwesome"
                                         FontSize="20"
-                                        TextColor="#2E7D32"
+                                        TextColor="#789262"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
                                 </Frame>
@@ -244,7 +244,7 @@
                                         Text="&#xf013;"
                                         FontFamily="FontAwesome"
                                         FontSize="20"
-                                        TextColor="#2E7D32"
+                                        TextColor="#789262"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
                                 </Frame>
@@ -401,6 +401,21 @@
                             CornerRadius="8"
                             HeightRequest="40"
                             HorizontalOptions="FillAndExpand"/>
+
+                        <!-- Información de la app -->
+                        <VerticalStackLayout Spacing="10" Margin="0,5,0,0">
+                            <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" HorizontalOptions="FillAndExpand" />
+                            <Label Text="Sabor Sostenible" 
+                                FontSize="14" 
+                                FontAttributes="Bold" 
+                                HorizontalOptions="Center" 
+                                TextColor="#789262" />
+                            <Label Text="Versión 1.0.0" 
+                                FontSize="12" 
+                                HorizontalOptions="Center" 
+                                TextColor="#AAA" />
+                        </VerticalStackLayout>
+
                     </VerticalStackLayout>
                 </Frame>
             </ScrollView>

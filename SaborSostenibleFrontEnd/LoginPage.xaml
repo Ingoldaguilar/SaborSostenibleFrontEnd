@@ -1,104 +1,91 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SaborSostenibleFrontEnd.LoginPage"
              BackgroundColor="{StaticResource backgroundColor}">
 
-    <AbsoluteLayout>
-
-
-        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
-              AbsoluteLayout.LayoutFlags="All"
+    <ScrollView>
+        <Grid Padding="50, 0"
               VerticalOptions="Center"
-              HorizontalOptions="Center">
+              HorizontalOptions="Center"
+              RowSpacing="20">
 
-            <ScrollView>
-                <ContentView HorizontalOptions="Center" VerticalOptions="Center">
-                    <Grid Padding="0" RowSpacing="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <!-- Logo -->
-                            <RowDefinition Height="Auto"/>
-                            <!-- Título -->
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                        <!-- LOGO -->
-                        <Image Source="logonobg.png"
-                               HeightRequest="220"
-                               Aspect="Fill"
-                               HorizontalOptions="Center"
-                               Grid.Row="0" />
+            <!-- LOGO -->
+            <Image Source="logonobg.png"
+                   HeightRequest="220"
+                   Aspect="Fill"
+                   HorizontalOptions="Center"
+                   Grid.Row="0" />
 
-                        <!-- TÍTULO -->
-                        <Label 
-                        Text="Inicio de sesión" 
-                        FontFamily="Roboto"
-                        FontSize="25" 
-                        FontAttributes="Bold"
-                        TextColor="#789262"
-                        HorizontalOptions="Center"
-                        Grid.Row="1" 
-                        Margin="0,0,0,15"/>
+            <!-- TÍTULO -->
+            <Label 
+                Text="Inicio de sesión" 
+                FontFamily="Roboto"
+                FontSize="25" 
+                FontAttributes="Bold"
+                TextColor="#789262"
+                HorizontalOptions="Center"
+                Grid.Row="1" 
+                Margin="0,0,0,15"/>
 
+            <Label FontFamily="Roboto" Text="Correo *" FontSize="14" TextColor="#789262" Grid.Row="2"/>
+            <Entry x:Name="EmailEntry" Placeholder="Correo" Keyboard="Email" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="3"/>
 
-                        <Label FontFamily="Roboto" Text="Correo *" FontSize="14" TextColor="#789262" Grid.Row="2"/>
-                        <Entry x:Name="EmailEntry" Placeholder="Correo" Keyboard="Email" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="3"/>
+            <Label FontFamily="Roboto" Text="Contraseña *" FontSize="14" TextColor="#789262" Grid.Row="4"/>
+            <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="5"/>
 
-                        <Label FontFamily="Roboto" Text="Contraseña *" FontSize="14" TextColor="#789262" Grid.Row="4"/>
-                        <Entry x:Name="PasswordEntry" Placeholder="Contraseña" IsPassword="True" TextColor="Black" BackgroundColor="#F9F9F3" Grid.Row="5"/>
+            <StackLayout Grid.Row="6" Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="¿Olvidaste tu contraseña? " 
+                       FontSize="12" 
+                       TextColor="#789262" 
+                       HorizontalOptions="Center"/>
+                <Label Text="Restablécela" 
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Primary}" 
+                       FontSize="12"
+                       HorizontalTextAlignment="Center"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
 
-                        <StackLayout Grid.Row="6" Orientation="Horizontal" HorizontalOptions="Center">
-                            <Label Text="¿Olvidaste tu contraseña? " 
-                                   FontSize="12" 
-                                   TextColor="#789262" 
-                                   HorizontalOptions="Center"/>
+            <Button Text="Ingresar"
+                    TextColor="White"
+                    BackgroundColor="#789262"
+                    CornerRadius="8"
+                    Grid.Row="7"
+                    Padding="10"
+                    FontAttributes="Bold"
+                    Clicked="OnLogIn_Clicked">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="&#xf023;" FontFamily="FontAwesome" Color="White" Size="16"/>
+                </Button.ImageSource>
+            </Button>
 
-                            <Label Text="Restablécela" 
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource Primary}" 
-                                   FontSize="12"
-                                   HorizontalTextAlignment="Center"
-                                   TextDecorations="Underline">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnOlvido_Tapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </StackLayout>
+            <BoxView HeightRequest="1" Color="#789262" Opacity="0.3" Margin="0,20" Grid.Row="8"/>
 
-                        <Button Text="Ingresar"
-                                TextColor="White"
-                                BackgroundColor="#789262"
-                                CornerRadius="8"
-                                Grid.Row="7"
-                                Padding="10"
-                                FontAttributes="Bold"
-                                Clicked="OnLogIn_Clicked">
-                            <Button.ImageSource>
-                                <FontImageSource Glyph="&#xf023;" FontFamily="FontAwesome" Color="White" Size="16"/>
-                            </Button.ImageSource>
-                        </Button>
-
-                        <BoxView HeightRequest="1" Color="#789262" Opacity="0.3" Margin="0,20" Grid.Row="8"/>
-
-                        <StackLayout Grid.Row="9" Orientation="Vertical" HorizontalOptions="Center">
-                            <Label Text="¿Aún no tienes cuenta?" FontSize="12" TextColor="#789262" HorizontalOptions="Center"/>
-                            <Label Margin="0,0,0,30" Text="Regístrate" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalTextAlignment="Center" TextDecorations="Underline">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnRegister_Tapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </StackLayout>
-                    </Grid>
-                </ContentView>
-            </ScrollView>
+            <StackLayout Grid.Row="9" Orientation="Vertical" HorizontalOptions="Center">
+                <Label Text="¿Aún no tienes cuenta?" FontSize="12" TextColor="#789262" HorizontalOptions="Center"/>
+                <Label Margin="0,0,0,30" Text="Regístrate" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalTextAlignment="Center" TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRegister_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
         </Grid>
-    </AbsoluteLayout>
+    </ScrollView>
 </ContentPage>

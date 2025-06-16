@@ -73,7 +73,7 @@
                             </Frame.GestureRecognizers>
 
                             <HorizontalStackLayout
-                                Padding="80,0"
+                                Padding="50,0"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
 
